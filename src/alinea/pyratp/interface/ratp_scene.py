@@ -368,28 +368,20 @@ class RatpScene(object):
             azmoy = numpy.array(azmoy) - 180 + self.orientation
             sky = Skyvault.initialise(hmoy=hmoy, azmoy=azmoy, omega=omega, pc=pc)
         met = MicroMeteo.initialise(doy=1, hour=12, Rglob=ghi, Rdif=ghi)
-        res = runRATP.DoIrradiation(self.ratp_grid, vegetation, sky, met)
+        dfvox = runRATP.DoIrradiation(self.ratp_grid, vegetation, sky, met)
 
-        VegetationType, Iteration, day, hour, VoxelId, ShadedPAR, SunlitPAR, \
-        ShadedArea, SunlitArea = res.T
-        # 'PAR' is expected in  Watt.m-2 in RATP input, whereas output is in
-        #  micromol => convert back to W.m2 (cf shortwavebalance, line 306)
-        dfvox = pandas.DataFrame({'VegetationType': VegetationType,
-                                  'Iteration': Iteration,
-                                  'day': day,
-                                  'hour': hour,
-                                  'VoxelId': VoxelId,
-                                  'ShadedPAR': ShadedPAR / 4.6,
-                                  'SunlitPAR': SunlitPAR / 4.6,
-                                  'ShadedArea': ShadedArea,
-                                  'SunlitArea': SunlitArea,
-                                  'Area': ShadedArea + SunlitArea,
-                                  'PAR': (
-                                         ShadedPAR * ShadedArea + SunlitPAR *
-                                         SunlitArea) / (
-                                         ShadedArea + SunlitArea) / 4.6,
-                                  })
+        # 'PAR' is expected in  Watt.m-2 in RATP input,
+        # whereas output is in micromol
+        # => convert back to W.m2 (cf shortwavebalance, line 306)
+        dfvox['ShadedPAR'] /= 4.6
+        dfvox['SunlitPAR'] /= 4.6
 
+        dfvox['Area'] = dfvox['ShadedArea'] + dfvox['SunlitArea']
+        dfvox['PAR'] = (dfvox['ShadedPAR'] * dfvox['ShadedArea']
+                        + dfvox['SunlitPAR'] * dfvox['SunlitArea']) / dfvox['Area']
+
+        dfvox = dfvox.reset_index(drop=True)  # for backward compatibility reasons
+        # TODO avoid and perform concat instead of merge
         return pandas.merge(dfvox, self.voxel_index())
 
     def scene_lightmap(self, dfvox, spatial='point_id', temporal=True):
