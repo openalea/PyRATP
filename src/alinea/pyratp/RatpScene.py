@@ -431,7 +431,7 @@ class RatpScene(object):
         
         return grid, vox_id, sh_id, s
 
-    def do_irradiation(self, rleaf=[0.1], rsoil=0.20, doy=1, hour=12, Rglob=1, Rdif=1, mu=None, sources=None):
+    def do_irradiation(self, rleaf=(0.1,), rsoil=0.20, doy=1, hour=12, Rglob=1, Rdif=1, mu=None, sources=None):
         """ Run a simulation of light interception for one wavelength
         
             Parameters:            
@@ -457,7 +457,7 @@ class RatpScene(object):
 
         vegetation = Vegetation.initialise(entities, nblomin=1)
         
-        if sources == None:
+        if sources is None:
             sky = Skyvault.initialise()
         else:
             el, az, w = sources
@@ -474,31 +474,29 @@ class RatpScene(object):
             
         met = MicroMeteo.initialise(doy=doy, hour=hour, Rglob=Rglob, Rdif=Rdif)
 
-        res = runRATP.DoIrradiation(grid, vegetation, sky, met)
+        dfvox = runRATP.DoIrradiation(grid, vegetation, sky, met)
         
-        VegetationType,Iteration,day,hour,VoxelId,ShadedPAR,SunlitPAR,ShadedArea,SunlitArea= res.T
-        # 'PAR' is expected in  Watt.m-2 in RATP input, whereas output is in micromol => convert back to W.m2 (cf shortwavebalance, line 306)
-        dfvox =  pandas.DataFrame({'VegetationType':VegetationType,
-                            'Iteration':Iteration,
-                            'day':day,
-                            'hour':hour,
-                            'VoxelId':VoxelId,
-                            'ShadedPAR':ShadedPAR / 4.6,
-                            'SunlitPAR':SunlitPAR / 4.6,
-                            'ShadedArea':ShadedArea,
-                            'SunlitArea': SunlitArea,
-                            'Area': ShadedArea + SunlitArea,
-                            'PAR': (ShadedPAR * ShadedArea + SunlitPAR * SunlitArea) / (ShadedArea + SunlitArea) / 4.6, 
-                            })
-        dfvox = dfvox[dfvox['VegetationType'] > 0]
-        dfvox = pandas.merge(dfvox, self.voxel_map.loc[:,
-                                    ('VoxelId', 'x', 'y', 'z', 'Volume')])
+        # 'PAR' is expected in  Watt.m-2 in RATP input,
+        # whereas output is in micromol
+        # => convert back to W.m2 (cf shortwavebalance, line 306)
+        dfvox['ShadedPAR'] /= 4.6
+        dfvox['SunlitPAR'] /= 4.6
+
+        dfvox['Area'] = dfvox['ShadedArea'] + dfvox['SunlitArea']
+        dfvox['PAR'] = (dfvox['ShadedPAR'] * dfvox['ShadedArea']
+                        + dfvox['SunlitPAR'] * dfvox['SunlitArea']) / dfvox['Area']
+
+        dfvox = dfvox.reset_index(drop=True)  # for backward compatibility reasons
+        # TODO avoid and perform concat instead of merge
+        dfvox = pandas.merge(dfvox, self.voxel_map.loc[:, ('VoxelId', 'x', 'y', 'z', 'Volume')])
         index = range(len(voxel_id))
         dfmap = pandas.DataFrame(
-            {'primitive_index': index, 'shape_id': shape_id,
+            {'primitive_index': index,
+             'shape_id': shape_id,
              'VoxelId': voxel_id,
              'VegetationType': [self.entity[sh_id] for sh_id in shape_id],
-             'primitive_area': areas})
+             'primitive_area': areas}
+        )
 
         return dfvox, dfmap
 

@@ -10,7 +10,7 @@ import grid
 from alinea.pyratp import pyratp
 
 columns = ('VegetationType',
-           'ntime',
+           'Iteration',
            'day',
            'hour',
            'AirTemperature',
@@ -32,7 +32,7 @@ columns = ('VegetationType',
            'ShadedAbsorbedNIR',
            'SunlitAbsorbedNIR')
 
-columns_tree = ('ntime',
+columns_tree = ('Iteration',
                 'day',
                 'hour',
                 'VegetationType',
@@ -40,6 +40,16 @@ columns_tree = ('ntime',
                 'AirTemperature',
                 'TreePhotosynthesis',
                 'TreeTranspiration')
+
+columns_irr = ('VegetationType',
+               'Iteration',
+               'day',
+               'hour',
+               'VoxelId',
+               'ShadedPAR',
+               'SunlitPAR',
+               'ShadedArea',
+               'SunlitArea')
 
 
 class runRATP(object):
@@ -50,8 +60,12 @@ class runRATP(object):
     def DoAll(*args):
         ratp = pyratp.ratp
         pyratp.dir_interception.scattering = False
-        ratp.out_time_spatial = np.zeros((pyratp.micrometeo.nbli * pyratp.grid3d.nveg * pyratp.grid3d.nent, 22))
-        ratp.out_time_tree = np.zeros((pyratp.micrometeo.nbli * pyratp.grid3d.nent, 8))
+        ratp.out_time_spatial = np.zeros(
+            (pyratp.micrometeo.nbli * pyratp.grid3d.nveg * pyratp.grid3d.nent, len(columns))
+        )
+        ratp.out_time_tree = np.zeros(
+            (pyratp.micrometeo.nbli * pyratp.grid3d.nent, len(columns_tree))
+        )
         if platform.system() == 'Windows':
             path = 'c:/tmpRATP'
             if os.path.exists(os.path.normpath(path)):
@@ -62,7 +76,7 @@ class runRATP(object):
         os.mkdir(path + "/Resul")
         grid.gridToVGX(pyratp.grid3d, path + "/Resul/", "VoxelsGrid.vgx")  # Save grid in VGX format
         print "... grid written"
-        ##print np.where(pyratp.vegetation_types.ismine==1)
+        # print np.where(pyratp.vegetation_types.ismine==1)
         try:
             numeroMin = (np.where(pyratp.vegetation_types.ismine == 1))[0][0] + 1
             blMin = np.where(pyratp.grid3d.nume == numeroMin)
@@ -168,26 +182,28 @@ class runRATP(object):
         df = pd.DataFrame(ratp.out_time_spatial, columns=columns)
 
         df['vtyp'] = [int(t) for t in df['VegetationType']]
-        df['ntime'] = [int(t) for t in df['ntime']]
+        df['iteration'] = [int(t) for t in df['Iteration']]
         df['day'] = [int(t) for t in df['day']]
         df['vid'] = [int(t) - 1 for t in df['VoxelId']]
 
-        df_spatial = df.set_index(['vtyp', 'ntime', 'vid'])
+        df_spatial = df.set_index(['vtyp', 'iteration', 'vid'])
 
         df = pd.DataFrame(ratp.out_time_tree, columns=columns_tree)
 
         df['vtyp'] = [int(t) for t in df['VegetationType']]
-        df['ntime'] = [int(t) for t in df['ntime']]
+        df['iteration'] = [int(t) for t in df['Iteration']]
         df['day'] = [int(t) for t in df['day']]
 
-        df_tree = df.set_index(['vtyp', 'ntime'])
+        df_tree = df.set_index(['vtyp', 'iteration'])
 
         return df_spatial, df_tree
 
     @staticmethod
     def DoIrradiation(*args):
         ratp = pyratp.ratp
-        ratp.out_rayt = np.zeros((pyratp.micrometeo.nbli * pyratp.grid3d.nveg * pyratp.grid3d.nent, 9))
+        ratp.out_rayt = np.zeros(
+            (pyratp.micrometeo.nbli * pyratp.grid3d.nveg * pyratp.grid3d.nent, len(columns_irr))
+        )
         pyratp.ratp.do_interception()
 
         # if platform.system() == 'Windows':
@@ -202,4 +218,14 @@ class runRATP(object):
         #     np.savetxt(fspatial,ratp.out_rayt,'%.6e')
         #     fspatial.close()
 
-        return ratp.out_rayt
+        # convert matrice to dataframe
+        df = pd.DataFrame(ratp.out_rayt, columns=columns_irr)
+
+        df['vtyp'] = [int(t) for t in df['VegetationType']]
+        df['iteration'] = [int(t) for t in df['Iteration']]
+        df['day'] = [int(t) for t in df['day']]
+        df['vid'] = [int(t) - 1 for t in df['VoxelId']]
+
+        df_rayt = df.set_index(['vtyp', 'iteration', 'vid'])
+
+        return df_rayt
