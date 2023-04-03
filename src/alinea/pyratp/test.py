@@ -20,7 +20,7 @@ def main():
     exec('print grid.'+i)
 
     exec('grid.'+i+'=gridmat["'+i+'"]')
-    print grid.dx
-    print 'OK'
+    print(grid.dx)
+    print('OK')
 if __name__ == '__main__':
     main()

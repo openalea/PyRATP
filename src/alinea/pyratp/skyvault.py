@@ -44,7 +44,7 @@ class Skyvault(object):
         skyvault.azmoy=np.transpose(tabGene)[1]*math.pi / 180
         skyvault.omega=np.transpose(tabGene)[2]
         skyvault.pc=np.transpose(tabGene)[3]
-        print 'SKYVAULT OK'
+        print("SKYVAULT OK")
         f.close()
         return skyvault
 

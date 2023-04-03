@@ -44,7 +44,7 @@ class Vegetation(object):
         pass
 
     @staticmethod
-    def initialise(entities=[{}], nblomin=1):
+    def initialise(entities=[{}], nblomin=1, pervoxel=False, distribvox=[]):
         """  Setup a vegetation object from arguments
         
             Parameters : 
@@ -73,6 +73,7 @@ class Vegetation(object):
                 - 'epm' : mine damage : product of leaf thickness * mine damage perimeter
 
             - nblomin : number of wavelength band given in MicroMeteo
+            - pervoxel : if angle distrib is per voxel or global (ajout mwoussen 06/04/22)
             
             Details: 
                 - gs = gsmax(Na) * fgsPAR * fgsCA * fgsLT *fgsVPD
@@ -98,13 +99,25 @@ class Vegetation(object):
         default = Vegetation.default
         
         nent = len(entities)
-        nbincli = [len(entity.get('distinc', default['distinc'])) for entity in entities]
         
         vegetation = pyratp.vegetation_types
-        
+        vegetation.pervoxel = pervoxel
+        if not pervoxel : 
+            nbincli = [len(entity.get('distinc', default['distinc'])) for entity in entities]
+            vegetation.nbincli = np.zeros(nent)
+            vegetation.nbincli[:] = nbincli
+            vegetation.distinc = np.zeros((nent, max(nbincli)))
+            vegetation.distinc[:,:] = [entity.get('distinc', default['distinc']) for entity in entities]
+        else : 
+            vegetation.nbinclivox = [len(distribvox[0][0])]
+            vegetation.distincvox =  np.zeros((len(distribvox),nent, len(distribvox[0][0])))
+            for k in range(len(distribvox)):
+                for n in range(nent):
+                    if len(distribvox[k]) > n :
+                        for i in range(len(distribvox[0][0])):
+                            vegetation.distincvox[k][n][i] = distribvox[k][n][i]
+
         vegetation.mu = np.zeros(nent)
-        vegetation.nbincli = np.zeros(nent)
-        vegetation.distinc =  np.zeros((nent, max(nbincli)))
         vegetation.nblo = np.zeros(nent)
         vegetation.rf =  np.zeros((nent, nblomin))
         vegetation.aga = np.zeros((nent,2))
@@ -123,8 +136,6 @@ class Vegetation(object):
         vegetation.epm = np.zeros(nent)
         
         vegetation.mu[:] = [entity.get('mu', default['mu']) for entity in entities]
-        vegetation.nbincli[:] = nbincli
-        vegetation.distinc[:,:] = [entity.get('distinc', default['distinc']) for entity in entities]
         vegetation.nblo[:] = [nblomin] * nent
         vegetation.nblomin = nblomin
         vegetation.rf[:,:] =  [entity.get('rf', default['rf'] * nblomin)[0:nblomin] for entity in entities]
@@ -243,14 +254,14 @@ class Vegetation(object):
             jent +=1
             fVeg.close()
 
-        print 'VEGETATION OK'
+        print('VEGETATION OK')
         return vegetation
 
 def _read(f, *args):
     l = f.readline()
     l= l.split('!')[0] # remove comments
     l = l.split('\t')
-    l = filter(None,l)
+    l = list(filter(None,l))
     assert len(args) <= len(l)
     args = list(args)
 

@@ -109,5 +109,5 @@ def equilateral(area=1):
 def unit_square_mesh():
     """A 2 triangle mesh representing ground unit area"""
     vertices = ((0, 0, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0))
-    faces = ((0, 1, 3), (1, 2, 3))
+    faces = ((0, 1, 2), (1, 2, 3))
     return vertices, faces

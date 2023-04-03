@@ -46,7 +46,7 @@ contains
 
 ! Parameters of the Farquhar's model : default values, ie for walnut tree (Le Roux et al. 1999)
 !
-! RUBISCO PARAMETERS AT 25°C
+! RUBISCO PARAMETERS AT 25Â°C
 !
   kc25=27.9   !  kc25: Michaelis constant of Rubisco for carboxylation (Pa)
   ko25=41959   !  ko25: Michaelis constant of Rubisco for oxigenation (Pa)
@@ -87,9 +87,9 @@ contains
   use grid3D
   use vegetation_types
 
-  real :: VCmax25  ! maximum carboxylation rate at 25°C
-  real :: Jmax25  ! maximum electron transfert rate at 25°C
-  real :: Rd25   ! dark respiration rate at 25°C
+  real :: VCmax25  ! maximum carboxylation rate at 25Â°C
+  real :: Jmax25  ! maximum electron transfert rate at 25Â°C
+  real :: Rd25   ! dark respiration rate at 25Â°C
 
 !  Computation of scaling factors: kc, ko, specificity
 
@@ -165,11 +165,11 @@ contains
    do je=1,nje(k)
     jent=nume(je,k)
     do joe=0,1
-     rco2Pa=rco2(joe,je,k)*101325. ! Conversion into µmol CO2-1 m2 s Pa
+     rco2Pa=rco2(joe,je,k)*101325. ! Conversion into Âµmol CO2-1 m2 s Pa
      A=0.
      call Farquhar_model_1(A,crespd(je,k),cvcmax(je,k),cjmax(je,k),rco2Pa,ts(joe,je,k)+273.15,PARirrad(joe,je,k),caref)
 
-     A = A * S_detailed(joe,je,k)  ! Net A rate in µmol CO2 s-1
+     A = A * S_detailed(joe,je,k)  ! Net A rate in Âµmol CO2 s-1
      A_detailed(joe,je,k) = A
      A_vt_vx(je,k) = A_vt_vx(je,k) + A
      A_vx(k) = A_vx(k) + A
@@ -219,22 +219,22 @@ contains
   zkc=exp(ckc - (dhakc/r/leaf_tempK)) ! Rubisco Michaelis constant for carboxylation Kc (Pa)
   zko=exp(cko - (dhako/r/leaf_tempK)) ! Rubisco Michaelis constant for oxigenation Ko (Pa)
   specif=exp(cspecif - (dhaspecif/r/leaf_tempK)) ! Rubisco specificity
-  respd=exp(crespd0-(dharespd/r/leaf_tempK)) ! Dark respiration rate (µmol CO2 m-2 s-1)
-  vcmax=exp(cvcmax0-(dhavcmax/r/leaf_tempK))/(1+exp(dsvcmax/r- (dhdvcmax/r/leaf_tempK))) ! Maximum carboxylation rate VCmax (µmol CO2 m-2 s-1)
-  zjmax=exp(cjmax0-(dhajmax/r/leaf_tempK))/(1+exp(dsjmax/r- (dhdjmax/r/leaf_tempK)))  ! Maximum electron transfert rate Jmax (µmol e m-2 s-1)
+  respd=exp(crespd0-(dharespd/r/leaf_tempK)) ! Dark respiration rate (Âµmol CO2 m-2 s-1)
+  vcmax=exp(cvcmax0-(dhavcmax/r/leaf_tempK))/(1+exp(dsvcmax/r- (dhdvcmax/r/leaf_tempK))) ! Maximum carboxylation rate VCmax (Âµmol CO2 m-2 s-1)
+  zjmax=exp(cjmax0-(dhajmax/r/leaf_tempK))/(1+exp(dsjmax/r- (dhdjmax/r/leaf_tempK)))  ! Maximum electron transfert rate Jmax (Âµmol e m-2 s-1)
 
-!  Actual electron flux J (µmol e m-2 s-1)
+!  Actual electron flux J (Âµmol e m-2 s-1)
   aa=alpha*leaf_PAR
   zj=aa/sqrt(1+(aa/zjmax)**2)
 
-!  Assimilation rate limited by electron flux,  WJ (µmol CO2 m-2 s-1)
+!  Assimilation rate limited by electron flux,  WJ (Âµmol CO2 m-2 s-1)
   aa=rco2Pa
   bb=(4.*respd-zj)*rco2Pa/4. - caref - O2/specif
   ccc=zj*(caref/4.-O2/specif/8.)-respd*(caref+O2/specif)
   dd=bb*bb-4.*aa*ccc
   wj=(-bb-sqrt(dd))/(2*aa)
 
-!  Assimilation rate limited by Rubisco,  Wc (µmol CO2 m-2 s-1)
+!  Assimilation rate limited by Rubisco,  Wc (Âµmol CO2 m-2 s-1)
   aa=rco2Pa
   bb=(respd-vcmax)*rco2Pa - caref - zkc*(1+O2/zko)
   ccc=vcmax*(caref-0.5*O2/specif)-respd*(caref+zkc*(1+O2/zko))

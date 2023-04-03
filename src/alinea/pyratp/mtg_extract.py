@@ -16,9 +16,9 @@ def extract_leaves(g, factor=100, nitrogen=2, grid_definition=None):
     """
     x, y, z=g.property('XX'), g.property('ZZ'), g.property('YY')
 
-    x = dict((k, v*factor) for k, v in x.iteritems())
-    y = dict((k, v*factor) for k, v in y.iteritems())
-    z = dict((k, v*factor) for k, v in z.iteritems())
+    x = dict((k, v*factor) for k, v in x.items())
+    y = dict((k, v*factor) for k, v in y.items())
+    z = dict((k, v*factor) for k, v in z.items())
 
     max_scale = g.max_scale()
     leaf_area = g.property('leaf_area')
@@ -50,7 +50,7 @@ def test(fn = "mtg_test.txt"):
     factor = 100
 
     l, lt, x, y, z, la, ln = extract_leaves(g)
-    print len(l)
+    print(len(l))
 
 
 

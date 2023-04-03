@@ -21,7 +21,7 @@ contains
 !   - compute larva body temperature (at each time step)
 !   - compute developmental rate (at each time step)
 !   - sum up developmental rate
-!   - compute larva mortality (T° > 42° for only one time step)
+!   - compute larva mortality (TÂ° > 42Â° for only one time step)
 
   use constant_values
   use grid3D
@@ -42,8 +42,8 @@ contains
   !C(1)=0.047   ! lower development (day-1)  values from Baumgarnter & Severini (1987)
   !C(2)=0.066   ! rate of increase
   !C(3)=0.047   ! temperature range
-  T(1)=5.2    ! Lower threshold (°)
-  T(2)=42.0   ! Upper threshold (°)
+  T(1)=5.2    ! Lower threshold (Â°)
+  T(2)=42.0   ! Upper threshold (Â°)
   rho25 = 0.15266600
   DHA = 4526.55271161
   TL = 284.30498226
@@ -54,10 +54,10 @@ contains
 
   sum_taref=sum_taref+(taref-t(1))  ! Sum of air temperature: Lower threshold for developmental rate is included
 
-  do k=1,nveg   ! Boucle sur les voxels occupés par une feuille minée
+  do k=1,nveg   ! Boucle sur les voxels occupÃ©s par une feuille minÃ©e
     do je=1,nje(k)
      jent=nume(je,k)
-     if (ismine(jent).eq.1) then  ! Le voxel contient des feuilles minées
+     if (ismine(jent).eq.1) then  ! Le voxel contient des feuilles minÃ©es
       if ((larvadeath(k).eq.0).and.(larvaout(k).eq.0)) then ! larva in voxel k is still alive and not yet out
 
 
@@ -73,7 +73,7 @@ contains
 
 
 
-!  Computing developmental rate (dev_rate, h-1): Boucle sur les voxels occupés par une feuille minée: Eqn 4 SP et al. 2007
+!  Computing developmental rate (dev_rate, h-1): Boucle sur les voxels occupÃ©s par une feuille minÃ©e: Eqn 4 SP et al. 2007
 
        if ((tbody(k).ge.t(2)).and.(larvadeath(k).eq.0)) then    ! body temperature is too high, larva dies
         larvadeath(k)=ntime

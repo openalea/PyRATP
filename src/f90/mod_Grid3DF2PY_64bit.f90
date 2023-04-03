@@ -11,7 +11,7 @@ real  :: dx, dy       ! voxel size according to X- and Y- axis
 real, allocatable :: dz(:)    ! voxel size according to  Z- axis
 real  :: xorig, yorig, zorig   ! 3D grid origin
 real  :: latitude, longitude, timezone
-real  :: orientation     ! angle (°) between axis X+ and North
+real  :: orientation     ! angle (Â°) between axis X+ and North
 integer :: idecaly                  ! offset between canopy units along Y-axis
 
 ! Soil surface
@@ -26,10 +26,10 @@ integer(8) :: nveg       ! number of vegetated voxels
 integer :: nent       ! number of vegetation types in the 3D grid
 integer :: nemax       ! maximum number of vegetation types in a voxel (nemax < nent)
 
-real, allocatable :: S_vt_vx(:,:) ! Leaf area (m²) per voxel and vegetation type
-real, allocatable :: S_vx(:)       ! Leaf area (m²) per voxel
-real, allocatable :: S_vt(:)    ! Leaf area (m²) per vegetation type
-real ::      S_canopy        ! Leaf area (m²) of canopy (ex-variable sft)
+real, allocatable :: S_vt_vx(:,:) ! Leaf area (mÂ²) per voxel and vegetation type
+real, allocatable :: S_vx(:)       ! Leaf area (mÂ²) per voxel
+real, allocatable :: S_vt(:)    ! Leaf area (mÂ²) per vegetation type
+real ::      S_canopy        ! Leaf area (mÂ²) of canopy (ex-variable sft)
 
 real, allocatable :: volume_canopy(:)  ! cumulative volume (m3) of vegetated voxels, for each vegetation type, index nent+1 for total canopy volume
 integer, allocatable :: voxel_canopy(:)  ! number of vegetated voxels, for each vegetation type

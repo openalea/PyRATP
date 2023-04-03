@@ -36,7 +36,7 @@ contains
 
 
  !write(*,*)
- write(*,*)  ' R. A. T. P. Mineuse   Version 2.0'
+ !write(*,*)  ' R. A. T. P. Mineuse   Version 2.0'
  !write(*,*)  ' Radiation Absorption, Transpiration and Photosynthesis'
  !write(*,*)
  !write(*,*)  ' Spatial distribution in a 3D grid of voxels'
@@ -49,7 +49,7 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de végétation
+! spec_vegetation='veg'   ! definition des types de vï¿½gï¿½tation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
@@ -66,7 +66,7 @@ contains
   scattering=.FALSE.
  end if
  !write(*,*) "scattering", scattering
- 
+
  if (int_isolated_box.eq.1)  then
   isolated_box=.TRUE.
  else
@@ -133,8 +133,8 @@ contains
    out_time_tree(itertree,4) = jent
    out_time_tree(itertree,5) = glob(1)+glob(2)
    out_time_tree(itertree,6) = taref
-   out_time_tree(itertree,7) = A_canopy    !  Net A rate in µmol CO2 s-1 m-2 
-   out_time_tree(itertree,8) = E_canopy    ! Evaporation rate in mmol H20 s-1 m-2   
+   out_time_tree(itertree,7) = A_canopy    !  Net A rate in ï¿½mol CO2 s-1 m-2
+   out_time_tree(itertree,8) = E_canopy    ! Evaporation rate in mmol H20 s-1 m-2
   end do
 
   !write(10,70) ntime, day, hour, sum_taref, Nlarvaout, Nlarvadead, taref !, sum_dev_rate(1), sum_dev_rate(10), sum_dev_rate(100)
@@ -143,7 +143,7 @@ contains
   do k=1,nveg
    do je=1,nje(k)
      iterspatial = iterspatial +1
-     jent=nume(je,k)  
+     jent=nume(je,k)
      if (ismine(jent).eq.1) then
        !write(*,*) k,je,jent
        out_time_spatial(iterspatial,1) = jent
@@ -153,22 +153,22 @@ contains
        out_time_spatial(iterspatial,5) = taref
        out_time_spatial(iterspatial,6) = k
        out_time_spatial(iterspatial,7) = ts(0,je,k)
-       out_time_spatial(iterspatial,8) = ts(1,je,k) 
-       out_time_spatial(iterspatial,9) = STAR_vt_vx(je,k)   
+       out_time_spatial(iterspatial,8) = ts(1,je,k)
+       out_time_spatial(iterspatial,9) = STAR_vt_vx(je,k)
        out_time_spatial(iterspatial,10) = STARsky_vt_vx(je,k)
        out_time_spatial(iterspatial,11) = A_detailed(0,je,k)
        out_time_spatial(iterspatial,12) = A_detailed(1,je,k)
        out_time_spatial(iterspatial,13) = E(0,je,k)
        out_time_spatial(iterspatial,14) = E(1,je,k)
        out_time_spatial(iterspatial,15) = S_detailed(0,je,k)
-       out_time_spatial(iterspatial,16) = S_detailed(1,je,k) 
+       out_time_spatial(iterspatial,16) = S_detailed(1,je,k)
        out_time_spatial(iterspatial,17) = gs(0,je,k)
-       out_time_spatial(iterspatial,18) = gs(1,je,k)      
+       out_time_spatial(iterspatial,18) = gs(1,je,k)
        out_time_spatial(iterspatial,19) = RA_detailed(1,0,je,k)       !PAR Absorbe ombre
        out_time_spatial(iterspatial,20) = RA_detailed(1,1,je,k)       !PAR Absorbe lumiere
        out_time_spatial(iterspatial,21) = RA_detailed(2,0,je,k)       !NIR Absorbe ombre
-       out_time_spatial(iterspatial,22) = RA_detailed(2,1,je,k)      !NIR Absorbe lumiere       
-       !write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref 
+       out_time_spatial(iterspatial,22) = RA_detailed(2,1,je,k)      !NIR Absorbe lumiere
+       !write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref
      end if
    end do
   end do
@@ -234,7 +234,7 @@ contains
 
  !pause
  !z = sin(x+y)
- write(*,*) 'CALCULS TERMINES 1'
+ !write(*,*) 'CALCULS TERMINES 1'
  end subroutine do_all_mine
 
 
@@ -242,7 +242,7 @@ contains
 subroutine do_all
 
  !write(*,*)
- write(*,*)  ' R. A. T. P.    Version 2.0'
+ !write(*,*)  ' R. A. T. P.    Version 2.0'
  !write(*,*)  ' Radiation Absorption, Transpiration and Photosynthesis'
  !write(*,*)
  !write(*,*)  ' Spatial distribution in a 3D grid of voxels'
@@ -254,69 +254,84 @@ subroutine do_all
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de végétation
+! spec_vegetation='veg'   ! definition des types de vï¿½gï¿½tation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+ !write(*,*)  '                out_time_destroy ...  '
+ call out_time_destroy 
+  
+ allocate(out_time_tree(nbli*nemax,9)) 
+ allocate(out_time_spatial(nbli*nveg*nemax,22))  
+ !allocate(out_time_spatial(nbli*nveg*nemax,9))
+ 
  call cv_set
 
  dpx=dx/5.
  dpy=dy/5.
 
+ !Default values
+ isolated_box=.TRUE.
+ scattering=.TRUE.
  if (int_scattering.eq.1)  then
   scattering=.TRUE.
  else
   scattering=.FALSE.
  end if
  !write(*,*) "scattering", scattering
- 
+
  if (int_isolated_box.eq.1)  then
   isolated_box=.TRUE.
  else
   isolated_box=.FALSE.
  end if
  !write(*,*) "isolated", isolated_box
+ !isolated_box=.TRUE.
+ !scattering=.TRUE.
 
  call Farquhar_parameters_set
 
  call hi_doall(dpx,dpy,isolated_box)  ! Compute interception of diffuse and scattering radiation, ie exchange coefficients
-          
+
  !pathResult = 'c:/tmpRATP/Resul/'
- pathResult = '/tmp/tmpRATP/Resul/'
- fname=pathResult//'output_PARclasses.dat'
+ !pathResult = '/tmp/tmpRATP/Resul/'
+ !fname=pathResult//'output_PARclasses.dat'
  !open (2,file=fname)
  !write(2,*) 'ntime day hour vt PARg %SF50 %SF100'
 
- fname=pathResult//'output_tsclasses.dat'
+ !fname=pathResult//'output_tsclasses.dat'
  !open (3,file=fname)
  !write(3,*) 'ntime day hour vt Tair %SF11 %SF12'
 
 ! Leaf temperature at the voxel scale
- fname = pathResult//'output_leafTemp.dat'
+ !fname = pathResult//'output_leafTemp.dat'
  !open (12,file=fname)
  !write(12,*) 'ntime day hour voxel Tsh Tsl Tair'
 
-
  ntime=0
- endmeteo=.FALSE.
+ !endmeteo=.FALSE.
+ endmeteo=.TRUE.
+ 
  call mm_initiate
-    
+
  itertree = 0
  iterspatial = 0
+ 
  do while (.NOT.((endmeteo)))
   ntime=ntime+1
-  write(*,*) '...Iteration : ',ntime,nbli
+  !write(*,*) '...Iteration : ',ntime,nbli
   call mm_read(ntime,nbli)  ! Read micrometeo data (line #ntime in file mmeteo.<spec>)
-  write(*,*) '...mm_read : '
+  !write(*,*) '...mm_read : '
   call swrb_doall     ! Compute short wave radiation balance
-  write(*,*) '...swrb_doall : '
+  !write(*,*) '...swrb_doall : '
 
-  call eb_doall  
-  write(*,*) '...eb_doall : '
-  call ps_doall         
-  write(*,*) '...ps_doall : '
+  call eb_doall2
+  !write(*,*) '...eb_doall : '
+  call ps_doall
+  !write(*,*) '...ps_doall : '
+  
   do jent=1,nent
    itertree = itertree +1
    out_time_tree(itertree,1) = ntime
@@ -325,51 +340,58 @@ subroutine do_all
    out_time_tree(itertree,4) = jent
    out_time_tree(itertree,5) = glob(1)+glob(2)
    out_time_tree(itertree,6) = taref
-   out_time_tree(itertree,7) = A_vt(jent)    !  Net A rate in µmol CO2 s-1 m-2  of entity jent
+   out_time_tree(itertree,7) = A_vt(jent)    !  Net A rate in ï¿½mol CO2 s-1 m-2  of entity jent
    out_time_tree(itertree,8) = E_vt(jent)    ! Evaporation rate in mmol H20 s-1 m-2    of entity jent
-   out_time_tree(itertree,9) = S_vt(jent)    ! Leaf Surface Area of entity jent 
+   out_time_tree(itertree,9) = S_vt(jent)    ! Leaf Surface Area of entity jent
+ !  out_time_tree(itertree,10) = hdeg               ! MARC pour test elevation soleil A ENLEVER 
   end do
+  !write(*,*) '...writing out_time_tree done '  
 
-
-  !if (hour.eq.12) then
+  !if (hour.eq.12) then 
   do k=1,nveg
    do je=1,nje(k)
      iterspatial = iterspatial +1
      jent=nume(je,k)
-       !write(*,*) k,je,jent
-       out_time_spatial(iterspatial,1) = jent
-       out_time_spatial(iterspatial,2) = ntime
-       out_time_spatial(iterspatial,3) = day
-       out_time_spatial(iterspatial,4) = hour
-       out_time_spatial(iterspatial,5) = taref
-       out_time_spatial(iterspatial,6) = k
-       out_time_spatial(iterspatial,7) = ts(0,je,k)
-       out_time_spatial(iterspatial,8) = ts(1,je,k) 
-       out_time_spatial(iterspatial,9) = STAR_vt_vx(je,k)   
-       out_time_spatial(iterspatial,10) = STARsky_vt_vx(je,k)
-       out_time_spatial(iterspatial,11) = A_detailed(0,je,k)
-       out_time_spatial(iterspatial,12) = A_detailed(1,je,k)
-       out_time_spatial(iterspatial,13) = E(0,je,k)
-       out_time_spatial(iterspatial,14) = E(1,je,k)
-       out_time_spatial(iterspatial,15) = S_detailed(0,je,k)
-       out_time_spatial(iterspatial,16) = S_detailed(1,je,k) 
-       out_time_spatial(iterspatial,17) = gs(0,je,k)
-       out_time_spatial(iterspatial,18) = gs(1,je,k)      
-       out_time_spatial(iterspatial,19) = RA_detailed(1,0,je,k)       !PAR Absorbe ombre
-       out_time_spatial(iterspatial,20) = RA_detailed(1,1,je,k)       !PAR Absorbe lumiere
-       out_time_spatial(iterspatial,21) = RA_detailed(2,0,je,k)       !NIR Absorbe ombre
-       out_time_spatial(iterspatial,22) = RA_detailed(2,1,je,k)      !NIR Absorbe lumiere       
-       !write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref
+    !!! !write(*,*) k,je,jent
+     out_time_spatial(iterspatial,1) = jent 
+     out_time_spatial(iterspatial,2) = ntime
+     out_time_spatial(iterspatial,3) = day
+     out_time_spatial(iterspatial,4) = hour
+     out_time_spatial(iterspatial,5) = taref
+     out_time_spatial(iterspatial,6) = k
+     out_time_spatial(iterspatial,7) = ts(0,je,k)
+     out_time_spatial(iterspatial,8) = ts(1,je,k)
+     out_time_spatial(iterspatial,9) = STAR_vt_vx(je,k)
+     out_time_spatial(iterspatial,10) = STARsky_vt_vx(je,k)
+     out_time_spatial(iterspatial,11) = A_detailed(0,je,k)
+     out_time_spatial(iterspatial,12) = A_detailed(1,je,k)
+     out_time_spatial(iterspatial,13) = E(0,je,k)
+     out_time_spatial(iterspatial,14) = E(1,je,k)
+     out_time_spatial(iterspatial,15) = S_detailed(0,je,k)
+     out_time_spatial(iterspatial,16) = S_detailed(1,je,k)
+     out_time_spatial(iterspatial,17) = gs(0,je,k)
+     out_time_spatial(iterspatial,18) = gs(1,je,k)
+     out_time_spatial(iterspatial,19) = RA_detailed(1,0,je,k)       !PAR Absorbe ombre
+     out_time_spatial(iterspatial,20) = RA_detailed(1,1,je,k)       !PAR Absorbe lumiere
+     out_time_spatial(iterspatial,21) = RA_detailed(2,0,je,k)       !NIR Absorbe ombre
+     out_time_spatial(iterspatial,22) = RA_detailed(2,1,je,k)      !NIR Absorbe lumiere
+     !write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref
    end do
-  end do
-  !end if
+  end do   
+  !write(*,*) '...writing out_time_spatial done '  
+  !end if 
+  !write(*,*) '...writing outputs done '
+! A enlever pour version finale: ntime, taref, A_detailed(0, A_detailed(1, RA_detailed(1,0, RA_detailed(1,1,RA_detailed(2,0, RA_detailed(2,1 
+
 
   if (ntime.eq.nbli) then
     endmeteo=.TRUE.
-  end if
+  end if 
+  !write(*,*) '...endmeteo ok '
 
  end do
-
+                
+ !write(*,*) '...nbiter ok '
  nbiter =nbiter + ntime
 
 
@@ -399,23 +421,37 @@ subroutine do_all
  !call vt_destroy
  !call mm_destroy
  call di_destroy
+ 
+ !write(*,*) '...di_destroy ok '
  call hi_destroy
- call swrb_destroy
- call eb_destroy
- call ps_destroy
+ !write(*,*) '...hi_destroy ok '
+ call swrb_destroy          
+ !write(*,*) '...swrb_destroy ok '
+ call eb_destroy       
+ !write(*,*) '...eb_destroy ok '
+ call ps_destroy      
+ !write(*,*) '...ps_destroy ok '
 
- write(*,*) 'CALCULS TERMINES 2'
+ !write(*,*) 'CALCULS TERMINES 2'
  end subroutine do_all
+
+
+ subroutine out_time_destroy
+  !write(*,*) 'destroy out_time_destroy'
+  if (allocated(out_time_tree))  deallocate(out_time_tree)   
+  if (allocated(out_time_spatial))  deallocate(out_time_spatial)
+  
+ end subroutine out_time_destroy
 
  subroutine do_interception
 
  !write(*,*)
-  write(*,*)  ' R. A. T. P.    Version 2.0'
+ !write(*,*)  ' R. A. T. P.    Version 2.0'
  !write(*,*)  ' Radiation Absorption, Transpiration and Photosynthesis'
  !write(*,*)
  !write(*,*)  ' Spatial distribution in a 3D grid of voxels'
  !write(*,*)
- write(*,*)  '                July 2003 - December 2012  '
+ !write(*,*)  '                July 2003 - December 2012  '
  !write(*,*)
 
  !write(*,*)
@@ -423,18 +459,24 @@ subroutine do_all
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de végétation
+! spec_vegetation='veg'   ! definition des types de vï¿½gï¿½tation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ! call qui permet de tester l existance des tableaux dynamiques et de les vider s'ils existent
+ !write(*,*)  '                out_rayt_destroy ...  '
  call out_rayt_destroy
+ !write(*,*)  '             ...   out_rayt_destroy '
+ !write(*,*)  '                cv_set ...  '
  call cv_set
+ !write(*,*)  '             ...   cv_set '
 
  dpx=dx/5.
  dpy=dy/5.
+!  dpx=dx
+!  dpy=dy
 
  if (int_scattering.eq.1)  then
   scattering=.TRUE.
@@ -442,30 +484,31 @@ subroutine do_all
   scattering=.FALSE.
  end if
  !write(*,*) "scattering", scattering
- 
+
  if (int_isolated_box.eq.1)  then
   isolated_box=.TRUE.
  else
   isolated_box=.FALSE.
  end if
  !write(*,*) "isolated", isolated_box
- call hi_doall(dpx,dpy,isolated_box)  ! Compute interception of diffuse and scattering radiation, ie exchange coefficients
+ !write(*,*)  '                hi_doall ...  '
+ call hi_doall(dpx,dpy,isolated_box)  ! Compute interception of diffuse and scattering radiation, ie exchange
+ !write(*,*)  '             ...   hi_doall   '
  ntime=0
  endmeteo=.FALSE.
  call mm_initiate
 
- allocate(out_rayt(nbli*nveg*nemax,9))
+ allocate(out_rayt(nbli*nveg*nemax,11))
  iterspatial = 0
  do while (.NOT.((endmeteo)))
   ntime=ntime+1
-  write(*,*) '...Iteration : ',ntime,nbli
+  !write(*,*) '...Iteration : ',ntime,nbli
   call mm_read(ntime,nbli)  ! Read micrometeo data (line #ntime in file mmeteo.<spec>)
   !write(*,*) '...mm_read : '
   call swrb_doall     ! Compute short wave radiation balance
 
-  do k=1,nveg
-
-   do je=1,nje(k)
+  do k=1, nveg
+    do je=1,nje(k)
      iterspatial = iterspatial +1
      jent=nume(je,k)
 
@@ -479,10 +522,12 @@ subroutine do_all
        out_rayt(iterspatial,6) = PARirrad(0,je,k)
        out_rayt(iterspatial,7) = PARirrad(1,je,k)
        out_rayt(iterspatial,8) = S_detailed(0,je,k)
-       out_rayt(iterspatial,9) = S_detailed(1,je,k) 
+       out_rayt(iterspatial,9) = S_detailed(1,je,k)
  !      out_rayt(iterspatial,10) = N_detailed(je,k)
-
-       !write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref
+      !  out_rayt(iterspatial,10) = xintav(je,k)/S_vt_vx(je,k) ! ajout mwoussen 
+       out_rayt(iterspatial,10) = xintav(je,k) ! ajout mwoussen 
+       out_rayt(iterspatial,11) = rdtv(je,k) ! ajout mwoussen 
+      !  write(12,90) ntime, day, hour, k, ts(0,1,k), ts(1,1,k), taref
    end do
   end do
   !end if
@@ -502,8 +547,7 @@ subroutine do_all
  call di_destroy
  call hi_destroy
  call swrb_destroy
-
- write(*,*) 'CALCULS TERMINES INTERCEPTION'
+ !write(*,*) 'CALCULS TERMINES INTERCEPTION'
  end subroutine do_interception
 
  subroutine out_rayt_destroy

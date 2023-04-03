@@ -1,0 +1,17 @@
+0.89! Parameter of foliage dispersion within voxels (1: random, <1: clumped; >1: regular)
+9! Number of leaf inclination angle classes
+0.043	0.100	0.170	0.174	0.158	0.139	0.083	0.067	0.067! Calculé d'après digit pommiers suisses 2004
+2! Number of wavelength bands
+0.08	0.49!	PAR	NIR	scattering coefficients
+0.01	0.0071!	Parameters of boundary layer conductance : ga = A1 wind_speed + A2
+0.	6.32e-3! Parameters of Jarvis model: effect of leaf nitrogen content : gsmax = A1 Na + A2
+2	4	1.79467	131.83	1.	1322.98! Parameters of Jarvis model: effect of leaf PAR irradiance : fgsPAR = f(PAR, µmol m-2 s-1) 
+1	3	2.32e-4	-4.02e-2	2.07! Parameters of Jarvis model: effect of air CO2 pressure : fgsPAR = f(CA, Pa) 
+5	4	0.97498	1.	25.01445	11.150015!Parameters of Jarvis model: effect of leaf temperature : fgsPAR = f(LT, °C) 
+-0.266e-3	1.3764	1500.! Parameters of Jarvis model: effect of leaf surface VPD : gsmax = A1 VPD (Pa) + A2, A3=treshold
+20.0	6.! Parameters of Farquhar's model: Vcmax25°C (µmol CO2 m-2 s-1) = A1 Na (g m-2) + A2
+52.0	15.! Parameters of Farquhar's model: Jmax25°C (µmol e m-2 s-1) = A1 Na (g m-2) + A2
+0.25	0.05! Parameters of Farquhar's model: Rd25°C (µmol CO2 m-2 s-1) = A1 Na (g m-2) + A2, Rd > 0
+0
+1
+
