@@ -1,14 +1,14 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 setup(
-    name="PyRATP",
+    name="alinea.pyratp",
     version="1.0.0",
     description="The Alinea.PyRATP package is a typical package example to help developper to create their own package, compatible with OpenAlea standards.",
 
     # package installation
-    packages= find_packages('src'),
+    packages= find_namespace_packages(where='src', include=['alinea.*', 'alinea']),
     package_dir={'': 'src'},
-    namespace_packages=['alinea'],
+    
     zip_safe= False,
     include_package_data = True,
     package_data = {'' : ['*.pyd', '*.so'],},
