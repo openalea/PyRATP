@@ -62,4 +62,5 @@ nosetests.xml
 # svn
 .svn
 
-
+# Mac
+.DS_Store
