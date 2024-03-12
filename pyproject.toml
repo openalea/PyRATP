@@ -1,0 +1,21 @@
+[build-system]
+build-backend = 'mesonpy'
+requires = [
+    "meson-python>=0.8.0",
+    "oldest-supported-numpy; python_version>'3.9'",
+    "numpy; python_version<='3.9'",
+    "charset-normalizer"
+]
+
+[project]
+name = "alinea.pyratp"
+license = {file = "LICENSE.txt"}
+description = "A Python wrapper for RATP (Radiation, Absorption, Transpiration, Photosynthesis)."
+requires-python = ">=3.7"
+dependencies = [
+    # TODO: update to "pin-compatible" once possible, see
+    # https://github.com/FFY00/meson-python/issues/29
+    "numpy>=1.19.5",
+]
+readme = "README.md"
+version = '0.12.0'
