@@ -4,18 +4,13 @@ package:
 
 source:
     path: ..
-build:
-    number: 0
-    script: python setup.py install
+
 requirements:
     build:
         - python
-        - setuptools
-        - openalea.sconsx
         - numpy
-        - mingwpy  # [win and py2k]
-        - gcc  # [osx]
-        - libgfortran  # [linux]
+        - meson
+        - compilers
     run:
         - python
         - path.py
