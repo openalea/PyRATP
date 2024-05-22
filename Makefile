@@ -55,7 +55,7 @@ src/alinea/pyratp/pyratp$(EXTTARGET): pyratp.*$(EXTTARGET)
 # library compilation
 pyratp.*$(EXTTARGET): pyratp.pyf
 	$(MKDIRBUILD)
-	f2py -c --build-dir $(BUILDFOLDER) $(OPTCOMPILE) --fcompiler=gnu95 pyratp.pyf $(FORTRANFILES)
+	f2py -c --build-dir $(BUILDFOLDER) $(OPTCOMPILE) --fcompiler=gnu95 -DNPY_OS_MINGW pyratp.pyf $(FORTRANFILES)
 
 # creation of the header
 pyratp.pyf: 

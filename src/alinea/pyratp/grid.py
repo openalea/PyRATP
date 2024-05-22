@@ -193,7 +193,7 @@ class Grid(object):
         l = f.readline().split('!')[0].strip().split(' ')
         assert len(l) == int(l[0])+1
         grid3d.nblosoil = l[0]
-        grid3d.rs = np.array(l[1:], dtype=np.float)
+        grid3d.rs = np.array(l[1:], dtype=float)
 
         f.close()
 
@@ -418,7 +418,7 @@ class Grid(object):
 
             dx, dy , dz = grid.dx, grid.dy, grid.dz
             k = 0
-            for i in range(np.alen(x)):
+            for i in range(len(x)):
                 jx, jy, jz = Jx[i], Jy[i], Jz[i]
 
                 #Cas ou il n'y avait encore rien dans la cellule (jx,jy,jz) (en fortran id>0)
