@@ -1,3 +1,5 @@
+{% set native = 'm2w64-' if win else '' %}
+
 package:
   name: alinea.pyratp
   version: 2.0.1
@@ -9,8 +11,10 @@ requirements:
     build:
         - python
         - numpy
-        - meson
+        - meson # Maybe deprecated for current version
         - compilers
+        - m2w64-toolchain   # [win]
+        - charset-normalizer
     run:
         - python
         - path.py
