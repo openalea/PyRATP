@@ -12,6 +12,7 @@ requirements:
         - python
         - numpy
         - meson # Maybe deprecated for current version
+        - make
         - compilers
         - m2w64-toolchain   # [win]
         - charset-normalizer
