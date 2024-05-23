@@ -4,5 +4,5 @@ cd build
 
 :: Build
 cd ..
-make  mode=develop
+make
 if errorlevel 1 exit 1
