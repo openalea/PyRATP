@@ -45,15 +45,15 @@ FORTRANFILES := src/f90/mod_Cocnstant_ValuesF2PY.f90  \
 
 
 # package installation in the current Python interpreter
-install : src/alinea/pyratp/pyratp$(EXTTARGET)
+install : src/alinea/pyratp/pyratp.pyd
 	pip install $(INSTALLOPT) .
 
 # copie within the python sources and simplify library's name
-src/alinea/pyratp/pyratp$(EXTTARGET): pyratp.*$(EXTTARGET)
+src/alinea/pyratp/pyratp.pyd: pyratp.pyd
 	$(MOVECMD) pyratp.*$(EXTTARGET) src/alinea/pyratp/pyratp$(EXTTARGET)
 
 # library compilation
-pyratp.*$(EXTTARGET): pyratp.pyf
+pyratp.pyd: pyratp.pyf
 	$(MKDIRBUILD)
 	f2py -c --build-dir $(BUILDFOLDER) $(OPTCOMPILE) --fcompiler=gnu95 -DNPY_OS_MINGW pyratp.pyf $(FORTRANFILES)
 
