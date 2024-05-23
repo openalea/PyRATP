@@ -1,76 +1,67 @@
-name: Building Package using Conda
+name: build_publish_anaconda
 
 on:
   push:
-    branches: 
-      - '**'
-    tags:
-      - 'v*'
+    branches: [ master ]
   pull_request:
-    branches: 
-      - '**'
-  workflow_call:
-    inputs:
-      python-minor-version:
-        description: 'Python minor version on which to build / deploy the package. Default is "[8, 9, 10, 11, 12]" '
-        default: "[8, 9, 10, 11, 12]"
-        required: false
-        type: string
-      numpy-version:
-        description: 'Numpy minor version. Default is None.'
-        default: 0
-        required: false
-        type: number
-      conda-channels:
-        description: 'Conda channels used during the building phase of the package. Default is the value of the GitHub variable `ANACONDA_CHANNELS`. If not set, job `openalea/action-build-publish-anaconda` will set it as `conda-forge` '
-        default: ${{ vars.ANACONDA_CHANNELS}}
-        required: false
-        type: string
-    secrets:
-      anaconda_token:
-        description: 'Anaconda access Token (required)'
-        required: true
-
+    branches: [ master ]
+    
 jobs:
   build-and-publish:
     name: ${{ matrix.os }}, Python 3.${{ matrix.python-minor-version }} for conda deployment
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
-        os: [ ubuntu-latest , macos-latest , windows-latest ]
-        python-minor-version: 10
+        os: [ ubuntu-latest, windows-latest, macos-latest]
+        python-minor-version: [10]
         isMaster:
-          - ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') }}
+          - ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev') }}
         exclude:
           - isMaster: false
+            os: ubuntu-latest
+            python-minor-version: 7
+          - isMaster: false
+            os: ubuntu-latest
             python-minor-version: 8
           - isMaster: false
+            os: macos-latest
+            python-minor-version: 7
+          - isMaster: false
+            os: macos-latest
+            python-minor-version: 8
+          - isMaster: false
+            os: macos-latest
             python-minor-version: 9
           - isMaster: false
-            python-minor-version: 11
+            os: windows-latest
+            python-minor-version: 7
           - isMaster: false
-            python-minor-version: 12
+            os: windows-latest
+            python-minor-version: 8
+          - isMaster: false
+            os: windows-latest
+            python-minor-version: 9            
 
     steps:
-    - name: Checkout
+    - name: Chekout
       uses: actions/checkout@v3
-    - name: Determine publication
+    - name: Determine publish
       uses: haya14busa/action-cond@v1
       id: publish
       with:
-        cond: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        cond: ${{ contains(github.ref, 'master') || startsWith(github.ref, 'refs/heads/v') }}
         if_true: 'true'
         if_false: 'false'
     - name: Build and Publish
-      uses: openalea/action-build-publish-anaconda@main
+      uses: openalea/action-build-publish-anaconda@v0.1.4
       with:
         conda: conda
         mamba: true
         python: ${{ matrix.python-minor-version }}
-        numpy: ${{ inputs.numpy-version }}
-        channels: ${{ inputs.conda-channels }}
-        token: ${{ secrets.anaconda_token }}
+        numpy: '20.0'
+        channels: openalea3, conda-forge
+        token: ${{ secrets.ANACONDA_TOKEN }}
         publish: ${{ steps.publish.outputs.value }}
         label: main
-        #buildoptions: '--no-test'
