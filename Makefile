@@ -59,7 +59,7 @@ pyratp.pyd: pyratp.pyf
 
 # creation of the header
 pyratp.pyf: 
-	f2py -m pyratp --overwrite-signature -h $@ $(FORTRANFILES)
+	f2py -m pyratp --overwrite-signature -h --lower $@ $(FORTRANFILES)
 
 clean:
 	$(RMFILE) pyratp.pyf
