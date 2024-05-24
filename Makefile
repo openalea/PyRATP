@@ -55,11 +55,11 @@ src/alinea/pyratp/pyratp.pyd: pyratp.pyd
 # library compilation
 pyratp.pyd: pyratp.pyf
 	$(MKDIRBUILD)
-	f2py -c --build-dir $(BUILDFOLDER) $(OPTCOMPILE) pyratp.pyf $(FORTRANFILES)
+	f2py -c  pyratp.pyf $(FORTRANFILES) --build-dir $(BUILDFOLDER) $(OPTCOMPILE)
 
 # creation of the header
 pyratp.pyf: 
-	f2py -m pyratp --overwrite-signature -h --lower $@ $(FORTRANFILES)
+	python -m numpy.f2py -m pyratp -h $@ $(FORTRANFILES) --lower
 
 clean:
 	$(RMFILE) pyratp.pyf
