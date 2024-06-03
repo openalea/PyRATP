@@ -1,18 +1,19 @@
 
 from alinea.pyratp import *
 from alinea.pyratp import grid
-from PyQt4 import QtCore, QtGui
+from qtpy import QtWidgets, QtGui
+#from PyQt4 import QtCore, QtGui
 from openalea.core.interface import * #IGNORE:W0614,W0401
 from openalea.core.observer import lock_notify
 from openalea.visualea.node_widget import NodeWidget
 import numpy as np
 
 
-class UI_ratp_Vege(QtGui.QWidget):
+class UI_ratp_Vege(QtWidgets.QWidget):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
 
-        self.Layout = QtGui.QGridLayout(self)
+        self.Layout = QtWidgets.QGridLayout(self)
 
 class ClassUiRATP_Vege(NodeWidget, UI_ratp_Vege):
 
@@ -38,29 +39,26 @@ class ClassUiRATP_Vege(NodeWidget, UI_ratp_Vege):
         listLabel =[]
 
         for i in range(5):
-            doubleSpinBox = QtGui.QDoubleSpinBox()
-            label = QtGui.QLabel()
+            doubleSpinBox = QtWidgets.QDoubleSpinBox(self)
+            label = QtWidgets.QLabel()
             label.setText('mu '+ str(i+1))
             listLabel.append(label)
             self.listSpinBox.append(doubleSpinBox)
             self.window().Layout.addWidget(label,i,0,)
             self.window().Layout.addWidget(doubleSpinBox,i,1)
-            self.connect( doubleSpinBox, QtCore.SIGNAL("editingFinished()"), self.UpdateVal )
+            doubleSpinBox.editingFinished.connect(self.UpdateVal)
 
 
 
     def notify(self, sender, event):
         """ Notification sent by node """
-        if self.copyVal <> None :
+        if self.copyVal is not None :
             self.val = self.copyVal
-        elif self.node.get_output(0)== None:
+        elif self.node.get_output(0) is None:
             self.val= pyratp.vegetation_types
             self.val.mu = np.zeros(1)
         else:
             self.val = self.node.get_output(0)
-
-
-
 
         self.listInput = list(self.val.mu)
 
