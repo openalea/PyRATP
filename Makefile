@@ -8,14 +8,14 @@ BUILDFOLDER := building
 
 ifeq ($(detected_OS), Windows)
 EXTTARGET := .pyd
-OPTCOMPILE := --compiler=mingw32
+OPTCOMPILE := --compiler=mingw32 --fcompiler=gnu95 -DNPY_OS_MINGW 
 MOVECMD := move /Y
 MKDIRBUILD := if not exist $(BUILDFOLDER) mkdir $(BUILDFOLDER)
 RMFILE := del
 RMFOLDER := rmdir /s /q
 else
 EXTTARGET := .so
-OPTCOMPILE := 
+OPTCOMPILE := --fcompiler=gnu95
 MOVECMD := mv
 MKDIRBUILD := mkdir -p $(BUILDFOLDER)
 RMFILE := rm
@@ -55,11 +55,11 @@ src/alinea/pyratp/pyratp.pyd: pyratp.pyd
 # library compilation
 pyratp.pyd: pyratp.pyf
 	$(MKDIRBUILD)
-	f2py -c --build-dir $(BUILDFOLDER) $(OPTCOMPILE) --fcompiler=gnu95 -DNPY_OS_MINGW pyratp.pyf $(FORTRANFILES)
+	f2py -c  pyratp.pyf $(FORTRANFILES) --build-dir $(BUILDFOLDER) $(OPTCOMPILE)
 
 # creation of the header
 pyratp.pyf: 
-	f2py -m pyratp --overwrite-signature -h $@ $(FORTRANFILES)
+	python -m numpy.f2py -m pyratp -h $@ $(FORTRANFILES) --lower
 
 clean:
 	$(RMFILE) pyratp.pyf
