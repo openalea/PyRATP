@@ -8,8 +8,11 @@ source:
     path: ..
 
 requirements:
+    host:
+        - python x.x
+        - setuptools
     build:
-        - python
+        - python {{PY_VER}}
         - numpy
         - meson # Maybe deprecated for current version
         - make
@@ -17,7 +20,7 @@ requirements:
         - m2w64-toolchain   # [win]
         - charset-normalizer
     run:
-        - python
+        - python x.x
         - path.py
         - libgfortran  # [linux or osx]
         - numpy
