@@ -22,7 +22,7 @@ echo:"current directory: " %cd%
 echo:
 
 echo:"creation of the header
-%PYTHON% -m numpy.f2py -m pyratp -h %fortranfiles% --lower
+%PYTHON% -m numpy.f2py -m pyratp -h pyratp.pyf %fortranfiles% --lower
 if errorlevel 1 echo Unsuccessful
 echo:
 
