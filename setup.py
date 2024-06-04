@@ -6,7 +6,7 @@ setup(
     description="The Alinea.PyRATP package is a typical package example to help developper to create their own package, compatible with OpenAlea standards.",
 
     # package installation
-    packages= find_namespace_packages(where='src', include=['alinea.*', 'alinea']),
+    packages= find_namespace_packages(where='src', include=['alinea.*']),
     package_dir={'': 'src'},
     
     zip_safe= False,
