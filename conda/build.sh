@@ -28,10 +28,12 @@ ${PYTHON}  -m numpy.f2py -c --fcompiler=gnu95 --build-dir $BUILD_PREFIX  pyratp.
 
 
 echo "MOVE pyratp.so"
+echo "The current directory is: $(ls pyratp*so)"
 
 mv pyratp.*so ../alinea/pyratp/.
 
 cd ${SRC_DIR}
+echo "The current directory is: $(pwd)"
 
 echo "pip install"
 ${PYTHON} setup.py install
