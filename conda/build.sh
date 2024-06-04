@@ -23,7 +23,7 @@ ${PYTHON}  -m numpy.f2py -c --fcompiler=gnu95 --build-dir $BUILD_PREFIX  pyratp.
                 mod_MicrometeoF2PY.f90  \
                 mod_Shortwave_BalanceF2PY.f90\
                 mod_Energy_BalanceF2PY.f90 \
-                mod_PhotosynthesisF2PY.f90 mod_MinerPhenoF2PY.f90 prog_RATP.f90 --backend meson
+                mod_PhotosynthesisF2PY.f90 mod_MinerPhenoF2PY.f90 prog_RATP.f90
 
 
 
