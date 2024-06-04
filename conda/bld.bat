@@ -31,12 +31,12 @@ echo:"library compilation into build-folder"
 if errorlevel 1 echo Unsuccessful
 echo:
 
-echo:"moving pyratp*.pyd to %SRC_DIR%/alinea/pyratp/pyratp.pyd"
-move /Y pyratp*.pyd %SRC_DIR%/alinea/pyratp/pyratp.pyd
+echo:"moving pyratp*.pyd to %SRC_DIR%/src/alinea/pyratp/pyratp.pyd"
+move /Y pyratp*.pyd %SRC_DIR%\src\alinea\pyratp\pyratp.pyd
 if errorlevel 1 echo Unsuccessful
 echo:
 
 echo:"setup.py install"
-%PYTHON% setup.py install --prefix=%PREFIX%
+python -m pip install --no-deps --ignore-installed -vv .
 if errorlevel 1 echo Unsuccessful
 echo:
