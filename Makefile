@@ -15,7 +15,7 @@ RMFILE := del
 RMFOLDER := rmdir /s /q
 else
 EXTTARGET := .so
-OPTCOMPILE := --fcompiler=gnu95 --backend meson
+OPTCOMPILE := --fcompiler=gnu95 --backend=meson
 MOVECMD := mv
 MKDIRBUILD := mkdir -p $(BUILDFOLDER)
 RMFILE := rm
@@ -54,8 +54,7 @@ src/alinea/pyratp/pyratp.pyd: pyratp.pyd
 
 # library compilation
 pyratp.pyd: pyratp.pyf
-	$(MKDIRBUILD)
-	f2py -c  pyratp.pyf $(FORTRANFILES) --build-dir $(BUILDFOLDER) $(OPTCOMPILE)
+	f2py -c  pyratp.pyf $(FORTRANFILES) $(OPTCOMPILE)
 
 # creation of the header
 pyratp.pyf: 
@@ -63,4 +62,4 @@ pyratp.pyf:
 
 clean:
 	$(RMFILE) pyratp.pyf
-	$(RMFOLDER) $(BUILDFOLDER)
+
