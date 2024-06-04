@@ -15,7 +15,7 @@ RMFILE := del
 RMFOLDER := rmdir /s /q
 else
 EXTTARGET := .so
-OPTCOMPILE := --fcompiler=gnu95
+OPTCOMPILE := --fcompiler=gnu95 --backend meson
 MOVECMD := mv
 MKDIRBUILD := mkdir -p $(BUILDFOLDER)
 RMFILE := rm
