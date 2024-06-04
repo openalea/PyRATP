@@ -34,4 +34,4 @@ mv pyratp.*so ../alinea/pyratp/.
 cd ${SRC_DIR}
 
 echo "pip install"
-pip install .
+${PYTHON} setup.py install
