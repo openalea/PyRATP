@@ -14,7 +14,7 @@ ${PYTHON}  -m numpy.f2py -m pyratp -h pyratp.pyf mod_Cocnstant_ValuesF2PY.f90 \
  mod_MinerPhenoF2PY.f90 \
  prog_RATP.f90 --lower
 
-${PYTHON}  -m numpy.f2py -c --build-dir $BUILD_PREFIX  pyratp.pyf mod_Cocnstant_ValuesF2PY.f90 \
+${PYTHON}  -m numpy.f2py -c --fcompiler=gnu95 --build-dir $BUILD_PREFIX  pyratp.pyf mod_Cocnstant_ValuesF2PY.f90 \
                 mod_Grid3DF2PY_64bit.f90 \
                 mod_SkyvaultF2PY.f90 \
                 mod_Vegetation_TypesF2PY.f90 \
