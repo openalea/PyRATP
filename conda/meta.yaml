@@ -10,7 +10,7 @@ source:
 requirements:
     host:
         - python x.x
-        - setuptools < 60.0
+        - setuptools <60.0
         - numpy x.x
     build:
         - python {{PY_VER}}
