@@ -54,7 +54,7 @@ src/alinea/pyratp/pyratp.pyd: pyratp.pyd
 
 # library compilation
 pyratp.pyd: pyratp.pyf
-	MKDIRBUILD
+	$(MKDIRBUILD)
 	f2py -c  pyratp.pyf $(FORTRANFILES) --build-dir $(BUILDFOLDER) $(OPTCOMPILE)
 
 # creation of the header
@@ -63,4 +63,5 @@ pyratp.pyf:
 
 clean:
 	$(RMFILE) pyratp.pyf
+	$(RMFOLDER) $(BUILDFOLDER)
 
