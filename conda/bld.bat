@@ -37,6 +37,6 @@ if errorlevel 1 echo Unsuccessful
 echo:
 
 echo:"setup.py install"
-%PYTHON% setup.py install --prefix=%PREFIXM%
+%PYTHON% setup.py install --prefix=%PREFIX%
 if errorlevel 1 echo Unsuccessful
 echo:
