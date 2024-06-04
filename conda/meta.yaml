@@ -16,7 +16,7 @@ requirements:
         - numpy
         - meson # Maybe deprecated for current version
         - make
-        - compilers
+        - {{compiler('fortran')}}
         - m2w64-toolchain   # [win]
         - charset-normalizer
     run:
