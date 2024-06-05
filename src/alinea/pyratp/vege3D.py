@@ -7,7 +7,7 @@
 # Verifi? avec lecture de fichier vgx le 28/01/2011 MS certified
 ##from alinea.pyratp import pyratp
 
-from PyQt5 import QtCore, QtGui
+from qtpy import QtCore
 import random
 #import pyRATP
 import numpy as np
