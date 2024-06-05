@@ -27,7 +27,7 @@ if errorlevel 1 echo Unsuccessful
 echo:
 
 echo:"library compilation into build-folder"
-%PYTHON% -m numpy.f2py -c pyratp.pyf %fortranfiles%  --fcompiler=gnu95 --backend meson
+%PYTHON% -m numpy.f2py -c --compiler=mingw32 --fcompiler=gnu95 -DNPY_OS_MINGW=1 pyratp.pyf %fortranfiles%  
 if errorlevel 1 echo Unsuccessful
 echo:
 
