@@ -22,12 +22,12 @@ echo:"current directory: " %cd%
 echo:
 
 echo:"creation of the header
-%PYTHON% -m numpy.f2py -m pyratp -h %fortranfiles% --lower
+%PYTHON% -m numpy.f2py -m pyratp -h pyratp.pyf %fortranfiles% --lower
 if errorlevel 1 echo Unsuccessful
 echo:
 
 echo:"library compilation into build-folder"
-%PYTHON% -m numpy.f2py -c pyratp.pyf %fortranfiles%  --fcompiler=gnu95 --backend meson
+%PYTHON% -m numpy.f2py -c --compiler=mingw32 --fcompiler=gnu95 -DNPY_OS_MINGW=1 pyratp.pyf %fortranfiles%  
 if errorlevel 1 echo Unsuccessful
 echo:
 
@@ -36,7 +36,8 @@ move /Y pyratp*.pyd %SRC_DIR%\src\alinea\pyratp\pyratp.pyd
 if errorlevel 1 echo Unsuccessful
 echo:
 
-echo:"setup.py install"
-python -m pip install --no-deps --ignore-installed -vv .
+echo:"pip install"
+REM python -m pip install  .
+%PYTHON% setup.py install
 if errorlevel 1 echo Unsuccessful
 echo:
