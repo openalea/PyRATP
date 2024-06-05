@@ -5,9 +5,9 @@ module vegetation_types
 character*6 spec_vegetation  ! for vegetation types
 
 
-! Remarque : Le nombre de composantes est donn� par la d�finition de la grille
-!     NENT est donc un param�tre de grid3D, pas de vegetation_types
-!     mais vegetation_types construit les tableaux de param�tres d'un ensemble de NENT composantes de v�g�tation
+! Remarque : Le nombre de composantes est donne par la definition de la grille
+!     NENT est donc un parametre de grid3D, pas de vegetation_types
+!     mais vegetation_types construit les tableaux de parametres d'un ensemble de NENT composantes de vegetation
 
 !  Parameter of foliage dispersion within voxels (1: random, <1: clumped; >1: regular)
 real, allocatable :: mu(:)
@@ -30,18 +30,18 @@ real, allocatable :: Aga(:,:)
 
 ! Jarvis'model parameters for stomatal conductance gs
 real, allocatable :: AgsN(:,:)  ! effect of leaf nitrogen: gs (s m-1) = A1*Na (g m-2) + A2
-integer, allocatable :: i_gsPAR(:) ! effect of leaf PAR irradiance: gs (s m-1) = f(PAR, �mol m-2 s-1)
+integer, allocatable :: i_gsPAR(:) ! effect of leaf PAR irradiance: gs (s m-1) = f(PAR, umol m-2 s-1)
 real, allocatable  :: AgsPAR(:,:)
 integer, allocatable :: i_gsCA(:) ! effect of air CO2 partial pressure: gs (s m-1) = f(CA, Pa)
 real, allocatable  :: AgsCA(:,:)
 integer, allocatable :: i_gsLT(:) ! effect of leaf temperature: gs (s m-1) = f(LT, Pa)
 real, allocatable  :: AgsLT(:,:)
-real, allocatable :: AgsVPD(:,:)  ! effect of leaf VPD: gs (s m-1) = A1*VPD (Pa) + A2, A3: VPDthreshold (Pa) (below A3, gs = A1*VPDthreshold (Pa) + A2
+real, allocatable :: AgsVPD(:,:)  ! effect of leaf VPD: gs (s m-1) = A1*VPD (Pa) + A2, A3: VPDthreshold (Pa) -below A3, gs = A1*VPDthreshold (Pa) + A2
 
 ! Farquhar's model parameters:
-real, allocatable :: AVcmaxN(:,:) ! effect of leaf nitrogen on Vcmax at 25�C: Vcmax25� (�mol CO2 m-2 s-1) = A1*Na (g m-2) + A2
-real, allocatable :: AJmaxN(:,:)  ! effect of leaf nitrogen on Jmax at 25�C: Jmax25� (�mol e m-2 s-1) = A1*Na (g m-2) + A2
-real, allocatable :: ARdN(:,:)  ! effect of leaf nitrogen on dark respiration at 25�C: Rd25� (�mol CO2 m-2 s-1) = A1*Na (g m-2) + A2
+real, allocatable :: AVcmaxN(:,:) ! effect of leaf nitrogen on Vcmax at 25C: Vcmax25 (umol CO2 m-2 s-1) = A1*Na (g m-2) + A2
+real, allocatable :: AJmaxN(:,:)  ! effect of leaf nitrogen on Jmax at 25C: Jmax25 (umol e m-2 s-1) = A1*Na (g m-2) + A2
+real, allocatable :: ARdN(:,:)  ! effect of leaf nitrogen on dark respiration at 25C: Rd25 (umol CO2 m-2 s-1) = A1*Na (g m-2) + A2
 
 ! Mine parameters
 integer, allocatable :: Ismine(:) ! =1 if vegetation type is mine, =0 if not
@@ -156,38 +156,38 @@ contains
 !   effect of leaf nitrogen: gs (s m-1) = A1*Na (g m-2) + A2
    read(1,*) AgsN(jent,1), AgsN(jent,2)
 
-!   effect of leaf PAR irradiance: gs (s m-1) = f(PAR, �mol m-2 s-1)
-!   i_gsPAR=1: 2nd order polynomial : gs = A1*PAR�+A2*PAR+A3
+!   effect of leaf PAR irradiance: gs (s m-1) = f(PAR, umol m-2 s-1)
+!   i_gsPAR=1: 2nd order polynomial : gs = A1*PAR2+A2*PAR+A3
    read(1,*) i_gsPAR(jent), nbparam, (AgsPAR(jent,i),i=1,nbparam)
 
 !   effect of air CO2 partial pressure: gs (s m-1) = f(CA, Pa)
-!   i_gsCA=1: 2nd order polynomial : gs = A1*CA�+A2*CA+A3
+!   i_gsCA=1: 2nd order polynomial : gs = A1*CA2+A2*CA+A3
    read(1,*) i_gsCA(jent), nbparam, (AgsCA(jent,i),i=1,nbparam)
 
 !   effect of leaf temperature: gs (s m-1) = f(LT, Pa)
-!   i_gsLT=1: 2nd order polynomial : gs = A1*LT�+A2*LT+A3
+!   i_gsLT=1: 2nd order polynomial : gs = A1*LT2+A2*LT+A3
    read(1,*) i_gsLT(jent), nbparam, (AgsLT(jent,i),i=1,nbparam)
 
-!   effect of leaf VPD: gs (s m-1) = A1*VPD (Pa) + A2, A3: VPDthreshold (Pa) (below A3, gs = A1*VPDthreshold (Pa) + A2
+!   effect of leaf VPD: gs (s m-1) = A1*VPD (Pa) + A2, A3: VPDthreshold (Pa) below A3, gs = A1*VPDthreshold (Pa) + A2
    read(1,*) AgsVPD(jent,1), AgsVPD(jent,2), AgsVPD(jent,3)
 
 
 !  5- Farquhar's model parameters:
 
-!   effect of leaf nitrogen on Vcmax at 25�C: Vcmax25� (�mol CO2 m-2 s-1) = A1*Na (g m-2) + A2
+!   effect of leaf nitrogen on Vcmax at 25 C: Vcmax25 (umol CO2 m-2 s-1) = A1*Na (g m-2) + A2
    read(1,*) AVcmaxN(jent,1), AVcmaxN(jent,2)
 
-!   effect of leaf nitrogen on Jmax at 25�C: Jmax25� (�mol e m-2 s-1) = A1*Na (g m-2) + A2
+!   effect of leaf nitrogen on Jmax at 25C: Jmax25 (umol e m-2 s-1) = A1*Na (g m-2) + A2
    read(1,*) AJmaxN(jent,1), AJmaxN(jent,2)
 
-!   effect of leaf nitrogen on dark respiration at 25�C: Rd25� (�mol CO2 m-2 s-1) = A1*Na (g m-2) + A2
+!   effect of leaf nitrogen on dark respiration at 25C: Rd25 (umol CO2 m-2 s-1) = A1*Na (g m-2) + A2
    read(1,*) ARdN(jent,1), ARdN(jent,2)
 
 !  6- Mine parameters
 
    read(1,*,end=22) IsMine(jent) ! 1 if vegetation type #jent is a mine, 0 if not
-   read(1,*) epm(jent)  ! product of leaf thickness * mine perimeter (in m�)
-22   if (Ismine(jent).ne.1) then
+   read(1,*) epm(jent)  ! product of leaf thickness * mine perimeter (in m2)
+22  if (Ismine(jent).ne.1) then
     Ismine(jent)=0
     epm(jent)=1.
    endif

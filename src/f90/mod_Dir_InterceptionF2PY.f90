@@ -84,7 +84,7 @@ contains
 !  write(*,*) '        coefficients (for each voxel)'
 
 ! Calcul des coefficients d'extinction et du champ de rayonnement
-! rediffuse pour chaque composante de v�g�tation : xka(jent)
+! rediffuse pour chaque composante de vgtation : xka(jent)
 !                                                 rka(jent)
 ! (hypothese de distribution uniforme des azimuths)
 ! (hypothese de comportement lambertien des feuilles)
@@ -110,11 +110,11 @@ contains
         xka(jent)=xka(jent) + G_function/sin(hmoy0) * distinc(jent,jinc)
         rka(jent)=rka(jent) + G_function*omega0/(2.*pi) * distinc(jent,jinc)
 
-! rem: rka est une variable qui peut �tre utilis�e � l'�chelle des voxels
-!   puisque qu'elle int�gre la convolution avec la distribution d'inclinaison
-!   La variable rk (incluse dans les versions pr�c�dentes de RIRI et RATP) n'est donc plus utile
+! rem: rka est une variable qui peut tre utilise  l'chelle des voxels
+!   puisque qu'elle intgre la convolution avec la distribution d'inclinaison
+!   La variable rk (incluse dans les versions prcdentes de RIRI et RATP) n'est donc plus utile
 !
-! rem: ATTENTION � v�rifier que sumrka devrait �tre 1 ou 0.5 !!!
+! rem: ATTENTION  vrifier que sumrka devrait tre 1 ou 0.5 !!!
     end do
 !    sumrka=sumrka+rka(jent,jdir)
 !   write(*,*) 'Direction-integrated scattered radiation by vegetation type #',jent,': ',sumrka,' . SHOULD BE ONE'
@@ -237,8 +237,8 @@ endif
   oax = cos(hmoy0)*cos(azmoy0)
   oaz = sin(hmoy0)
 !     Rem: Le choix des cosinus directeurs implique que:
-!             X > 0 : Axe dirig� vers le Nord (ou Direction des rangs)
-!             Y > 0 : Axe dirig� vers l'Est
+!             X > 0 : Axe dirig vers le Nord (ou Direction des rangs)
+!             Y > 0 : Axe dirig vers l'Est
 !     Rem1: Ne pas oublier qu'un rayon venant du Sud-Ouest
 !                                avance vers le Nord-Est
 !     Rem2: Les definitions de oax et oay sont inversees par rapport
@@ -282,8 +282,8 @@ endif
 
 !
 !  Sunlit and shaded area of each vegetation type in each voxel:
-!  S_detailed(0,je,k) : shaded leaf area (m�) of vegetation type je in voxel k
-!  S_detailed(1,je,k) : sunlit leaf area (m�) of vegetation type je in voxel k
+!  S_detailed(0,je,k) : shaded leaf area (m) of vegetation type je in voxel k
+!  S_detailed(1,je,k) : sunlit leaf area (m) of vegetation type je in voxel k
 !  NOTE:  Due to random leaf dispersion within voxel,
 !     the fraction of sunlit area is the same for all vegetation types included in the voxel
                          
@@ -342,7 +342,7 @@ endif
 
 
 ! Calcul des:
-!  Fractions de rayonnement incident intercept�es
+!  Fractions de rayonnement incident interceptes
 !  Facteurs de forme entre diffuseurs et recepteurs: ff<recepteur><source>
 
 ! Step 1: Beam - voxels intersection
