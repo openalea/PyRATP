@@ -27,6 +27,11 @@ requirements:
         - numpy
         - scipy
         - pandas
+        - meson # Maybe deprecated for current version
+        - compilers
+        - m2w64-toolchain   # [win]
+        - charset-normalizer
+
         #- openalea.mtg
         #- openalea.visualea
 test:
