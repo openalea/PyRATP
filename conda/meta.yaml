@@ -24,7 +24,6 @@ requirements:
         - python x.x
         - path.py
         - {{ native }}toolchain   # [win]
-        - libgfortran 
         - numpy
         - scipy
         - pandas
