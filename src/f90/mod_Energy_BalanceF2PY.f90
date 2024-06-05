@@ -268,7 +268,7 @@ contains
 
     dh=rho*cp/rh
 
-!    4-  Heat exchange between the mine and healthy tissue : Cf. Thèse S. Pincebourde
+!    4-  Heat exchange between the mine and healthy tissue : Cf. Thse S. Pincebourde
 
     hem= float(ismine(jent))*(rho*cp)*(ts(joe,je,k)-ts(joe,1,k))*&
      &(0.05*(22.4/1000.)*(abs(ts(joe,je,k)-ts(joe,1,k))/epm(jent))**0.25)*0.13
@@ -306,7 +306,7 @@ contains
     rsico2=1.6*rsi     ! Lower side stomatal resistance for CO2 transfert
 !    Total resistance to CO2 transfert, i.e. leaf boundary layer + stomatal and 2 sides
     rco2(joe,je,k)=(rssco2+raco2(k))*(rsico2+raco2(k))/(rssco2+rsico2+2.*raco2(k))
-!    Conversion to µmol CO2-1 m2 s   (a 25 °C)
+!    Conversion to mol CO2-1 m2 s   (a 25 C)
     rco2(joe,je,k)=rco2(joe,je,k)/1000./0.0414 / 1.e6
 
 
@@ -662,7 +662,7 @@ contains
     rsico2=1.6*rsi     ! Lower side stomatal resistance for CO2 transfert
 !    Total resistance to CO2 transfert, i.e. leaf boundary layer + stomatal and 2 sides
     rco2(joe,je,k)=(rssco2+raco2(k))*(rsico2+raco2(k))/(rssco2+rsico2+2.*raco2(k))
-!    Conversion to µmol CO2-1 m2 s   (a 25 °C)
+!    Conversion to mol CO2-1 m2 s   (a 25 C)
     rco2(joe,je,k)=rco2(joe,je,k)/1000./0.0414 / 1.e6
 
 !    Computation of the decoupling factor (omega), Jarvis et Mc Naughton (1986)
@@ -1026,7 +1026,7 @@ contains
     rsico2=1.6*rsi     ! Lower side stomatal resistance for CO2 transfert
 !    Total resistance to CO2 transfert, i.e. leaf boundary layer + stomatal and 2 sides
     rco2(joe,je,k)=(rssco2+raco2(k))*(rsico2+raco2(k))/(rssco2+rsico2+2.*raco2(k))
-!    Conversion to µmol CO2-1 m2 s   (a 25 °C)
+!    Conversion to mol CO2-1 m2 s   (a 25 C)
     rco2(joe,je,k)=rco2(joe,je,k)/1000./0.0414/1.e6
 
 !    Computation of the decoupling factor (omega), Jarvis et Mc Naughton (1986)
@@ -1172,7 +1172,7 @@ contains
   real  :: des    ! Derivative of saturating water vapour pressure with regard to leaf temperature
 
 !  Step #1: maximum gs, as a function of leaf nitrogen content Na (g m-2)
-!  AgsN = 2.002 * 1.e-3  !Paramètres pour Noyer
+!  AgsN = 2.002 * 1.e-3  !Paramtres pour Noyer
 !  BgsN = 0.740 * 1.e-3
       gsmax=AgsN(jent,1)*leaf_nitrogen+AgsN(jent,2)
 
@@ -1181,7 +1181,7 @@ contains
 
    case (1)  ! gs=f(PAR) : 2nd order polynomial function
 
-!   AgsPAR = -3.752 * 1.e-7  ! Paramètres Noyer (ajustement données jeune Noyer a CO2 ambiant (Juillet 2000)
+!   AgsPAR = -3.752 * 1.e-7  ! Paramtres Noyer (ajustement donnes jeune Noyer a CO2 ambiant (Juillet 2000)
 !   BgsPAR = 1.105 * 1.e-3
 !   CgsPAR = 0.183
 
@@ -1195,7 +1195,7 @@ contains
 
    fgsPAR=(AgsPAR(jent,1)*par_irrad+AgsPAR(jent,2))/(AgsPAR(jent,3)*par_irrad+AgsPAR(jent,4))
 
-   case (3) ! gs=f(PAR) : function (a PAR² + b PAR + c) / (d PAR² + e PAR + f) : i.e. 6 parameters
+   case (3) ! gs=f(PAR) : function (a PAR + b PAR + c) / (d PAR + e PAR + f) : i.e. 6 parameters
 
    fgsPAR=(AgsPAR(jent,1)*par_irrad**2+AgsPAR(jent,2)*&
    &par_irrad+AgsPAR(jent,3))/(AgsPAR(jent,4)*par_irrad**2+&
@@ -1206,7 +1206,7 @@ contains
    fgsPAR=(AgsPAR(jent,1)*sqrt(par_irrad)+AgsPAR(jent,2))/(AgsPAR(jent,3)*&
    &par_irrad+AgsPAR(jent,4)*sqrt(par_irrad)+AgsPAR(jent,5))
 
-   case (5) ! gs=f(PAR) : function a / (b + [(PAR-c)/d]²) : i.e. 4 parameters
+   case (5) ! gs=f(PAR) : function a / (b + [(PAR-c)/d]) : i.e. 4 parameters
 
    fgsPAR= AgsPAR(jent,1)/(AgsPAR(jent,2)+&
    &((par_irrad-AgsPAR(jent,3))/AgsPAR(jent,4))**2)
@@ -1230,7 +1230,7 @@ contains
 
    case (1) ! gs=f(ca) : 2nd order polynomial function
 
-!   AgsCA = 2.32e-4    ! Paramètres Noyer de Plauzat
+!   AgsCA = 2.32e-4    ! Paramtres Noyer de Plauzat
 !   BgsCA = -4.02e-2
 !   CgsCA = 2.07
 
@@ -1251,13 +1251,13 @@ contains
 
    case (1) ! gs=f(leaf_temp) : 2nd order polynomial function
 
-!   AgsLT = -4.82e-3   ! Paramètres Noyer de Plauzat
+!   AgsLT = -4.82e-3   ! Paramtres Noyer de Plauzat
 !   BgsLT = 0.24165
 !   CgsLT = -2.029
 
    fgsLT=amax1(AgsLT(jent,1)*leaf_temp**2+AgsLT(jent,2)*leaf_temp+AgsLT(jent,3),0.05)
 
-   case (3) ! gs=f(leaf_temp) : function (a LT² + b LT + c) / (d LT² + e LT + f) : i.e. 6 parameters
+   case (3) ! gs=f(leaf_temp) : function (a LT + b LT + c) / (d LT + e LT + f) : i.e. 6 parameters
 
    fgsLT=(AgsLT(jent,1)*leaf_temp**2+AgsLT(jent,2)*leaf_temp+AgsLT(jent,3))/&
    &(AgsLT(jent,4)*leaf_temp**2+AgsLT(jent,5)*leaf_temp+AgsLT(jent,6))
@@ -1267,7 +1267,7 @@ contains
    fgsLT=(AgsLT(jent,1)*sqrt(leaf_temp)+AgsLT(jent,2))/&
    &(AgsLT(jent,3)*leaf_temp+AgsLT(jent,4)*sqrt(leaf_temp)+AgsLT(jent,5))
 
-   case (5) ! gs=f(leaf_temp) : function a / (b + [(LT-c)/d]²) : i.e. 4 parameters
+   case (5) ! gs=f(leaf_temp) : function a / (b + [(LT-c)/d]) : i.e. 4 parameters
 
    fgsLT=AgsLT(jent,1)/(AgsLT(jent,2)+&
    &((leaf_temp-AgsLT(jent,3))/AgsLT(jent,4))**2)
@@ -1287,12 +1287,12 @@ contains
 !      Coupling between VPD and gs must thus be solved.
 !      Gs response to VPD is assumed to be linear: fgsVPD = AgsVPD* VPDleaf + BgsVPD
 !      Improved solving as reported in SAFE booklet (H. Sinoquet, 23 dec 2002)
-!      gs = (1/2) [ square_root{ [ga - gs(VPDleaf=0)]² + 4 ga gs(VPDleaf=VPDair) } - [ga - gs(VPDleaf=0)]  ]
+!      gs = (1/2) [ square_root{ [ga - gs(VPDleaf=0)] + 4 ga gs(VPDleaf=VPDair) } - [ga - gs(VPDleaf=0)]  ]
 !    Two major advantages:
 !  1- Intermediate variables have some biological meaning
 !  2- Analytical derivation of gs with regard to leaf temperature is possible
 
-!  AgsVPD = -1.8e-4  ! Paramètres Noyer de Plauzat
+!  AgsVPD = -1.8e-4  ! Paramtres Noyer de Plauzat
 !  BgsVPD = 1.18
 
 !  Addendum 09 June 2004: Threshold value for VPD, i.e. below threshold value fgsVPD= cte = fgsVPD(VPDthreshold)

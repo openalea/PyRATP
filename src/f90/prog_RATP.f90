@@ -49,7 +49,7 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de v�g�tation
+! spec_vegetation='veg'   ! definition des types de vgtation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
@@ -133,7 +133,7 @@ contains
    out_time_tree(itertree,4) = jent
    out_time_tree(itertree,5) = glob(1)+glob(2)
    out_time_tree(itertree,6) = taref
-   out_time_tree(itertree,7) = A_canopy    !  Net A rate in �mol CO2 s-1 m-2
+   out_time_tree(itertree,7) = A_canopy    !  Net A rate in mol CO2 s-1 m-2
    out_time_tree(itertree,8) = E_canopy    ! Evaporation rate in mmol H20 s-1 m-2
   end do
 
@@ -254,7 +254,7 @@ subroutine do_all
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de v�g�tation
+! spec_vegetation='veg'   ! definition des types de vgtation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
@@ -340,7 +340,7 @@ subroutine do_all
    out_time_tree(itertree,4) = jent
    out_time_tree(itertree,5) = glob(1)+glob(2)
    out_time_tree(itertree,6) = taref
-   out_time_tree(itertree,7) = A_vt(jent)    !  Net A rate in �mol CO2 s-1 m-2  of entity jent
+   out_time_tree(itertree,7) = A_vt(jent)    !  Net A rate in mol CO2 s-1 m-2  of entity jent
    out_time_tree(itertree,8) = E_vt(jent)    ! Evaporation rate in mmol H20 s-1 m-2    of entity jent
    out_time_tree(itertree,9) = S_vt(jent)    ! Leaf Surface Area of entity jent
  !  out_time_tree(itertree,10) = hdeg               ! MARC pour test elevation soleil A ENLEVER 
@@ -459,7 +459,7 @@ subroutine do_all
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! spec_grid='grd'     ! definition de la grille
-! spec_vegetation='veg'   ! definition des types de v�g�tation
+! spec_vegetation='veg'   ! definition des types de vgtation
 
 ! spec_gfill='dgi'     ! definition du fichier de structure (feuillage)
 !spec_mmeteo='mto'     ! definition du fichier mmeteo

@@ -126,7 +126,7 @@ contains
   sunazimuth=sunazimuth*180./pi
 
   ! ajout mwoussen 21/02/2022 pour utiliser sundirection
-  ! indépendamment de DirectBeam_Interception
+  ! indpendamment de DirectBeam_Interception
   hdeg = sunheight
   azdeg = sunazimuth
 
@@ -156,7 +156,7 @@ contains
    scattering=.FALSE.   ! only computation of incident direct radiation
    call di_doall(hdeg, azdeg, 0., dpx, dpy,scattering, isolated_box)  ! rem: sun angles in degrees
   else
-   riv=0.  ! If hdeg < 5�, interception of direct radiation is assumed to be zero
+   riv=0.  ! If hdeg < 5, interception of direct radiation is assumed to be zero
    ris=0.
   endif
 
@@ -300,15 +300,15 @@ contains
    Eclomb= glob(iblo)*xintav(je,k)-ski
    Eclomb= Eclomb*(1.-2.*rf(jent,iblo))
    Eclens= Ski * (1.-2.*rf(jent,iblo))
-   RA_detailed(iblo,0,je,k)= Eclomb/S_vt_vx(je,k)  ! Absorbed radiation W per m� leaf area, in band iblo
+   RA_detailed(iblo,0,je,k)= Eclomb/S_vt_vx(je,k)  ! Absorbed radiation W per m leaf area, in band iblo
    RA_detailed(iblo,1,je,k)= RA_detailed(iblo,0,je,k) + Eclens/S_detailed(1,je,k)
-   SWRA_detailed(0,je,k)=SWRA_detailed(0,je,k) + RA_detailed(iblo,0,je,k)  ! Absorbed radiation W per m� leaf area, summing up all wavebands
+   SWRA_detailed(0,je,k)=SWRA_detailed(0,je,k) + RA_detailed(iblo,0,je,k)  ! Absorbed radiation W per m leaf area, summing up all wavebands
    SWRA_detailed(1,je,k)=SWRA_detailed(1,je,k) + RA_detailed(iblo,1,je,k)
    end do
   end do
 
 
-!  write(*,*) 'PARirrad: PAR leaf irradiance (�mol m-2 s-1)'     
+!  write(*,*) 'PARirrad: PAR leaf irradiance (mol m-2 s-1)'     
 !  - utilise pour calcul de J (flux d'electrons)
 !  - utilise pour conductance stomatique
 
