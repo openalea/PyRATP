@@ -17,7 +17,9 @@ requirements:
         - numpy
         - meson # Maybe deprecated for current version
         - make
-        - compilers
+        - {{ compiler('fortran') }}  # [not win]
+        - {{ compiler('c') }} 
+        #- compilers
         - {{ native }}toolchain   # [win]
         - charset-normalizer
     run:
@@ -28,7 +30,6 @@ requirements:
         - scipy
         - pandas
         - meson # Maybe deprecated for current version
-        - compilers
         - charset-normalizer
 
         #- openalea.mtg
