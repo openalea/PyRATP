@@ -36,7 +36,7 @@ move /Y pyratp*.pyd %SRC_DIR%\src\alinea\pyratp\pyratp.pyd
 if errorlevel 1 echo Unsuccessful
 echo:
 
-echo:"setup.py install"
-python -m pip install --no-deps --ignore-installed -vv .
+echo:"pip install"
+python -m pip install  .
 if errorlevel 1 echo Unsuccessful
 echo:
