@@ -37,6 +37,7 @@ if errorlevel 1 echo Unsuccessful
 echo:
 
 echo:"pip install"
-python -m pip install  .
+REM python -m pip install  .
+%PYTHON% setup.py install
 if errorlevel 1 echo Unsuccessful
 echo:
