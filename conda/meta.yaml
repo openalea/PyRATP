@@ -11,10 +11,12 @@ requirements:
     host:
         - python x.x
         - setuptools
-        - numpy x.x
+        - numpy >=1.25  # [macos]
+        - numpy x.x  # [not macos]
     build:
         - python {{PY_VER}}
-        - numpy
+        - numpy x.x  # [not macos]
+        - numpy >=1.25  # [macos]
         - meson # Maybe deprecated for current version
         - make
         - {{ compiler('fortran') }}  # [not win]
@@ -26,7 +28,7 @@ requirements:
         - python x.x
         - path.py
         - {{ native }}toolchain   # [win]
-        - numpy
+        - {{ pin_compatible('numpy') }}
         - scipy
         - pandas
         - meson # Maybe deprecated for current version
