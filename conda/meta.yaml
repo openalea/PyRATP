@@ -18,18 +18,18 @@ requirements:
         - meson # Maybe deprecated for current version
         - make
         - compilers
-        - m2w64-toolchain   # [win]
+        - {{ native }}toolchain   # [win]
         - charset-normalizer
     run:
         - python x.x
         - path.py
+        - {{ native }}toolchain   # [win]
         - libgfortran 
         - numpy
         - scipy
         - pandas
         - meson # Maybe deprecated for current version
         - compilers
-        - m2w64-toolchain   # [win]
         - charset-normalizer
 
         #- openalea.mtg
