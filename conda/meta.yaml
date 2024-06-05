@@ -23,7 +23,7 @@ requirements:
     run:
         - python x.x
         - path.py
-        - libgfortran  # [linux or osx]
+        - libgfortran 
         - numpy
         - scipy
         - pandas
