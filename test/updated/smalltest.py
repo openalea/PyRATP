@@ -57,7 +57,7 @@ def test_pommier_veg(datafolder):
 
 if __name__ == "__main__":
     # dossier contenant les données
-    datafolder = os.path.join("test", "updated", "data")
+    datafolder = os.path.abspath(os.path.join("data"))
     print(test_pommier_veg(datafolder))
     
     print('--- END ---')
