@@ -18,7 +18,7 @@ real, allocatable :: tabMeteo(:,:)  ! Meteo data
 
 integer :: ntimemax
 logical  :: endmeteo     ! TRUE if end of mmeteo file has been reached
-logical :: truesolartime ! ajout mwoussen 23/03/2022, l'heure en entrée est l'heure solaire ou locale
+logical :: truesolartime ! ajout mwoussen 23/03/2022, l'heure en entre est l'heure solaire ou locale
 
 contains
 
@@ -95,9 +95,9 @@ contains
 
     !write(*,*) 'day,hour =',day,hour ,(glob(iblo),diff(iblo),iblo=1,nblomin), ratmos,tsol,taref,earef,caref,urefref
 
-!   Rem: L'azimut 0 est d�fini pour la direction SUD,
+!   Rem: L'azimut 0 est dfini pour la direction SUD,
 !      i.e. un rayon avancant vers le NORD, donc les X > 0
-!    L'azimut 90 est d�fini pour la direction OUEST,
+!    L'azimut 90 est dfini pour la direction OUEST,
 !    i.e. un rayon avancant vers l'EST, donc les Y > 0
 
    !write(*,*)
