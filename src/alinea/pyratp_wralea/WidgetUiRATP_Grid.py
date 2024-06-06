@@ -1,7 +1,9 @@
 from alinea.pyratp import *
 from alinea.pyratp import grid
 from alinea.pyratp import pyratp
-from PyQt4 import QtCore, QtGui
+#from PyQt4 import QtCore, QtGui
+from qtpy import QtWidgets, QtGui
+
 from openalea.core.interface import * #IGNORE:W0614,W0401
 from openalea.core.observer import lock_notify
 from openalea.visualea.node_widget import NodeWidget
@@ -10,9 +12,9 @@ import numpy as np
 
 class UI_ratp_Grid(QtGui.QWidget):
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+        QtWidgets.QWidget.__init__(self, parent)
 
-        self.Layout = QtGui.QGridLayout(self)
+        self.Layout = QtWidgets.QGridLayout(self)
 
 class ClassUiRATP_Grid(NodeWidget, UI_ratp_Grid):
 
@@ -26,7 +28,7 @@ class ClassUiRATP_Grid(NodeWidget, UI_ratp_Grid):
         self.listSpinBox = []
         self.copyVal = None
         self.adjustUI()
-        self.notify(node, ('input_modified',))
+        self.input_modified.emit(node)
 
 
     def initVal(self):
@@ -67,19 +69,20 @@ class ClassUiRATP_Grid(NodeWidget, UI_ratp_Grid):
             label = QtGui.QLabel()
             label.setText(listLabel[i])
             self.listSpinBox.append(doubleSpinBox)
-            self.connect( doubleSpinBox, QtCore.SIGNAL( "editingFinished ()" ), self.UpdateVal )
+            
+            doubleSpinBox.editingFinished.connect(self.UpdateVal)
 
             self.window().Layout.addWidget(label,i,0,)
 
             self.window().Layout.addWidget(doubleSpinBox,i,1)
 
 
-        self.checkCentre = QtGui.QCheckBox('Centrer la scene')
-        self.checkIB = QtGui.QCheckBox('Isolated Box')
-        self.checkScattering = QtGui.QCheckBox('Scattering')
-        self.connect( self.checkCentre, QtCore.SIGNAL( "clicked()" ), self.UpdateVal )
-        self.connect( self.checkIB, QtCore.SIGNAL( "clicked()" ), self.UpdateVal )
-        self.connect( self.checkScattering, QtCore.SIGNAL( "clicked()" ), self.UpdateVal )
+        self.checkCentre = QtWidgets.QCheckBox('Centrer la scene')
+        self.checkIB = QtWidgets.QCheckBox('Isolated Box')
+        self.checkScattering = QtWidgets.QCheckBox('Scattering')
+        self.checkCentre.clicked.connect(self.UpdateVal )
+        self.checkIB.clicked.connect(self.UpdateVal )
+        self.checkScattering.clicked.connect(self.UpdateVal )
         self.window().Layout.addWidget(self.checkIB,i+1,0)
         self.window().Layout.addWidget(self.checkCentre,i+2,0)
         self.window().Layout.addWidget(self.checkScattering,i+3,0)
@@ -87,9 +90,9 @@ class ClassUiRATP_Grid(NodeWidget, UI_ratp_Grid):
     def notify(self, sender, event):
         """ Notification sent by node """
 
-        if self.copyVal <> None :
+        if self.copyVal is not None :
             self.val = self.copyVal
-        elif self.node.get_output(0)== None:
+        elif self.node.get_output(0) is None:
             self.val=pyratp.grid3d
             self.initVal()
         else:

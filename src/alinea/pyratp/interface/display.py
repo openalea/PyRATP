@@ -3,7 +3,7 @@ from itertools import chain
 from math import isnan
 
 from alinea.pyratp.interface.color_map import ColorMap
-import alinea.pyratp.interface.pgl_scene as pgls
+import pyratpmobidiv.interface.pgl_scene as pgls
 
 
 def jet_colors(x, minval=None, maxval=None):
@@ -43,7 +43,7 @@ def property_as_colors(a_property, minval=None, maxval=None, gamma=None):
     values = map(lambda x: ((x - minval) / float(norm)) ** gamma, values)
     colors = jet_colors(values, 0, 1)
     color_property = {}
-    for k, v in a_property.iteritems():
+    for k, v in a_property.items():
         if isinstance(v, list):
             color_property[k] = []
             for i in range(len(v)):

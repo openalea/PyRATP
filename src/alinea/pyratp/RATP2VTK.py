@@ -180,10 +180,8 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
            Outputs: ... a VTK file
     '''
         # Writes the output file following VTK file format for 3D view with Paraview
-        # Works only with triangles P1 i.e. defined with 3 points
         #
         #... Input:
-            #... Triangles - self attribute
             #... Variable[0] is the value of the variable to be plotted
             #... Variable[1] is the entity corresponding to the variable
             #... Variable[2] is the Voxel id associated to the entity
@@ -201,14 +199,11 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
     f.write('DIMENSIONS '+str(grid.njx+1)+' '+str(grid.njy+1)+' '+str(grid.njz+2)+'\n')
     ## The soil layer is included
 
-    f.write('Z_COORDINATES '+str(grid.njz+2)+' float\n')
-
+    """ f.write('Z_COORDINATES '+str(grid.njz+2)+' float\n')
     for i in range(grid.njz,-1,-1):
        z = -100*grid.dz[i]*(i+1)+100*grid.zorig
        f.write(str(z)+' ')
     f.write(str(100*grid.zorig)+' ')
-
-
     f.write('\n')
 
     f.write('Y_COORDINATES '+str(grid.njy+1)+' float\n')
@@ -217,12 +212,37 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
        f.write(str(y)+' ')
     f.write('\n')
 
-
     f.write('X_COORDINATES '+str(grid.njx+1)+' float\n')
     for i in  range(grid.njx+1):
        x = 100*grid.dx*i-100*grid.xorig
        f.write(str(x)+' ')
+    f.write('\n') """
+
+    f.write('Z_COORDINATES '+str(grid.njz+2)+' float\n')
+    # couche du sol (sous l'origine)
+    
+    # origine du sol
+    
+    for i in range(grid.njz):
+       z = grid.dz[i:grid.njz].sum()-grid.zorig
+       f.write(str(z)+' ')
+
+    f.write(str(-grid.zorig)+' ')
+    f.write(str(-10*grid.dz[0]-grid.zorig)+' ')
     f.write('\n')
+
+    f.write('Y_COORDINATES '+str(grid.njy+1)+' float\n')
+    for i in range(grid.njy, -1, -1):
+       y = grid.dy*i+grid.yorig
+       f.write(str(y)+' ')
+    f.write('\n')
+
+    f.write('X_COORDINATES '+str(grid.njx+1)+' float\n')
+    for i in  range(grid.njx+1):
+       x = grid.dx*i+grid.xorig
+       f.write(str(x)+' ')
+    f.write('\n')
+
     # Write data for each voxels with 1 variable per entity inkcuding soil layer
     numVoxels = (grid.njx)*(grid.njy)*(grid.njz+1)
 
@@ -244,32 +264,37 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
         #DefaultValue = -9999.0
         #Utiliser grid.kxyz
         for ik in range(grid.njz+1):#range(grid.njz-1,-1,-1):#
-          for ij in range(grid.njy):
-            for ii in range(grid.njx): #Loop over all voxels
-              k =grid.kxyz[ii,ij,ik] #Get the voxel id number in fortran minus 1 to get the value in Python
-              if (k>0):              #If the voxel k gets some vegetation then
-##                print "ent =",ent,"... k =", k
-                #find the index of voxel k in the variable[2]
-                kindexDummy = np.where(np.array(variable[2])==k)
-                kindex = kindexDummy[0]
-                #Get entity numbers which are in this voxel
-                enties = np.array(variable[1])[kindex]
-                #check if  ent is in this voxel
-                EntityOk =np.where(enties==ent)
-                if np.alen(EntityOk[0])<1: #if enties is not in this voxel
-                    f.write(str(-9999.0)+'\n')
-                else:                           #if enties is in this voxel
-##                    print "np.where(enties==ent)",np.where(enties==ent)
-                    if ik == grid.njz:         #Soil layer
-                        f.write(str(-9999.0)+'\n')
+            for ij in range(grid.njy):
+                for ii in range(grid.njx): #Loop over all voxels
+                    k =grid.kxyz[ii,ij,ik] #Get the voxel id number in fortran minus 1 to get the value in Python
+                    if (k>0):              #If the voxel k gets some vegetation then
+                        #find the index of voxel k in the variable[2]
+                        kindexDummy = np.where(np.array(variable[2])==k)
+                        kindex = kindexDummy[0]
+                        #Get entity numbers which are in this voxel
+                        enties = np.array(variable[1])[kindex]
+                        #check if  ent is in this voxel
+                        EntityOk =np.where(enties==ent)
+                        if np.alen(EntityOk[0])<1: #if enties is not in this voxel
+                            f.write(str(-9999.0)+'\n')
+                        else:                           #if enties is in this voxel
+                            if ik == grid.njz:         #Soil layer
+                                f.write(str(-9999.0)+'\n')
+                            else:
+                                value = variable[0][(kindex[np.where(enties==ent)])[0]]
+                                f.write(str(value)+'\n')
                     else:
-                        value = variable[0][kindex[np.where(enties==ent)]]
-                        f.write(str(value)+'\n')
-              else:
-                f.write(str(-9999.0)+'\n')
-    #          f.write(str(ik)+'\n')
+                        f.write(str(-9999.0)+'\n')
+        f.write('\n')
 
-
+        # indice des voxels
+        f.write('SCALARS Voxel_ID float  1 \n')
+        f.write('LOOKUP_TABLE default\n')
+        for ik in range(grid.njz+1):#range(grid.njz-1,-1,-1):#
+            for ij in range(grid.njy):
+                for ii in range(grid.njx): #Loop over all voxels
+                    k =grid.kxyz[ii,ij,ik] # attention affiche k+1
+                    f.write(str(k)+'\n')
         f.write('\n')
 
     f.close()

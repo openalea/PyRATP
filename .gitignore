@@ -13,6 +13,7 @@
 
 # Compiled Object files
 *.os
+*.mod
 
 # Packages
 *.egg
@@ -61,4 +62,5 @@ nosetests.xml
 # svn
 .svn
 
-
+# Mac
+.DS_Store

@@ -63,9 +63,9 @@ contains
   allocate(Spar(nent,60))
   Spar=0.
 
-  call DirectBeam_Interception(day, hour)
+  call DirectBeam_Interception(day, hour, truesolartime)
 
-  if (hdeg.gt.1.) then
+  if (hdeg.gt.2.) then      !MARC  pb with hdeg ->0 
    do iblo=1,nblomin
     if (glob(iblo).gt.0.) then
      call Spectral_Radiation_Balance(iblo)
@@ -76,15 +76,17 @@ contains
  end subroutine swrb_doall
 
 
- subroutine sundirection(sunheight,sunazimuth,latitude,longitude,timezone,day,hour)
+ subroutine sundirection(sunheight,sunazimuth,latitude,longitude,timezone,day,hour,truesolartime)
 
 ! Computation of the sun direction (i.e. height and azimuth, in degrees) from grid location and time
 ! From programs given by Grebet (1993, in Crop structure and light microclimate)
 ! Sun azimuth is computed with the South clockwise convention (East = -90, West = 90)
+! ajout du flag truesolartime si hour est l'heure solaire (ajout mwoussen 23/03/2022)
 
   real :: sunheight, sunazimuth
   real :: latitude, longitude
   real :: timezone, day, hour
+  logical :: truesolartime
 
   real :: om, teta, sidec, codec, tphi, dphi, eqntime
   real :: silat, colat, pi
@@ -107,7 +109,13 @@ contains
   silat=sin(latitude*pi/180.) ! Sine and cosine of latitude
   colat=cos(latitude*pi/180.)
 
-  TSThour=amod(hour+timezone+longitude/15.-eqntime/60.,24.) ! True Solar Time
+  ! active ou non le calcul de l'heure solaire
+  if(.NOT. truesolartime) then
+    TSThour =amod(hour+timezone+longitude/15.-eqntime/60.,24.) ! True Solar Time
+  else
+    TSThour =hour
+  endif
+
   hour_angle = (TSThour-12)*pi/12.
   sinh = silat*sidec + colat*codec*cos(hour_angle)
   sunheight=asin(sinh)
@@ -117,10 +125,15 @@ contains
   sunheight=sunheight*180./pi  ! Conversion to degrees
   sunazimuth=sunazimuth*180./pi
 
+  ! ajout mwoussen 21/02/2022 pour utiliser sundirection
+  ! indpendamment de DirectBeam_Interception
+  hdeg = sunheight
+  azdeg = sunazimuth
+
  end subroutine sundirection
 
 
- subroutine DirectBeam_Interception(day,hour)
+ subroutine DirectBeam_Interception(day,hour,truesolartime)
 
   use grid3D
   use skyvault
@@ -128,20 +141,22 @@ contains
   use dir_interception
 
   real :: day, hour
+  logical :: truesolartime
 
-  write(*,*) 'Computing interception of direct radiation ...'
+!  write(*,*) 'Computing interception of direct radiation ...'
 
-  call sundirection(hdeg,azdeg,latitude,longitude,timezone,day,hour)
+  call sundirection(hdeg,azdeg,latitude,longitude,timezone,day,hour,truesolartime)
+  
 
   azdeg=azdeg-orientation  ! azimuth with regard to 3Dgrid X-axis
 
 !  Direct beam interception (includes computation of extinction coefficient, beam sampling, and exchange coefficients)
 
-  if (hdeg.gt.1.) then
+  if (hdeg.gt.5.) then      !MARC  pb with hdeg ->0 
    scattering=.FALSE.   ! only computation of incident direct radiation
    call di_doall(hdeg, azdeg, 0., dpx, dpy,scattering, isolated_box)  ! rem: sun angles in degrees
   else
-   riv=0.  ! If hdeg < 2°, interception of direct radiation is assumed to be zero
+   riv=0.  ! If hdeg < 5, interception of direct radiation is assumed to be zero
    ris=0.
   endif
 
@@ -285,15 +300,15 @@ contains
    Eclomb= glob(iblo)*xintav(je,k)-ski
    Eclomb= Eclomb*(1.-2.*rf(jent,iblo))
    Eclens= Ski * (1.-2.*rf(jent,iblo))
-   RA_detailed(iblo,0,je,k)= Eclomb/S_vt_vx(je,k)  ! Absorbed radiation W per m² leaf area, in band iblo
+   RA_detailed(iblo,0,je,k)= Eclomb/S_vt_vx(je,k)  ! Absorbed radiation W per m leaf area, in band iblo
    RA_detailed(iblo,1,je,k)= RA_detailed(iblo,0,je,k) + Eclens/S_detailed(1,je,k)
-   SWRA_detailed(0,je,k)=SWRA_detailed(0,je,k) + RA_detailed(iblo,0,je,k)  ! Absorbed radiation W per m² leaf area, summing up all wavebands
+   SWRA_detailed(0,je,k)=SWRA_detailed(0,je,k) + RA_detailed(iblo,0,je,k)  ! Absorbed radiation W per m leaf area, summing up all wavebands
    SWRA_detailed(1,je,k)=SWRA_detailed(1,je,k) + RA_detailed(iblo,1,je,k)
    end do
   end do
 
 
-!  write(*,*) 'PARirrad: PAR leaf irradiance (µmol m-2 s-1)'     
+!  write(*,*) 'PARirrad: PAR leaf irradiance (mol m-2 s-1)'     
 !  - utilise pour calcul de J (flux d'electrons)
 !  - utilise pour conductance stomatique
 
@@ -337,7 +352,6 @@ contains
 
   deallocate(xintbv)
   deallocate(xintbs)
-
 
  end subroutine Spectral_Radiation_Balance
 

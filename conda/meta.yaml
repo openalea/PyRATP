@@ -1,28 +1,39 @@
+{% set native = 'm2w64-' if win else '' %}
+
 package:
   name: alinea.pyratp
   version: 2.0.1
 
 source:
     path: ..
-build:
-    number: 0
-    script: python setup.py install
+
 requirements:
-    build:
-        - python
+    host:
+        - python x.x
         - setuptools
-        - openalea.sconsx
-        - numpy
-        - mingwpy  # [win and py2k]
-        - gcc  # [osx]
-        - libgfortran  # [linux]
+        - numpy >=1.25  # [osx]
+        - numpy x.x  # [not osx]
+    build:
+        - python {{PY_VER}}
+        - numpy x.x  # [not osx]
+        - numpy >=1.25  # [osx]
+        - meson # Maybe deprecated for current version
+        - make
+        - {{ compiler('fortran') }}  # [not win]
+        - {{ compiler('c') }} 
+        #- compilers
+        - {{ native }}toolchain   # [win]
+        - charset-normalizer
     run:
-        - python
+        - python x.x
         - path.py
-        - libgfortran  # [linux or osx]
-        - numpy
+        - {{ native }}toolchain   # [win]
+        - {{ pin_compatible('numpy') }}
         - scipy
         - pandas
+        - meson # Maybe deprecated for current version
+        - charset-normalizer
+
         #- openalea.mtg
         #- openalea.visualea
 test:

@@ -29,37 +29,23 @@ def bbox(pgl_scene, scene_unit='m'):
     return (xmin, ymin, zmin), (xmax, ymax, zmax)
 
 
-def shape_mesh(pgl_shape, tesselator=None):
-    if tesselator is None:
-        tesselator = pgl.Tesselator()
-    tesselator.process(pgl_shape)
-    tset = tesselator.result
+def shape_mesh(pgl_shape, discretiser=None):
+    if discretiser is None:
+        discretiser = pgl.Discretizer()
+    discretiser.process(pgl_shape)
+    tset = discretiser.result
     return numpy.array(tset.pointList), numpy.array(tset.indexList)
 
 
 def as_scene_mesh(pgl_scene):
     """ Transform a PlantGL scene / PlantGL shape dict to a scene_mesh"""
-    tesselator = pgl.Tesselator()
+    discretizer = pgl.Discretizer()
 
     if isinstance(pgl_scene, pgl.Scene):
-        sm = {}
-
-        def _concat_mesh(mesh1,mesh2):
-            v1, f1 = mesh1
-            v2, f2 = mesh2
-            v = numpy.array(v1.tolist() + v2.tolist())
-            offset = len(v1)
-            f = numpy.array(f1.tolist() + [[i + offset, j + offset, k + offset] for i, j, k
-                               in f2.tolist()])
-            return v, f
-
-        for pid, pgl_objects in pgl_scene.todict().iteritems():
-            sm[pid] = reduce(_concat_mesh, [shape_mesh(pgl_object, tesselator) for pgl_object in
-                           pgl_objects])
-        return sm
+        return {sh.id: shape_mesh(sh, discretizer) for sh in pgl_scene}
     elif isinstance(pgl_scene, dict):
-        return {sh_id: shape_mesh(sh,tesselator) for sh_id, sh in
-                pgl_scene.iteritems()}
+        return {sh_id: shape_mesh(sh, discretizer) for sh_id, sh in
+                pgl_scene.items()}
     else:
         return pgl_scene
 
@@ -71,7 +57,7 @@ def from_scene_mesh(scene_mesh, colors=None):
         colors = {k: plant_color for k in scene_mesh}
 
     scene = pgl.Scene()
-    for sh_id, mesh in scene_mesh.iteritems():
+    for sh_id, mesh in scene_mesh.items():
         vertices, faces = mesh
         if isinstance(colors[sh_id], tuple):
             r, g, b = colors[sh_id]

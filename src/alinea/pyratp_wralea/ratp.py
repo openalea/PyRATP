@@ -46,11 +46,11 @@ class ExtractColumn( Node ):
     def __call__(self, inputs):
         col= inputs[0]
         a = inputs[1]
-        print 'col ', col
+        print('col', col)
         try:
             i = self.index[self.header.index(col)]
             self.set_caption(col)
-        except Exception, e:
+        except Exception as e:
             if col.isdigit():
                 i = int(col)
                 col = self.header[i]

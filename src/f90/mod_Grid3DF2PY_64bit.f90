@@ -11,7 +11,7 @@ real  :: dx, dy       ! voxel size according to X- and Y- axis
 real, allocatable :: dz(:)    ! voxel size according to  Z- axis
 real  :: xorig, yorig, zorig   ! 3D grid origin
 real  :: latitude, longitude, timezone
-real  :: orientation     ! angle (°) between axis X+ and North
+real  :: orientation     ! angle (degree) between axis X+ and North
 integer :: idecaly                  ! offset between canopy units along Y-axis
 
 ! Soil surface

@@ -7,7 +7,7 @@
 # Verifi? avec lecture de fichier vgx le 28/01/2011 MS certified
 ##from alinea.pyratp import pyratp
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore
 import random
 #import pyRATP
 import numpy as np
@@ -97,7 +97,7 @@ class Vege3D(object):
         #- pour chaque mot cle, on verifie qu'il existe dans le dictionaire et on note son numero de colonne
         listEntete = list(listEntete)
         for mot in listEntete:
-            if dicoMotCle.has_key(str(mot)):
+            if str(mot) in dicoMotCle:
                 dicoMotCle[str(mot)] = listEntete.index(str(mot))+1
         nbObj=1
 
@@ -115,7 +115,7 @@ class Vege3D(object):
                 try:
                     val=float(ch)
                 except ValueError:
-                    print ch,  " : valeur non numerique a la ligne : ", nbObj+1
+                    print(ch,  " : valeur non numerique a la ligne : ", nbObj+1)
                     return
                 liste.append(val)
 
@@ -162,16 +162,16 @@ class Vege3D(object):
 ##            if (ShootType == 4.0): typeV =2
 ##            if (ShootType == 5.0): typeV =3
 ##            if (ShootType == 6.0): typeV =4
-##            print 'typeV =',typeV
+##            print(typeV =',typeV
 ##            typeV =0
 
             tabTypeVege= np.append(tabTypeVege,typeV)
             tabS= np.append(tabS,AREA)
             tabN= np.append(tabN,Azote)
-##            print 'Area',AREA
+##            print(Area',AREA
 ##            if nbLigne == typeVege : nbLigne=0
         file.close()
-        print 'VEGE3D OK'
+        print('VEGE3D OK')
         return (tabTypeVege,tabX,tabY,tabZ,tabS,tabN)
 
 

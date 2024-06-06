@@ -5,23 +5,19 @@
 """ A high level class interface to RATP
 """
 from collections import Iterable
+import pyratpmobidiv.interface.pgl_scene as pgls
+from alinea.pyratp.interface.display import display_property
 import numpy
 import pandas
-import json
-
 from alinea.pyratp.grid import Grid
-from alinea.pyratp.micrometeo import MicroMeteo
-from alinea.pyratp.runratp import runRATP
-from alinea.pyratp.skyvault import Skyvault, elevations46, azimuths46, omegas_46
-from alinea.pyratp.vegetation import Vegetation
-
 from alinea.pyratp.interface.clumping_index import get_clumping
 from alinea.pyratp.interface.geometry import unit_square_mesh
 from alinea.pyratp.interface.smart_grid import SmartGrid
 from alinea.pyratp.interface.surfacic_point_cloud import SurfacicPointCloud
-from alinea.pyratp.interface.post_processing import aggregate_light, aggregate_grid
-from alinea.pyratp.interface.display import display_property
-import alinea.pyratp.interface.pgl_scene as pgls
+from alinea.pyratp.micrometeo import MicroMeteo
+from alinea.pyratp.runratp import runRATP
+from alinea.pyratp.skyvault import Skyvault
+from alinea.pyratp.vegetation import Vegetation
 
 
 def sample_database():
@@ -48,8 +44,8 @@ class RatpScene(object):
     nitrogen = 2  # dummy value (g.m-2) for nitrogen per leaf area
 
     def __init__(self, scene=None, grid=None, entities=None, rleaf=0.15,
-                 rsoil=0.2, nbinclin=9, orientation=0, localisation='Montpellier',
-                 scene_unit='m', mu=None, distinc=None, **grid_kwds):
+                 rsoil=0.2, orientation=0, localisation='Montpellier',
+                 scene_unit='m', **grid_kwds):
         """
         Initialise a RatpScene.
 
@@ -61,18 +57,12 @@ class RatpScene(object):
         entities: a {shape_id: entity} dict defining entities in the scene. If
          None (default), all shapes are considered as members of the same entity
         rleaf: leaf reflectance or a {entity: leaf_reflectance} property dict.
-        rsoil: soil reflectance
-        nbinclin: the number of angular classes for leaf angle distribution
+        rsoil: soil reflectance or a list of soil reflectances in PAR and NIR
         orientation (float): the angle (deg, positive clockwise) from X+ to
          North (default: 0)
         localisation : a string referencing a city of the localisation database
          (class variable), or a dict{'longitude':longitude, 'latitude':latitude}
         scene_unit: a string indicating unit used for scene coordinates
-        mu : a list of clumping indices, indexed by density.If None (default)
-         clumping is automatically evaluated using clark-evans method.
-        distinc: a list of list giving the frequency of the nbinclin leaf angles
-         classes (from horizontal to vertical) per entity in the canopy.
-         If None (default), distinc is computed automatically from the scene
 
         Other named args to this function are used for controlling grid shape
         when grid=None
@@ -108,7 +98,7 @@ class RatpScene(object):
                     scene_box = (
                     (min(x), min(y), min(z)), (max(x), max(y), max(z)))
             except Exception as details:
-                print details
+                print(details)
                 raise ValueError("Unrecognised scene format: should be one of pgl.Scene, "
                       "SurfacicPointCloud or {sh_id:(vertices, faces)} dict")
 
@@ -143,103 +133,91 @@ class RatpScene(object):
 
         if not isinstance(localisation, dict):
             try:
-                localisation = RatpScene.localisation_db[localisation]
+                self.localisation = RatpScene.localisation_db[localisation]
             except KeyError:
-                print 'Warning : localisation', localisation, \
+                print('Warning : localisation', localisation, \
                     'not found in database, using default localisation', \
-                    RatpScene.localisation_db.iter().next()
-                localisation = RatpScene.localisation_db.itervalues().next()
-        self.localisation = localisation
+                    RatpScene.localisation_db.iter().next())
+                self.localisation = RatpScene.localisation_db.itervalues().next()
+        #
 
-        if mu is None:
-            mu = self.clumping()
-            print(' '.join(['clumping evaluated:'] + [str(m) for m in
-                                                      mu]))
-        self.set_clumping(mu)
-
-        if distinc is None:
-            distinc = self.inclination_distribution(nbinclin)
-        self.set_inclin(distinc)
-
-        self.ratp_grid, self.grid_indices = self.grid()
+        self.distinc = None
+        self.nbinclin=0
+        self.mu = None
+        self.ratp_grid = None
+        self.grid_indices = None
 
     def n_entities(self):
         """ return the number of distinct entities in the canopy"""
         return max(self.entity_code)
 
-    def set_clumping(self, mu):
-        nent = self.n_entities()
-        if not isinstance(mu, Iterable):
-            mu = [mu] * nent
-        assert len(mu) == nent
-        self.mu = mu
-
-    def set_inclin(self, distinc):
-        nent = self.n_entities()
-        assert isinstance(distinc, Iterable)
-        assert len(distinc) == nent
-        nbinclin = len(distinc[0])
-        assert all(map(lambda x: len(x) == nbinclin, distinc))
-        self.distinc = distinc
-        self.nbinclin = nbinclin
-
-    def clumping(self, expand=True):
-        spc = self.scene
-        grid = self.smart_grid
-        x, y, z = spc.x, spc.y, spc.z
-        xv, yv, zv = grid.within_cell_position(x, y, z, normalise=True)
-        jx, jy, jz = grid.grid_index(x, y, z)
-        entity = self.entity_code
-        data = pandas.DataFrame(
-            {'entity': entity, 'x': xv, 'y': yv, 'z': zv, 's': spc.area,
-             'n': spc.normals,
-             'jx': jx, 'jy': jy, 'jz': jz})
-        mu = []
-        domain = ((0, 0, 0), (1, 1, 1))
-        grouped = data.groupby('entity')
-        for e, dfe in grouped:
-            gvox = dfe.groupby(('jx', 'jy', 'jz'))
-            clumps = []
-            for k, df in gvox:
-                clumping = get_clumping(df['x'], df['y'], df['z'], df['s'],
-                                        df['n'], domain=domain, expand=expand)
-                min_mu = df['s'].mean() / df[
-                    's'].sum()  # minimal mu in the case of perfect clumping
-                if numpy.isfinite(clumping):
+    def clumping(self):
+        if self.mu is None:
+            spc = self.scene
+            grid = self.smart_grid
+            x, y, z = spc.x, spc.y, spc.z
+            xv, yv, zv = grid.within_cell_position(x, y, z, normalise=True)
+            jx, jy, jz = grid.grid_index(x, y, z)
+            entity = self.entity_code
+            data = pandas.DataFrame(
+                {'entity': entity, 'x': xv, 'y': yv, 'z': zv, 's': spc.area,
+                 'n': spc.normals,
+                 'jx': jx, 'jy': jy, 'jz': jz})
+            mu = []
+            domain = ((0, 0, 0), (1, 1, 1))
+            grouped = data.groupby('entity')
+            for e, dfe in grouped:
+                gvox = dfe.groupby(('jx', 'jy', 'jz'))
+                clumps = []
+                for k, df in gvox:
+                    clumping = get_clumping(df['x'], df['y'], df['z'], df['s'],
+                                            df['n'], domain=domain)
+                    min_mu = df['s'].mean() / df[
+                        's'].sum()  # minimal mu in the case of perfect clumping
                     clumps.append(max(min_mu, clumping))
-            mu.append(numpy.mean(clumps))
+                mu.append(numpy.mean(clumps))
+            self.mu = mu
 
-        return mu
+        return self.mu
 
-    def grid(self):
+    def grid(self, rsoil=0.2):
 
         """ Create and fill a RATP grid
+
+        :Parameters:
+        - rsoil : soil reflectances
         """
+        if not hasattr(rsoil, '__len__'):
+            rsoil = [rsoil]
 
-        spc = self.scene
-        grid_pars = {'latitude': self.localisation['latitude'],
-                     'longitude': self.localisation['longitude'],
-                     'timezone': self.timezone,
-                     'idecaly': self.idecaly,
-                     'orientation': self.orientation,
-                     'rs': self.rsoil,
-                     'nent': self.n_entities()
-                     }
-        grid_pars.update(self.smart_grid.ratp_grid_parameters())
-        ratp_grid = Grid.initialise(**grid_pars)
-        grid_indices = self.smart_grid.grid_index(spc.x, spc.y, spc.z,
-                                                  check=True)
-        jx, jy, jz = self.smart_grid.ratp_grid_index(*grid_indices)
-        entity = self.entity_code - 1  # Grid.fill expect python indices
-        nitrogen = [self.nitrogen] * spc.size
-        ratp_grid, _ = Grid.fill_from_index(entity, jx, jy, jz, spc.area,
-                                       nitrogen, ratp_grid)
-        # RATPScene grid indices of individual surfacic points
-        jx, jy, jz = grid_indices
-        grid_indices = pandas.DataFrame({'point_id': range(len(jx)),
-                                              'jx': jx, 'jy': jy, 'jz': jz})
+        if self.ratp_grid is None or rsoil != self.rsoil:
 
-        return ratp_grid, grid_indices
+            self.rsoil = rsoil
+            spc = self.scene
+            grid_pars = {'latitude': self.localisation['latitude'],
+                         'longitude': self.localisation['longitude'],
+                         'timezone': self.timezone,
+                         'idecaly': self.idecaly,
+                         'orientation': self.orientation,
+                         'rs': self.rsoil,
+                         'nent': self.n_entities()
+                         }
+            grid_pars.update(self.smart_grid.ratp_grid_parameters())
+            ratp_grid = Grid.initialise(**grid_pars)
+            grid_indices = self.smart_grid.grid_index(spc.x, spc.y, spc.z,
+                                                      check=True)
+            jx, jy, jz = self.smart_grid.ratp_grid_index(*grid_indices)
+            entity = self.entity_code - 1  # Grid.fill expect python indices
+            nitrogen = [self.nitrogen] * spc.size
+            ratp_grid, _ = Grid.fill_from_index(entity, jx, jy, jz, spc.area,
+                                           nitrogen, ratp_grid)
+            # RATPScene grid indices of individual surfacic points
+            jx, jy, jz = grid_indices
+            self.grid_indices = pandas.DataFrame({'point_id': range(len(jx)),
+                                                  'jx': jx, 'jy': jy, 'jz': jz})
+            self.ratp_grid = ratp_grid
+
+        return self.ratp_grid
 
     def inclinations(self):
         df = self.scene.inclinations()
@@ -250,14 +228,15 @@ class RatpScene(object):
                 df.groupby('entity')]
 
     def inclination_distribution(self, nbinclin=9):
+        if self.distinc is None or self.nbinclin != nbinclin:
+            def _dist(inc):
+                dist = numpy.histogram(inc, self.nbinclin, (0, 90))[0]
+                return dist.astype('float') / dist.sum()
+            self.nbinclin = nbinclin
+            inclinations = self.inclinations()
+            self.distinc = map(_dist, inclinations)
 
-        def _dist(inc):
-            dist = numpy.histogram(inc, nbinclin, (0, 90))[0]
-            return (dist.astype('float') / dist.sum()).tolist()
-        inclinations = self.inclinations()
-        distinc = map(_dist, inclinations)
-
-        return distinc
+        return self.distinc
 
     def voxel_index(self):
         """Mapping between RATP (filled) VoxelId and RatpScene grid indices"""
@@ -278,97 +257,50 @@ class RatpScene(object):
         # associated smart_grid indices
         jx, jy, jz = self.smart_grid.decode_ratp_indices(numx - 1, numy - 1,
                                                          numz - 1)
-        xc, yc, zc = self.smart_grid.voxel_centers(jx, jy, jz)
 
-        return pandas.DataFrame(
-            {'VoxelId': index, 'jx': jx, 'jy': jy, 'jz': jz, 'xc': xc, 'yc': yc,
-             'zc': zc})
+        return pandas.DataFrame({'VoxelId': index, 'jx': jx, 'jy': jy, 'jz': jz})
 
-    def do_irradiation(self, sun_sources=None, sky_sources=None,
-                       scattering_indicatrix=None, mu=None, distinc=None):
+    def do_irradiation(self, rsoil=0.20, doy=1, hour=12, Rglob=1,
+                       Rdif=1, mu=None, sources=None, nbinclin=9):
         """ Run a simulation of light interception for one wavelength
 
             Parameters:
-                sun_sources: elevation (degrees), azimuth (degrees, from North
-                    positive clockwise), horizontal irradiance of sources
-                    representing the sun.
-                sky_sources: elevation (degrees), azimuth (degrees, from North
-                    positive clockwise), horizontal irradiance of sources
-                    representing the sky.
-                    If both sun_sources and sky_sources are None, a 46
-                    directions, normalised soc sky is used
-                scattering_indicatrix: relative weights associated to sky_sources
-                    directions used to compute interception coefficient of scattered
-                    light. If None uniform contribution is used if sky_sources
-                    is not None or default RATP turtle 46 if sky_sources is None
-                mu: clumping index of vegetation. If None, clumping index is
-                    estimated after modified clark evans index
-                distinc: a list of list giving the frequency of the nbinclin
-                    leaf angles classes (from horizontal to vertical) per entity
-                    in the canopy.If None (default), distinc is computed
-                    automatically from the scene
+                - rleaf : list of leaf refectance per entity
+                - rsoil : soil reflectance
+                - doy : [list of] day of year [for the different iterations]
+                - hour : [list of] decimal hour (0-24) [for the different
+                 iterations]
+                - Rglob : [list of] global (direct + diffuse) radiation [for
+                 the different iterations] (W.m-2)
+                - Rdif : [list of] direct/diffuse radiation ratio [for the
+                 different iterations] (0-1)
+                - sources: a list of sequences giving elevation, azimuth,
+                 steradians and weights of sky vault.
+                if None, default RATP soc skyvault is used
+
         """
 
         nent = self.n_entities()
 
-        if mu is not None:
-            self.set_clumping(mu)
-
-        if distinc is not None:
-            self.set_inclin(distinc)
-
-        entities = [{'rf': [self.rleaf[i + 1]], 'distinc': self.distinc[i],
-                     'mu': self.mu[i]} for i
-                    in range(nent)]
-        vegetation = Vegetation.initialise(entities, nblomin=1)
-
-        if sun_sources is None and sky_sources is None:
-            sky = Skyvault.initialise()
-            ghi = 1
+        if mu is None:
+            mu = self.clumping()
+            print(' '.join(['clumping evaluated:'] + [str(mu[i]) for i in
+                                                      range(nent)]))
         else:
-            hmoy, azmoy, omega, pc = [], [], [], []
-            if sun_sources is not None:
-                el, az, irr = sun_sources
-                hmoy.extend(el)
-                azmoy.extend(az)
-                pc.extend(irr)
-                # sun directions are not used to estimate interception coeff of
-                # scattered light 'rka' (mod_Shortwave_Balance.f90, line 142 +
-                # mod_dir_interception.f90, line 112)
-                omega.extend([0.] * len(irr))
-            if sky_sources is not None:
-                el, az, irr = sky_sources
-                hmoy.extend(el)
-                azmoy.extend(az)
-                pc.extend(irr)
-                if scattering_indicatrix is None:
-                    omega.extend([1.] * len(irr))
-                else:
-                    omega.extend(scattering_indicatrix)
-            else:
-                hmoy.extend(elevations46)
-                azmoy.extend(azimuths46)
-                omega.extend(omegas_46)
-                # only use for omega / rediff, not fo lighting
-                pc.extend([0] * len(omegas_46))
-
-            # pc is used (mod_Hemi_Interception, line 124) to weight Rdif
-            ghi = sum(pc)
-            if ghi == 0:
-                raise ValueError('Irradiance of sources is null!!!')
-            pc = numpy.array(pc) / ghi
-            # omega are Sr solid angles (mod_dir_interception.f90, line 112)
-            omega = numpy.array(omega)
-            omega /= omega.sum()
-            omega *= 2 * numpy.pi
-            # RATP sources azimuths are from South, positive clockwise
-            # (mod_Shortwave_Balance, line 83) and orientation is not taken into
-            # account for diffuse sources, unike RATP native sun sources
-            # (mod_Shortwave_Balance.f90, line 136)
-            azmoy = numpy.array(azmoy) - 180 + self.orientation
-            sky = Skyvault.initialise(hmoy=hmoy, azmoy=azmoy, omega=omega, pc=pc)
-        met = MicroMeteo.initialise(doy=1, hour=12, Rglob=ghi, Rdif=ghi)
-        res = runRATP.DoIrradiation(self.ratp_grid, vegetation, sky, met)
+            if not isinstance(mu, Iterable):
+                mu = [mu] * nent
+        inclins = self.inclination_distribution(nbinclin)
+        entities = [{'rf': [self.rleaf[i + 1]], 'distinc': inclins[i], 'mu': mu[i]} for i
+                    in range(nent)]
+        grid = self.grid(rsoil=rsoil)
+        vegetation = Vegetation.initialise(entities, nblomin=1)
+        if sources == None:
+            sky = Skyvault.initialise()
+        else:
+            el, az, strd, w = sources
+            sky = Skyvault.initialise(hmoy=el, azmoy=az, omega=strd, pc=w)
+        met = MicroMeteo.initialise(doy=doy, hour=hour, Rglob=Rglob, Rdif=Rdif)
+        res = runRATP.DoIrradiation(grid, vegetation, sky, met)
 
         VegetationType, Iteration, day, hour, VoxelId, ShadedPAR, SunlitPAR, \
         ShadedArea, SunlitArea = res.T
@@ -393,7 +325,7 @@ class RatpScene(object):
         return pandas.merge(dfvox, self.voxel_index())
 
     def scene_lightmap(self, dfvox, spatial='point_id', temporal=True):
-        """  Aggregate light outputs along spatial domain of scene input
+        """  Aggregate light outputs along scene inputs
 
         Args:
             dfvox: a pandas data frame with ratp outputs
@@ -405,20 +337,46 @@ class RatpScene(object):
             a pandas dataframe with aggregated outputs
 
         """
+        dfmap = pandas.merge(self.scene.as_data_frame(), self.grid_indices)
+        aggregated_area = dfmap.loc[:, (spatial, 'area')].groupby(spatial).agg(
+            'sum').reset_index()
+        aggregated_area = aggregated_area.rename(columns={'area': 'agg_area'})
+        output = pandas.merge(pandas.merge(dfmap, aggregated_area), dfvox)
+
+        def _process(df):
+            w = df['area'] / df['agg_area']
+            a_agg = df['agg_area'].values[0]
+            res = pandas.Series(
+                {'VegetationType': df['VegetationType'].values[0],
+                 'day': df['day'].values[0],
+                 'hour': df['hour'].values[0],
+                 'ShadedPAR': numpy.sum(df['ShadedPAR'] * w),
+                 # weighted mean of voxel values (weigth = primitive area)
+                 'SunlitPAR': numpy.sum(df['SunlitPAR'] * w),
+                 'ShadedArea': numpy.sum(
+                     df['ShadedArea'] / df['Area'] * w) * a_agg,
+                 # weighted mean of shaded fraction times shape_area
+                 'SunlitArea': numpy.sum(
+                     df['SunlitArea'] / df['Area'] *w) * a_agg,
+                 'Area': a_agg,
+                 'PAR': numpy.sum(df['PAR'] * w)})
+            return res
+
+        grouped = output.groupby(['Iteration', spatial])
+        res = grouped.apply(_process).reset_index()
+
+        if temporal and len(set(res['Iteration'])) > 1:
+            grouped = res.groupby(spatial)
+            how = {'VegetationType': numpy.mean, 'day': numpy.mean,
+                   'hour': numpy.mean,
+                   'ShadedPAR': numpy.sum, 'SunlitPAR': numpy.sum,
+                   'ShadedArea': numpy.mean, 'SunlitArea': numpy.mean,
+                   'Area': numpy.mean, 'PAR': numpy.sum}
+            res = grouped.agg(how).reset_index()
+
         if spatial == 'point_id':
-            scene_map = self.scene.area_map()
-        else:
-            scene_map = self.scene.shape_map().merge(self.scene.area_map())
-        grid_map = self.grid_indices
-
-        return aggregate_light(dfvox, scene_map=scene_map, grid_map=grid_map,
-                               temporal=temporal)
-
-    def xy_lightmap(self, dfvox):
-        """ Aggregate light outputs along x y cells"""
-        grid_map = self.grid_indices
-        area_map = self.scene.area_map()
-        return aggregate_grid(dfvox, grid_map, area_map)
+            res = res.merge(self.scene.shape_map())
+        return res
 
     def plot(self, dfvox, by='point_id', minval=None, maxval=None):
         lmap = self.scene_lightmap(dfvox, spatial=by)
@@ -426,44 +384,7 @@ class RatpScene(object):
             df = lmap.loc[:, ('shape_id', 'PAR')].set_index('shape_id')
             prop = {k: df['PAR'][k] for k in df.index}
         else:
-            # add shape_id
-            lmap = lmap.merge(self.scene.shape_map())
-            lmap = lmap.sort_values('point_id')
             prop = {sh_id: df.to_dict('list')['PAR'] for sh_id, df in
                     lmap.groupby('shape_id')}
         return display_property(self.scene_mesh, prop, minval=minval,
                                 maxval=maxval)
-
-    def parameters(self):
-        """return a dict of intantiation parameters"""
-        ent = self.entities
-        rl = self.rleaf
-        if self.n_entities() == 1:
-            ent = ent.itervalues().next()
-            rl = rl.itervalues().next()
-            if ent == 'default':
-                ent = None
-        d = {'grid': self.smart_grid.as_dict(), 'entities': ent, 'rleaf': rl,
-             'rsoil': self.rsoil, 'nbinclin': self.nbinclin,
-             'orientation': self.orientation, 'localisation': self.localisation,
-             'mu': self.mu, 'distinc':self.distinc}
-        return d
-
-    @staticmethod
-    def read_parameters(file_path):
-        with open(file_path, 'r') as input_file:
-            pars = json.load(input_file)
-        return pars
-
-    def save_parameters(self, file_path):
-        saved = self.parameters()
-        with open(file_path, 'w') as output_file:
-            json.dump(saved, output_file, sort_keys=True, indent=4,
-                      separators=(',', ': '))
-
-    @staticmethod
-    def load_ratp_scene(scene, parameters):
-        # copy to avoid altering parameters
-        pars = {k:v for k,v in parameters.iteritems()}
-        grid = SmartGrid.from_dict(pars.pop('grid'))
-        return RatpScene(scene, grid=grid, **pars)

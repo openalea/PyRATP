@@ -1,0 +1,8 @@
+3 5 4						! number of grid voxels along X Y and Z axis (S1 = 50.50.17)
+0.1 0.1 0.1 0.1 0.1 0.1  ! dx, dy, (dz(jz),jz=1,njz)		! voxel size according to X- Y- and Z- axis
+-0.3 -0.4 -0.9							! 3D grid origin (m)
+44.00 0.  0.						! latitude, longitude timezone (hours)
+0							! angle (�) between axis X+ and North
+0									! offset between canopy units along Y-axis
+1									! number of vegetation entities in the 3D grid
+2 0.075 0.20	! number of wavebands, soil reflectance for each waveband

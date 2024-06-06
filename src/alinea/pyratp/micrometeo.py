@@ -19,7 +19,7 @@ class MicroMeteo(object):
         pass
 
     @staticmethod
-    def read(filename):
+    def read(filename,truesolartime):
         chemin=str(os.path.dirname(filename))
         micrometeo = pyratp.micrometeo
         listVegeNom = []
@@ -39,11 +39,12 @@ class MicroMeteo(object):
             for ii in range(len(li)):
                 micrometeo.tabmeteo[i,ii] = li[ii]
         f.close()
-        print 'MICROMETEO OK'
+        micrometeo.truesolartime=truesolartime
+        print("MICROMETEO OK")
         return micrometeo
 
     @staticmethod
-    def initialise(doy=1, hour=12, Rglob=1, Rdif=1, Ratmos=1, Tsol=1, Tair=1, Eair=1, CO2air=1, Wind=1, HRsol=1):
+    def initialise(doy=1, hour=12, Rglob=1, Rdif=1, Ratmos=1, Tsol=1, Tair=1, Eair=1, CO2air=1, Wind=1, HRsol=1,truesolartime=False):
         """ Create a micrometeo object from data given in arguments
         
         Parameters:
@@ -57,6 +58,7 @@ class MicroMeteo(object):
         - CO2air: CO2 partial pressure in the air (Pa)
         - Wind: wind speed above the canopy (m.s-1)
         - HRsol: Relative Soil Humidity (0-1)
+        - truesolartime: with hour is true solar time or local time
         
         Note that for the first wavelength should be PAR if phothosysnthesis is to be computed, and that all wavelength are summed for Shortwave energy ballance.
         
@@ -96,6 +98,7 @@ class MicroMeteo(object):
         for i,col in enumerate(cols):
             micrometeo.tabmeteo[:,i] = args[col]
         
+        micrometeo.truesolartime=truesolartime
         return micrometeo
         
 def _read(f):
@@ -104,7 +107,8 @@ def _read(f):
     l= l.split('\n')[0] # remove chr(13)
     #l = l.split(' ')
     l = l.replace('\t',' ').split(' ') 
-    l = filter(None,l)
+    #l = filter(None,l)
+    l = [x for x in l if bool(x)==True]
     for j in range(len(l)):
         l[j]=np.float32(l[j])
     return l

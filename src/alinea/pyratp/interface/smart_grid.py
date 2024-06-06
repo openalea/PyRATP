@@ -1,7 +1,6 @@
 """ Class interface for Z+ oriented / autofit equivalent of RATP grid"""
 import numpy
 import pandas
-import json
 
 
 def relative_index(x, dx):
@@ -145,42 +144,6 @@ class SmartGrid(object):
         self.origin = xo, yo, zo
         self.shape = nbx, nby, nbz
         self.resolution = dx, dy, dz
-
-    def as_dict(self):
-        d = dict()
-        d['z_soil'] = self.z_soil
-        d['toric'] = self.toric
-        d['domain'] = self.domain
-        d['x_dz'] = self.x_dz
-        d['origin'] = self.origin
-        d['shape'] = self.shape
-        d['resolution'] = self.resolution
-        return d
-
-    @staticmethod
-    def from_dict(d):
-        grid = SmartGrid()
-        grid.z_soil = d['z_soil']
-        grid.toric = d['toric']
-        grid.domain = d['domain']
-        grid.x_dz = d['x_dz']
-        grid.origin = d['origin']
-        grid.shape = d['shape']
-        grid.resolution = d.get('resolution')
-        return grid
-
-    @staticmethod
-    def load(file_path):
-        with open(file_path, 'r') as input_file:
-            saved = json.load(input_file)
-            grid = SmartGrid.from_dict(saved)
-        return grid
-
-    def save(self, file_path):
-        saved = self.as_dict()
-        with open(file_path, 'w') as output_file:
-            json.dump(saved, output_file, sort_keys=True, indent=4,
-                      separators=(',', ': '))
 
     def bbox(self):
         """ return lower and upper corner of the grid"""
@@ -327,22 +290,3 @@ class SmartGrid(object):
         jz = nbz - jjz - 1
 
         return jx, jy, jz
-
-    def voxel_centers(self, jx, jy, jz):
-        """Coordinates of voxel centers identified by their indices"""
-
-        xo, yo, zo = self.origin
-        dx, dy, dz = self.resolution
-
-        xc = dx / 2. + numpy.array(jx) * dx
-        yc = dy / 2. + numpy.array(jy) * dy
-
-        if self.x_dz is None:
-            zc = dz / 2. + numpy.array(jz) * dz
-        else:
-            # dh is for the upper boundary of cells from base to top
-            xdz = numpy.array(self.x_dz)
-            dh = xdz.cumsum() - xdz / 2.
-            zc = numpy.array([dh[j] for j in jz])
-
-        return xo + xc, yo + yc, zo + zc
