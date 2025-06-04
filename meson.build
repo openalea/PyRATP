@@ -14,8 +14,8 @@ sources = files([
   'src/f90/mod_Energy_BalanceF2PY.f90',
   'src/f90/mod_PhotosynthesisF2PY.f90',
   'src/f90/mod_MinerPhenoF2PY.f90',
-  'src/f90/mod_prog_RATP.f90',
-  'src/f90/main.f90'
+  'src/f90/mod_prog_RATP.f90'
 ])
 
-executable('PyRATP', sources, install : true)
+shared_library('PyRATP', sources, install : true)
+
