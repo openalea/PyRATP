@@ -20,7 +20,7 @@ sources = files([
 ])
 
 # manage the numpy lib and include
-incdir_numpy = run_command(py3, [
+incdir_numpy = run_command(py, [
     '-c',
     '''import os, numpy as np
 try:
@@ -37,7 +37,7 @@ fortranobject_c = incdir_f2py / 'fortranobject.c'
 ratp_source = custom_target('pyratpmodule.c',
   input : sources,
   output : ['pyratpmodule.c', 'pyratp-f2pywrappers2.f90'],
-  command : [py, '-m', 'numpy.f2py', '@INPUT@', '-m', 'pyratp', '--lower']
+  command : [py, '-m', 'numpy.f2py', '@INPUT@', '-m', 'pyratp', '--build-dir', '@OUTDIR@', '--lower']
 )
 
 inc_np = include_directories(incdir_numpy, incdir_f2py)
