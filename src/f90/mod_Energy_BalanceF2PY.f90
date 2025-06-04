@@ -990,7 +990,7 @@ contains
 !!TEST Brenqt
     
     call sub_brent(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen,par_irrad,caref,&
-    &HRsol,VPDair,xstar,EnergBilan,-90.0,150.0,xtoler_in=2.0*epsilon(0.0),printmod_in=0)
+    &HRsol,VPDair,xstar,-90.0,150.0,xtoler_in=2.0*epsilon(0.0),printmod_in=0)
 !    write(*,*) 'f(',xstar,')=',EnergBilan(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,&
 !    &leaf_nitrogen,par_irrad,caref,HRsol,VPDair,xstar)
 !    6- Updating leaf temperature (and emitted TIR radiation) for next iteration
@@ -1480,24 +1480,24 @@ contains
   end function
    
  subroutine sub_brent(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
- &HRsol,VPDair,x,f,a_in,b_in,toler_in,maxiter_in,fa_in,fb_in,xtoler_in,printmod_in)
+ &HRsol,VPDair,x,a_in,b_in,toler_in,maxiter_in,fa_in,fb_in,xtoler_in,printmod_in)
     !! From  https://sites.google.com/site/greygordon/code
-    implicit none    
+    implicit none
     real :: sigma, rn,rho,cp,taref,rh
     real :: gamma,ga,earef,leaf_nitrogen, par_irrad,caref,HRsol,VPDair
-    integer :: jent 
+    integer :: jent
     real, intent(out) :: x
-    interface
-        function f(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
-        &HRsol,VPDair,x)
-        implicit none
-        real :: sigma, rn ,rho,cp,taref,rh 
-        real :: gamma,ga,earef,leaf_nitrogen, par_irrad,caref,HRsol,VPDair 
-        integer :: jent 
-        real, intent(in) :: x
-        real :: f
-        end function f
-    end interface
+!    interface
+!        function f(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
+!        &HRsol,VPDair,x)
+!        implicit none
+!        real :: sigma, rn ,rho,cp,taref,rh
+!        real :: gamma,ga,earef,leaf_nitrogen, par_irrad,caref,HRsol,VPDair
+!        integer :: jent
+!        real, intent(in) :: x
+!        real :: f
+!        end function f
+!    end interface
     real, intent(in) :: a_in,b_in
     real, intent(in), optional :: toler_in,fa_in,fb_in,xtoler_in
     integer, intent(in), optional :: maxiter_in, printmod_in
@@ -1507,10 +1507,11 @@ contains
     integer :: maxiter,printmod,iter
     character(len=6) :: step
 
+
     ! Set of get parameters
     toler = 0.0; if (present(toler_in)) toler = toler_in ! Better to use custom toler here
     xtoler = xtoler_def; if (present(xtoler_in)) xtoler = xtoler_in
-    maxiter = maxiter_def; if (present(maxiter_in)) maxiter = maxiter_in    
+    maxiter = maxiter_def; if (present(maxiter_in)) maxiter = maxiter_in
     printmod = printmod_def; if (present(printmod_in)) printmod = printmod_in
 
     ! Set the user chosen tolerance t to xtoler
@@ -1519,24 +1520,24 @@ contains
         xtoler = 0.0
     end if
     t = xtoler
-    
+
     ! Get initial bracket
     a=a_in
     b=b_in
     if (present(fa_in)) then
         fa = fa_in
     else
-        fa = f(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
+        fa = EnergBilan(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
         &HRsol,VPDair,a)
     end if
 !    write(*,*) 'f(a)', fa
-    
+
     if (present(fb_in)) then
         fb = fb_in
     else
-        fb = f(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
+        fb = EnergBilan(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
         HRsol,VPDair,b)
-    end if   
+    end if
  !  write(*,*) 'f(b)', fb
 
     ! Test whether root is bracketed
@@ -1553,7 +1554,7 @@ contains
 
     step = 'init'
 
-    ! At any point in time, b is the best guess of the root, a is the previous value of b, 
+    ! At any point in time, b is the best guess of the root, a is the previous value of b,
     ! and the root is bracketed by b and c.
     do iter = 1,maxiter
 
@@ -1564,7 +1565,7 @@ contains
             d = e
         end if
 
-        ! If c is strictly better than b, swap b and c so b is the best guess. 
+        ! If c is strictly better than b, swap b and c so b is the best guess.
         if (abs(fc)<abs(fb)) then
             a = b
             b = c
@@ -1599,7 +1600,7 @@ contains
                 r = fb/fc
                 p = s*(2.0*m*q*(q-r) - (b-a)*(r-1.0))
                 q = (q-1.0)*(r-1.0)*(s-1.0)
-                
+
                 step = 'quad'
             else
                 ! Linear interpolation
@@ -1631,19 +1632,19 @@ contains
         else
 
             ! Do bisection step
-            e = m 
+            e = m
             d = m
-            
+
         end if
 
-        ! Get new points. 
+        ! Get new points.
         !! Replace a (the old b) with b.
         a = b
         fa = fb
 
         !!! Increment b by d if that is greater than the tolerance. O/w, increment by tol.
         if (abs(d)<=tol) then
-            ! m is .5*(c-b) with the bracket either [b,c] or [c,b]. 
+            ! m is .5*(c-b) with the bracket either [b,c] or [c,b].
             if (m > 0.0) then
                 ! If m>0.0, then bracket is [b,c] so move towards c by tol
                 b = b + tol
@@ -1656,15 +1657,15 @@ contains
         end if
 
         !!! Evaluate at the new point
-        fb = f(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
+        fb = EnergBilan(rn,sigma,rho,cp,taref,rh,gamma,ga,jent,earef,leaf_nitrogen, par_irrad,caref,&
         &HRsol,VPDair,b)
 
-        ! Check my custom tolerance 
+        ! Check my custom tolerance
         if (abs(fb)<toler) then
             x = b
             return
         end if
-            
+
     end do
 
  end subroutine sub_brent
