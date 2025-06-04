@@ -17,11 +17,15 @@ where = ["src"]
 # can be empty if no extra settings are needed, presence enables setuptools-scm
 
 [project]
-name = "alinea.pyratp"
+name = "openalea.ratp"
 authors = [
+  { name = "Hervé Sinoquet" },
+  { name = "Marc Saudreau" },
   { name = "Christophe Pradal" },
+  { name = "Fabrice Bauget" },
+
 ]
-description = "The Alinea.PyRATP package is a typical package example to help developper to create their own package, compatible with OpenAlea standards."
+description = "TODO: description of the package"
 readme = "README.md"
 license = "CECILL-C"
 license-files = ["LICEN[CS]E*"]
@@ -35,6 +39,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering",
+  "Framework :: OpenAlea",
 ]
 dynamic = ["version"]
 
@@ -75,4 +80,4 @@ Changelog = "https://github.com/openalea-incubator/PyRATP/releases"
 "pyratp_data" = ['*.pyd', '*.so'] # not following actual guidelines 02/06/2025 not sure but I feel it is needed
 
 [project.entry-points."wralea"]
-"pyratp" = "openalea.alinea.pyratp_wralea"
+"pyratp" = "openalea.ratp_wralea"
