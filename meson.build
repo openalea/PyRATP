@@ -1,18 +1,21 @@
 project('PyRATP', 'c',
-  version : '0.1',
-  license: 'BSD-3',
+  version : '1.0.0',
+  license: 'CeCILL-C',
   meson_version: '>=0.64.0',
   default_options : ['warning_level=0'],
 )
 
 add_languages('fortran')
 
+subdir('src/openalea/ratp')
+
+
 py_mod = import('python')
 py = py_mod.find_installation(pure: false)
 py_dep = py.dependency()
 
 sources = files([
-  'src/f90/mod_Cocnstant_ValuesF2PY.f90',
+  'src/f90/mod_Constant_ValuesF2PY.f90',
   'src/f90/mod_Grid3DF2PY_64bit.f90',
   'src/f90/mod_SkyvaultF2PY.f90',
   'src/f90/mod_Vegetation_TypesF2PY.f90',
@@ -36,15 +39,15 @@ incdir_f2py = run_command(py,
     check : true
 ).stdout().strip()
 
-ratp_source = custom_target('ratp.c',
+ratp_source = custom_target('pyratpmodule.c',
   input : sources,
-  output : ['ratpmodule.c', 'ratp-f2pywrappers2.f90'],
-  command : [py, '-m', 'numpy.f2py', '@INPUT@', '-m', 'ratp', '--lower']
+  output : ['pyratpmodule.c', 'pyratp-f2pywrappers2.f90'],
+  command : [py, '-m', 'numpy.f2py', '@INPUT@', '-m', 'pyratp', '--lower']
 )
 
 inc_np = include_directories(incdir_numpy, incdir_f2py)
 
-py.extension_module('ratp',
+py.extension_module('pyratp',
   [sources, ratp_source],
   incdir_f2py / 'fortranobject.c',
   include_directories: inc_np,
