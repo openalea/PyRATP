@@ -1,6 +1,6 @@
 
-from alinea.pyratp import *
-from alinea.pyratp import grid
+from openalea.ratp import *
+from openalea.ratp import grid
 from qtpy import QtWidgets, QtGui
 #from PyQt4 import QtCore, QtGui
 from openalea.core.interface import * #IGNORE:W0614,W0401

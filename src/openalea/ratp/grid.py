@@ -5,8 +5,8 @@ import numpy as np
 import pandas
 import scipy.io as io
 
-from alinea.pyratp import pyratp
-import alinea.pyratp.vege3D as vege3D
+from . import pyratp
+import .vege3D as vege3D
 
 
 def relative_index(x, dx):
@@ -77,7 +77,7 @@ def grid_index(x, y, z, grid, toric=True):
     return map(lambda x: x.astype(int).tolist(), [jx, jy, jz])
 
 
-class Grid(object):
+class Grid:
     """A python class interface to pyratp grid3d object
     """
     def __init__(self, *args, **kwds):

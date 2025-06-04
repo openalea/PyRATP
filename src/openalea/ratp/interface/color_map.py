@@ -1,4 +1,4 @@
-class ColorMap(object):
+class ColorMap:
     """A RGB color map, between 2 colors defined in HSV code
     """
 

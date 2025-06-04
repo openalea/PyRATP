@@ -4,14 +4,13 @@
 """
 """
 
-from alinea.pyratp import pyratp
+from . import pyratp
 import numpy as np
 import os
 import shutil
 import tempfile
 import sys
-from alinea.pyratp import grid
-import subprocess
+from . import grid
 import platform
 
 class runRATP(object):

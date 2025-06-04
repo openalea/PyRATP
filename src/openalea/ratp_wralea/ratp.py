@@ -1,17 +1,16 @@
 from openalea.core import *
 
-from alinea.pyratp import skyvault
-from alinea.pyratp import grid
-from alinea.pyratp import vegetation
-from alinea.pyratp import micrometeo
-from alinea.pyratp import runratp
-from alinea.pyratp import mtg_extract
-from alinea.pyratp import can2riri
-from alinea.pyratp.RATP2VTK import RATP2VTK
-from alinea.pyratp.RATP2VTK import RATPVOXELS2VTK
-from alinea.pyratp.RATP2VTK import PlantGL2VTK
-from alinea.pyratp import Nallocate
-
+from openalea.ratp import (
+    skyvault,
+    grid,
+    vegetation,
+    micrometeo,
+    runratp,
+    mtg_extract,
+    can2riri,
+    Nallocate
+)
+from openalea.ratp.RATP2VTK import RATP2VTK, RATPVOXELS2VTK, PlantGL2VTK
 
 
 read_grid = grid.Grid.read

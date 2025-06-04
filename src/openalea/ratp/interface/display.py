@@ -2,8 +2,8 @@ import warnings
 from itertools import chain
 from math import isnan
 
-from alinea.pyratp.interface.color_map import ColorMap
-import pyratpmobidiv.interface.pgl_scene as pgls
+from .color_map import ColorMap
+import .pgl_scene as pgls
 
 
 def jet_colors(x, minval=None, maxval=None):

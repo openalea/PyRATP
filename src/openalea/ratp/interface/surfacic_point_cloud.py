@@ -1,10 +1,12 @@
 import numpy
 import pandas
-from alinea.pyratp.interface.geometry import spherical, surface, normal, \
+from .geometry import (
+    spherical, surface, normal, 
     centroid, random_normals, equilateral, move_points
+    )
 
 
-class SurfacicPointCloud(object):
+class SurfacicPointCloud:
     """Python data structure for linking labelled mesh scene to ratp input"""
 
     units = {'mm': 0.001, 'cm': 0.01, 'dm': 0.1, 'm': 1, 'dam': 10, 'hm': 100,

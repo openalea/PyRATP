@@ -5,19 +5,19 @@
 """ A high level class interface to RATP
 """
 from collections import Iterable
-import pyratpmobidiv.interface.pgl_scene as pgls
-from alinea.pyratp.interface.display import display_property
+import .pgl_scene as pgls
+from .display import display_property
 import numpy
 import pandas
-from alinea.pyratp.grid import Grid
-from alinea.pyratp.interface.clumping_index import get_clumping
-from alinea.pyratp.interface.geometry import unit_square_mesh
-from alinea.pyratp.interface.smart_grid import SmartGrid
-from alinea.pyratp.interface.surfacic_point_cloud import SurfacicPointCloud
-from alinea.pyratp.micrometeo import MicroMeteo
-from alinea.pyratp.runratp import runRATP
-from alinea.pyratp.skyvault import Skyvault
-from alinea.pyratp.vegetation import Vegetation
+from ..grid import Grid
+from .clumping_index import get_clumping
+from .geometry import unit_square_mesh
+from .smart_grid import SmartGrid
+from .surfacic_point_cloud import SurfacicPointCloud
+from ..micrometeo import MicroMeteo
+from ..runratp import runRATP
+from ..skyvault import Skyvault
+from ..vegetation import Vegetation
 
 
 def sample_database():

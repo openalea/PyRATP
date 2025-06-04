@@ -5,12 +5,12 @@
 
 """
 
-from alinea.pyratp import pyratp
-#import pyRATP
+from . import pyratp
 import numpy as np
 import math
 import os
-class MicroMeteo(object):
+
+class MicroMeteo:
     """
     """
     def __init__(self, *args, **kwds):

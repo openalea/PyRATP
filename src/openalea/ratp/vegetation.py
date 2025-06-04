@@ -5,7 +5,7 @@
 
 """
 
-from alinea.pyratp import pyratp
+from . import pyratp
 #import pyRATP
 import numpy as np
 import math

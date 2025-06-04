@@ -6,7 +6,7 @@
 """
 
 import numpy
-from alinea.pyratp.interface.geometry import move_points
+from .geometry import move_points
 from scipy import spatial
 
 

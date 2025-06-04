@@ -6,7 +6,7 @@ import platform
 
 ## Parametres a sortir dans un widgets: nb voxels pour intialiser PAR_voxmean, aN et bN, nb de jours pour moyenner
 
-class Nallocate(object):
+class Nallocate:
     """
     """
     def __init__(self, *args, **kwds):

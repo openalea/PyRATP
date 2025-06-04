@@ -9,13 +9,13 @@ import numpy
 import pandas
 from functools import reduce
 
-from alinea.pyratp.skyvault import Skyvault
-from alinea.pyratp.grid import Grid
-from alinea.pyratp.vegetation import Vegetation
-from alinea.pyratp.micrometeo import MicroMeteo
-from alinea.pyratp.runratp import runRATP
+from .skyvault import Skyvault
+from .grid import Grid
+from .vegetation import Vegetation
+from .micrometeo import MicroMeteo
+from .runratp import runRATP
 
-from alinea.pyratp.clumping_index import clark_evans
+from .clumping_index import clark_evans
 
 from openalea.plantgl import all as pgl
 
@@ -116,7 +116,7 @@ def sample_database():
     """
     return {'Montpellier': {'city': 'Montpellier', 'latitude':43.61, 'longitude':3.87}}
 
-class RatpScene(object):
+class RatpScene:
     """ High level class interface for RATP
     """
     

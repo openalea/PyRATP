@@ -1,7 +1,6 @@
 import sys
 from openalea.mtg.aml import *
 from openalea.plantgl.all import *
-import cPickle
 
 g = MTG("mtg_test.txt")
 
