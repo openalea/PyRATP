@@ -24,7 +24,7 @@ incdir_numpy = run_command(py, [
     '-c',
     '''import os, numpy as np
 try:
-    print(os.path.relpath(np.get_include()))
+    print(os.path.abspath(np.get_include()))
 except:
     print(np.get_include())
     ''',

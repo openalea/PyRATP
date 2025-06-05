@@ -8,7 +8,7 @@
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
 {% set conda_deps = pyproject.get('tool', {}).get('conda-environment', {}).get('dependencies',[]) %}
 {% set build_suffix = environ.get('BUILD_SUFFIX', '') %}
-
+{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: {{ name }}
@@ -74,5 +74,5 @@ extra:
     - baugetfa
 
 
-{% set native = 'm2w64-' if win else '' %}
+
 

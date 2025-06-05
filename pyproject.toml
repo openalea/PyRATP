@@ -23,8 +23,8 @@ authors = [
   { name = "Marc Saudreau" },
   { name = "Christophe Pradal" },
   { name = "Fabrice Bauget" },
-
 ]
+version="2.2.0"
 description = "TODO: description of the package"
 readme = "README.md"
 license = "CECILL-C"
@@ -56,7 +56,6 @@ channels = [
   "conda-forge"
 ]
 dependencies = [
-
     "openalea.mtg",
     "openalea.plantgl",
 ]
