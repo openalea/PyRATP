@@ -7,6 +7,7 @@
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
 {% set conda_deps = pyproject.get('tool', {}).get('conda-environment', {}).get('dependencies',[]) %}
+{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: {{ name }}
@@ -37,6 +38,7 @@ requirements:
     - {{ compiler('c') }}
     #- compilers
     - {{ native }}toolchain   # [win]
+    - charset-normalizer
   run:
     - python
     {% for dep in deps + conda_deps %}
@@ -44,6 +46,7 @@ requirements:
     {% endfor %}
     - {{ native }}toolchain   # [win]
     - {{ pin_compatible('numpy') }}
+    - charset-normalizer
 
 test:
   requires:
@@ -51,9 +54,9 @@ test:
     - nbmake
   imports:
     - {{ name }}
-  source_files:
-    - test/test_*.py
-    - doc/notebooks/*.ipynb
+#  source_files:
+#    - test/test_*.py
+#    - doc/notebooks/*.ipynb
   commands:
    - pytest -v
    - pytest --nbmake
@@ -62,7 +65,7 @@ about:
   home: {{ home }}
   license: {{ license }}
   summary: {{ description }}
-  
+
 extra:
   recipe-maintainers:
     - pradal

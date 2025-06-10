@@ -26,7 +26,7 @@ authors = [
   { name = "Fabrice Bauget" },
 ]
 #version="2.2.0"
-description = "TODO: description of the package"
+description = "RATP - Radiation, Absorption, Transpiration and photosythesis Python and Fortran package."
 readme = "README.md"
 license = "CECILL-C"
 license-files = ["LICEN[CS]E*"]
