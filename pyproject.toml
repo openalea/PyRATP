@@ -4,9 +4,10 @@ requires = [
     "setuptools",
     "setuptools_scm",
     "meson-python",
+    "numpy", # mandatory for incdir_numpy in meson.build
   ]
 #build-backend = "setuptools.build_meta"
-build-backend = 'mesonpy'
+build-backend = "mesonpy"
 
 # allow openalea to be a namespace package
 [tool.setuptools.packages.find]
@@ -24,7 +25,7 @@ authors = [
   { name = "Christophe Pradal" },
   { name = "Fabrice Bauget" },
 ]
-version="2.2.0"
+#version="2.2.0"
 description = "TODO: description of the package"
 readme = "README.md"
 license = "CECILL-C"
@@ -52,8 +53,8 @@ dependencies = [
 # section specific to conda-only distributed package (not used by pip yet)
 [tool.conda.environment]
 channels = [
-  "openalea3",
-  "conda-forge"
+    "openalea3",
+    "conda-forge"
 ]
 dependencies = [
     "openalea.mtg",

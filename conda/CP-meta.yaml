@@ -7,6 +7,8 @@
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
 {% set conda_deps = pyproject.get('tool', {}).get('conda-environment', {}).get('dependencies',[]) %}
+{% set build_suffix = environ.get('BUILD_SUFFIX', '') %}
+{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: {{ name }}
@@ -16,54 +18,61 @@ source:
   path: ..
 
 build:
-  noarch: python
   number: 0
+  string: py{{ PY_VER }}{{ build_suffix }}
   preserve_egg_dir: True
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
+  script:
+    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
 requirements:
   host:
     - python
-    {% for dep in build_deps %}
-    - {{ dep }}
-    {% endfor  %}
+    - numpy
+
   build:
-    - python
-    {% for dep in build_deps %}
-    - {{ dep }}
-    {% endfor  %}
+    - {{ compiler("cxx") }}
+    - meson # Maybe deprecated for current version
+    - setuptools
+    - setuptools-scm
+    - meson-python
     - {{ compiler('fortran') }}  # [not win]
-    - m2w64-gcc-fortran           # [win]
-    - {{ compiler('c') }}
+    - {{ compiler('c') }} 
     #- compilers
     - {{ native }}toolchain   # [win]
+    - charset-normalizer
+
   run:
     - python
-    {% for dep in deps + conda_deps %}
-    - {{ dep }}
-    {% endfor %}
-    - {{ native }}toolchain   # [win]
-    - {{ pin_compatible('numpy') }}
+    - numpy
+    - charset-normalizer
+    - {{ native }}toolchain  # [win]
+    - scipy
+    - pandas
+    - meson # Maybe deprecated for current version
+    - charset-normalizer
+
 
 test:
+  imports:
+    - openalea.ratp
+    - openalea.ratp.pyratp
   requires:
     - pytest
-    - nbmake
-  imports:
-    - {{ name }}
   source_files:
-    - test/test_*.py
-    - doc/notebooks/*.ipynb
+    - test/
   commands:
-   - pytest -v
-   - pytest --nbmake
+    - pytest
 
 about:
   home: {{ home }}
-  license: {{ license }}
   summary: {{ description }}
-  
+  license: {{ license }}
+
 extra:
   recipe-maintainers:
     - pradal
     - baugetfa
+
+
+
+
