@@ -17,7 +17,6 @@ source:
   path: ..
 
 build:
-  noarch: python
   number: 0
   preserve_egg_dir: True
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
