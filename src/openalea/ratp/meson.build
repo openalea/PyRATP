@@ -62,7 +62,7 @@ python_sources = [
   'interception.py',
   'IOtable.py',
   'micrometeo.py',
-  'mineral_pheno.py',
+  'miner_pheno.py',
   'mtg_extract.py',
   'mtg2ratp.py',
   'Nallocate.py',
