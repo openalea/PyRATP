@@ -72,7 +72,7 @@ python_sources = [
   'runratp.py',
   'shortwave_balance.py',
   'skyvault.py',
-  'vegetation_types.py',
+  'vegetation_type.py',
   'vegetation.py',  
   'vege3D.py',
 ]
