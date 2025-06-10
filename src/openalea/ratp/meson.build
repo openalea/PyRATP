@@ -82,3 +82,5 @@ py.install_sources(
   pure: false,
   subdir: 'openalea/ratp'
 )
+
+subdir('interface')
