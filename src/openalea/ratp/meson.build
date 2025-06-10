@@ -49,5 +49,36 @@ py.extension_module('pyratp',
   dependencies : py_dep,
   install : true,
   link_language: 'fortran',
-   subdir: 'openalea.ratp',
+  subdir: 'openalea/ratp',
+)
+
+python_sources = [
+  '__init__.py',
+  'can2riri.py',
+  'clumping_index.py', 
+  'energy_balance.py',
+  'grid.py',
+  'hemi_interception.py',
+  'interception.py',
+  'IOtable.py',
+  'micrometeo.py',
+  'mineral_pheno.py',
+  'mtg_extract.py',
+  'mtg2ratp.py',
+  'Nallocate.py',
+  'photosynthesis.py',
+  'RATP2VTK.py',
+  'RatpScene.py',
+  'runratp.py',
+  'shortwave_balance.py',
+  'skyvault.py',
+  'vegetation_types.py',
+  'vegetation.py',  
+  'vege3D.py',
+]
+
+py.install_sources(
+  python_sources,
+  pure: false,
+  subdir: 'openalea/ratp'
 )
