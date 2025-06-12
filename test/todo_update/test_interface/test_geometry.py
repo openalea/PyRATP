@@ -1,5 +1,5 @@
 import numpy
-from alinea.pyratp.interface.geometry import normed, spherical, cartesian, \
+from openalea.ratp.interface.geometry import normed, spherical, cartesian, \
     surface, normal, centroid, random_normals, move_points, unit_square_mesh
 
 

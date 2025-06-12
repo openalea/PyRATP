@@ -6,7 +6,7 @@ import pandas
 import scipy.io as io
 
 from . import pyratp
-import .vege3D as vege3D
+from . import vege3D
 
 
 def relative_index(x, dx):
@@ -74,7 +74,8 @@ def grid_index(x, y, z, grid, toric=True):
     rev_index = grid.njz - index - 1
     jz = np.where((z >= 0) & (z <= dh.max()), rev_index, -1)
 
-    return map(lambda x: x.astype(int).tolist(), [jx, jy, jz])
+    # return map(lambda x: x.astype(int).tolist(), [jx, jy, jz])
+    return jx, jy, jz
 
 
 class Grid:
@@ -110,7 +111,7 @@ class Grid:
 
         # voxel size according to X- Y- and Z- axis
         # TEST
-        grid3d.dx, grid3d.dy, grid3d.dz[:-1] = dx, dy, np.array(dz, dtype=np.float)
+        grid3d.dx, grid3d.dy, grid3d.dz[:-1] = dx, dy, np.array(dz, dtype=np.float32)
         # 3D grid origin
         grid3d.xorig, grid3d.yorig, grid3d.zorig = xorig, yorig, zorig
 
@@ -132,7 +133,7 @@ class Grid:
 
         # number of wavelength bands for the soil surface
         grid3d.nblosoil = int(len(rs))
-        grid3d.rs = np.array(rs, dtype=np.float)
+        grid3d.rs = np.array(rs, dtype=np.float32)
 
         # isolated or toric scene ?
         grid3d.int_isolated_box = int(not toric)
@@ -419,7 +420,7 @@ class Grid:
             dx, dy , dz = grid.dx, grid.dy, grid.dz
             k = 0
             for i in range(len(x)):
-                jx, jy, jz = Jx[i], Jy[i], Jz[i]
+                jx, jy, jz = int(Jx[i]), int(Jy[i]), int(Jz[i])
 
                 #Cas ou il n'y avait encore rien dans la cellule (jx,jy,jz) (en fortran id>0)
                 if grid.kxyz[jx, jy, jz] == 0 :

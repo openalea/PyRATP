@@ -280,7 +280,8 @@ class SmartGrid(object):
         jjx = jx
         jjy = nby - jy - 1
         jjz = nbz - jz - 1
-        return map(lambda x: x.astype(int).tolist(), [jjx, jjy, jjz])
+        # return map(lambda x: x.astype(int).tolist(), [jjx, jjy, jjz])
+        return jjx, jjy, jjz
 
     def decode_ratp_indices(self, jjx, jjy, jjz):
         """ Return smart_grid indices associated to RATP grid indices"""

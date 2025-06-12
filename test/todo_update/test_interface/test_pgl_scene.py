@@ -1,4 +1,4 @@
-import alinea.pyratp.interface.pgl_scene as pgls
+import openalea.ratp.interface.pgl_scene as pgls
 import numpy
 
 if pgls.pgl_imported:

@@ -8,6 +8,7 @@
 import numpy
 from .geometry import move_points
 from scipy import spatial
+from functools import reduce
 
 
 def _domain(pts):
@@ -126,6 +127,6 @@ def expand_points(x, y, z, s, n, domain=None):
 def get_clumping(x, y, z, s, n=None, domain=None, expand=True):
     if expand and n is not None:
         x, y, z = expand_points(x, y, z, s, n, domain=domain)
-    return clark_evans(zip(x, y, z), domain)
+    return clark_evans(list(zip(x, y, z)), domain)
 
 

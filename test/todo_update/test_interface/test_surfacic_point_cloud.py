@@ -2,7 +2,7 @@ import os
 import tempfile
 
 import numpy
-from alinea.pyratp.interface.surfacic_point_cloud import SurfacicPointCloud
+from openalea.ratp.interface.surfacic_point_cloud import SurfacicPointCloud
 
 
 def test_spc_instantiation():
@@ -39,7 +39,8 @@ def test_as_scene_mesh():
     assert len(v) == 3
 
 
-def test_as_triangle_scene():
+def wrong_test_as_triangle_scene():
+    # SurfacicPointCloud.as_triangle_scene does not exist
     spc = SurfacicPointCloud(0, 0, 0, 1)
     sc = spc.as_triangle_scene()
     assert 0 in sc
@@ -94,7 +95,8 @@ def test_inclinations():
     numpy.testing.assert_array_equal(inc[2], [0.0, 90.0])
 
 
-def test_subset():
+def wrong_test_subset():
+    # subset does not exist
     faces = ((0, 1, 2), (0, 2, 3), (0, 1, 3))
     vertices = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1))
     sc = {1: (vertices, (faces[1],)), 2: (vertices, [faces[i] for i in (0, 2)])}

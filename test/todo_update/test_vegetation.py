@@ -1,5 +1,4 @@
-from alinea.pyratp.vegetation import Vegetation
-import numpy
+from openalea.ratp.vegetation import Vegetation
 
 def test_read():
     fn ='vegetationa_2004.vfn'
@@ -8,8 +7,7 @@ def test_read():
 
     assert veg.nbincli[1] == 9
     assert veg.nblo[1] == 2
-    
-    return veg
+
     
 def test_initialise():
 
@@ -20,5 +18,3 @@ def test_initialise():
     
     veg = Vegetation.initialise(nblomin=2)
     assert veg.nblo[0] == 2
-    
-    return veg

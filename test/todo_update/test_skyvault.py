@@ -1,4 +1,4 @@
-from alinea.pyratp.skyvault import Skyvault
+from openalea.ratp.skyvault import Skyvault
 import numpy
 
 def test_read():
@@ -20,7 +20,7 @@ def test_read():
     numpy.testing.assert_allclose(sky.hmoy, expected_hmoy, atol=1e-4)
 
     
-    return sky
+    assert sky
     
 def test_initialise():
 

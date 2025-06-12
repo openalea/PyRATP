@@ -1,5 +1,5 @@
 import numpy
-from alinea.pyratp.interface.display import jet_colors, property_as_colors, \
+from openalea.ratp.interface.display import jet_colors, property_as_colors, \
     display_property
 
 

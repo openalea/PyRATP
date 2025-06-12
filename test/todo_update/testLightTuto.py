@@ -4,7 +4,7 @@
 import numpy as np
 
 import openalea.plantgl.all as pgl
-from alinea.pyratp.RatpScene import RatpScene
+from openalea.ratp.RatpScene import RatpScene
 
 
 def test_pommier(display=False):
@@ -24,9 +24,9 @@ def test_pommier(display=False):
     if display:
         ratp.plot(out)
     
-    print 'clumping within voxels: ', ratp.mu
-    print 'orientations: ', ratp.distinc
+    print('clumping within voxels: ', ratp.mu)
+    print('orientations: ', ratp.distinc)
     
-    return out
+    # return out
     
 

@@ -1,9 +1,9 @@
 import numpy as np
-from alinea.pyratp.skyvault import Skyvault
-from alinea.pyratp.grid import Grid
-from alinea.pyratp.vegetation import Vegetation
-from alinea.pyratp.micrometeo import MicroMeteo
-from alinea.pyratp.runratp import runRATP
+from openalea.ratp.pyratp.skyvault import Skyvault
+from openalea.ratp.pyratp.grid import Grid
+from openalea.ratp.pyratp.vegetation import Vegetation
+from openalea.ratp.pyratp.micrometeo import MicroMeteo
+from openalea.ratp.pyratp.runratp import runRATP
 
 import sys
 

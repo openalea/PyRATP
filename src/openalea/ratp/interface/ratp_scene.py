@@ -4,8 +4,8 @@
 
 """ A high level class interface to RATP
 """
-from collections import Iterable
-import .pgl_scene as pgls
+from collections.abc import Iterable
+from . import pgl_scene as pgls
 from .display import display_property
 import numpy
 import pandas
@@ -303,7 +303,7 @@ class RatpScene(object):
         res = runRATP.DoIrradiation(grid, vegetation, sky, met)
 
         VegetationType, Iteration, day, hour, VoxelId, ShadedPAR, SunlitPAR, \
-        ShadedArea, SunlitArea = res.T
+        ShadedArea, SunlitArea, xintav, rdtv = res.T # see mod_prog_RATP.f90 2 var were missing
         # 'PAR' is expected in  Watt.m-2 in RATP input, whereas output is in
         #  micromol => convert back to W.m2 (cf shortwavebalance, line 306)
         dfvox = pandas.DataFrame({'VegetationType': VegetationType,
@@ -320,6 +320,8 @@ class RatpScene(object):
                                          ShadedPAR * ShadedArea + SunlitPAR *
                                          SunlitArea) / (
                                          ShadedArea + SunlitArea) / 4.6,
+                                  'xintav' : xintav,
+                                  'rdtv' : rdtv,
                                   })
 
         return pandas.merge(dfvox, self.voxel_index())

@@ -3,7 +3,7 @@ from itertools import chain
 from math import isnan
 
 from .color_map import ColorMap
-import .pgl_scene as pgls
+from . import pgl_scene as pgls
 
 
 def jet_colors(x, minval=None, maxval=None):

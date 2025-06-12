@@ -5,7 +5,7 @@
 
 """
 # Verifi? avec lecture de fichier vgx le 28/01/2011 MS certified
-##from alinea.pyratp import pyratp
+##from openalea.ratp import pyratp
 
 from qtpy import QtCore
 import random

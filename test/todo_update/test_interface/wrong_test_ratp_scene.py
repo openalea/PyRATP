@@ -1,6 +1,11 @@
+#
+# problem several attributes do not exist for class RatpScene
+# and for ratp.do_irradiation use of unexisting argument
+#
+
 import numpy
-from alinea.pyratp.interface.ratp_scene import RatpScene, pgls
-from alinea.pyratp.interface.surfacic_point_cloud import SurfacicPointCloud
+from openalea.ratp.interface.ratp_scene import RatpScene, pgls
+from openalea.ratp.interface.surfacic_point_cloud import SurfacicPointCloud
 
 
 def test_instanciation():

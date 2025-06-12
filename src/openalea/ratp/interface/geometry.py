@@ -48,7 +48,7 @@ def centroid(face, vertices):
 def random_normals(size=1):
     theta = numpy.pi / 2 * numpy.random.random_sample(size)
     phi = 2 * numpy.pi * numpy.random.random_sample(size)
-    return zip(*cartesian(theta, phi))
+    return list(zip(*cartesian(theta, phi))) # py2 to py3
 
 
 def rotation_matrix(axis, theta):

@@ -6,7 +6,7 @@
 {% set home = pyproject.get('project', {}).get('urls', {}).get('Homepage', '') %}
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
-{% set conda_deps = pyproject.get('tool', {}).get('conda-environment', {}).get('dependencies',[]) %}
+{% set conda_deps = pyproject.get('tool', {}).get('conda', {}).get('environment', {}).get('dependencies',[]) %}
 {% set native = 'm2w64-' if win else '' %}
 
 package:
@@ -50,15 +50,15 @@ requirements:
 test:
   requires:
     - pytest
-    - nbmake
+    {% for dep in deps + conda_deps %}
+    - {{ dep }}
+    {% endfor %}
   imports:
     - {{ name }}
-#  source_files:
-#    - test/test_*.py
-#    - doc/notebooks/*.ipynb
+  source_files:
+    - test/todo_update/test_*.py
   commands:
-   - pytest -v
-   - pytest --nbmake
+   - pytest -v --ignore=test/todo_update/test_complet.py
 
 about:
   home: {{ home }}

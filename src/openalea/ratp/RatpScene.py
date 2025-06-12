@@ -412,7 +412,7 @@ class RatpScene:
 
         """
         
-        grid, voxel_id, shape_id , areas = self.grid(rsoil=rsoil)
+        grid, voxel_id, shape_id , areas, mapping = self.grid(rsoil=rsoil)
                
         print(' '.join(['clumping evaluated:'] + [str(self.mu[i]) for i in range(len(rleaf))]))
         if mu is None:
@@ -428,7 +428,7 @@ class RatpScene:
 
         res = runRATP.DoIrradiation(grid, vegetation, sky, met)
         
-        VegetationType,Iteration,day,hour,VoxelId,ShadedPAR,SunlitPAR,ShadedArea,SunlitArea, xintav= res.T
+        VegetationType,Iteration,day,hour,VoxelId,ShadedPAR,SunlitPAR,ShadedArea,SunlitArea, xintav, rdtv= res.T # see mod_prog_RATP.f90 there are 11 values
         # 'PAR' is expected in  Watt.m-2 in RATP input, whereas output is in micromol => convert back to W.m2 (cf shortwavebalance, line 306)
         dfvox =  pandas.DataFrame({'VegetationType':VegetationType,
                             'Iteration':Iteration,
@@ -442,6 +442,7 @@ class RatpScene:
                             'Area': ShadedArea + SunlitArea,
                             'PAR': (ShadedPAR * ShadedArea + SunlitPAR * SunlitArea) / (ShadedArea + SunlitArea) / 4.6, 
                             'xintav' : xintav,
+                            'rdtv' : rdtv,
                             })
         dfvox = dfvox[dfvox['VegetationType'] > 0]
         index = range(len(voxel_id))

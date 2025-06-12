@@ -1,13 +1,14 @@
-from alinea.pyratp.micrometeo import MicroMeteo
+from openalea.ratp.micrometeo import MicroMeteo
 import numpy
 
 def test_read():
     fn ='mmeteo082050_1h.mto'
-    met = MicroMeteo.read(fn)
+    truesolartime = True # choix entre heure solaire ou heure locale
+    met = MicroMeteo.read(fn, truesolartime)
     expected = numpy.array([[234, 11, 2, 2, 0, 0, 0, 33.1, 33.1, 3288, 54, 1.1, 1],
        [234, 12, 2, 2, 0, 0, 0, 20.1, 20.1, 3288, 54, 1.1, 1]])
     numpy.testing.assert_allclose(met.tabmeteo, expected, atol=0.01)
-    return met
+    assert met
     
 def test_initialise():
     
@@ -24,5 +25,5 @@ def test_initialise():
                             [2, 13, 1, 1, 3, 0, 10, 20, 20, 1, 1, 1, 1]])
     numpy.testing.assert_allclose(met.tabmeteo, expected, atol=0.01)
     
-    return met
+    assert met
     

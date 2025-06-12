@@ -46,6 +46,8 @@ class SurfacicPointCloud:
 
         if normals is None:
             normals = random_normals(len(x))
+        else:
+            normals = list(normals) # because could be coming from a zip and in py3 does not have any length it is pure iterator
 
         if shape_id is None:
             shape_id = range(len(x))

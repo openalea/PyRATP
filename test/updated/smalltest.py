@@ -4,13 +4,13 @@
 import pandas
 import os
 
-from alinea.pyratp.skyvault import Skyvault
-from alinea.pyratp.grid import Grid
-from alinea.pyratp.vegetation import Vegetation
-from alinea.pyratp.micrometeo import MicroMeteo
-from alinea.pyratp.runratp import runRATP
+from openalea.ratp.skyvault import Skyvault
+from openalea.ratp.grid import Grid
+from openalea.ratp.vegetation import Vegetation
+from openalea.ratp.micrometeo import MicroMeteo
+from openalea.ratp.runratp import runRATP
 
-def test_pommier_veg(datafolder):
+def test_pommier_veg(datafolder='data'):
     # lecture du fichier grille
     fn = os.path.join(datafolder, 'grid3Da_2004.grd')
     g = Grid()
@@ -53,11 +53,11 @@ def test_pommier_veg(datafolder):
                         'intercepté' : Pintercepted,
                         'transmis' : Ptransmitted,
                         })
-    return dfvox
+    # assert dfvox
 
 if __name__ == "__main__":
     # dossier contenant les données
     datafolder = os.path.abspath(os.path.join("data"))
-    print(test_pommier_veg(datafolder))
+    print(test_pommier_veg('data'))
     
     print('--- END ---')
