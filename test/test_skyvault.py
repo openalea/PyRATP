@@ -2,7 +2,7 @@ from openalea.ratp.skyvault import Skyvault
 import numpy
 
 def test_read():
-    fn ='skyvaultsoc.skv'
+    fn ='data/skyvaultsoc.skv'
     sky = Skyvault.read(fn)
     assert sky.ndir == 46
     

@@ -56,9 +56,11 @@ test:
   imports:
     - {{ name }}
   source_files:
-    - test/todo_update/test_*.py
+    - test/test_*.py
+    - test/data/**
   commands:
-   - pytest -v --ignore=test/todo_update/test_complet.py
+   - cd test
+   - pytest -v --ignore=test_complet.py
 
 about:
   home: {{ home }}

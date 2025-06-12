@@ -2,7 +2,7 @@ from openalea.ratp.micrometeo import MicroMeteo
 import numpy
 
 def test_read():
-    fn ='mmeteo082050_1h.mto'
+    fn ='data/mmeteo082050_1h.mto'
     truesolartime = True # choix entre heure solaire ou heure locale
     met = MicroMeteo.read(fn, truesolartime)
     expected = numpy.array([[234, 11, 2, 2, 0, 0, 0, 33.1, 33.1, 3288, 54, 1.1, 1],

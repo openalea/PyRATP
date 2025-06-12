@@ -27,8 +27,8 @@ def property_as_colors(a_property, minval=None, maxval=None, gamma=None):
         property is a {shape_id: value} or {shape_id: list of values} dict
     """
 
-    values = a_property.values()
-    if isinstance(values[0], list):
+    values = list(a_property.values())
+    if isinstance(values[0], list): # why testing only the first 
         values = list(chain.from_iterable(values))
     values = nan_to_zero(values)
     if minval is None:
@@ -41,7 +41,7 @@ def property_as_colors(a_property, minval=None, maxval=None, gamma=None):
     if minval != maxval:
         norm = maxval - minval
     values = map(lambda x: ((x - minval) / float(norm)) ** gamma, values)
-    colors = jet_colors(values, 0, 1)
+    colors = list(jet_colors(values, 0, 1)) # according to the lines below needs to be a list
     color_property = {}
     for k, v in a_property.items():
         if isinstance(v, list):

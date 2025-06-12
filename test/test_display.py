@@ -15,7 +15,7 @@ def test_jet_colors():
                 (250, 45, 20),
                 (250, 20, 20),
                 (250, 20, 20)]
-    numpy.testing.assert_array_equal(colors, expected)
+    numpy.testing.assert_array_equal(list(colors), expected)
 
     colors = jet_colors(range(10), minval=0, maxval=100)
     expected = [(20, 20, 250),
@@ -29,7 +29,7 @@ def test_jet_colors():
                 (20, 111, 250),
                 (20, 123, 250)]
 
-    numpy.testing.assert_array_equal(colors, expected)
+    numpy.testing.assert_array_equal(list(colors), expected)
 
 
 def test_property_as_colors():

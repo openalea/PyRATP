@@ -1,7 +1,7 @@
 from openalea.ratp.vegetation import Vegetation
 
 def test_read():
-    fn ='vegetationa_2004.vfn'
+    fn ='data/vegetationa_2004.vfn'
     veg = Vegetation.read(fn)
     
 

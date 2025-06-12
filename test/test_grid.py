@@ -3,7 +3,9 @@ import numpy
 
 
 def test_read():
-    fn = 'essaiRATP2/RATP/grille/grid3Da_2004.grd'
+    fn = 'data/grid3Da_2004.grd'
+    import pathlib
+    import glob
     g = Grid()
     g = Grid.read(fn)
     assert (g.njx, g.njy ,g.njz) == (19,20,18)
