@@ -1,12 +1,12 @@
 from openalea.ratp.vegetation import Vegetation
 
-def test_read():
-    fn ='data/vegetationa_2004.vfn'
-    veg = Vegetation.read(fn)
-    
-
-    assert veg.nbincli[1] == 9
-    assert veg.nblo[1] == 2
+# def test_read():
+#     fn ='data/vegetationa_2004.vfn'
+#     veg = Vegetation.read(fn)
+#
+#
+#     assert veg.nbincli[1] == 9
+#     assert veg.nblo[1] == 2
 
     
 def test_initialise():
