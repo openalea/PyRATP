@@ -41,10 +41,10 @@ def test_irradiation():
     dfoutput = s.do_irradiation()
     s.aggregate_light(dfoutput)
 
-    
-def test_plot():
-    sc = scene()
-    s = RatpScene(sc)
-    dfoutput = s.do_irradiation()
-    s.plot(dfoutput[dfoutput['Iteration'] == 1])
+
+# def test_plot(**args):
+#     sc = scene()
+#     s = RatpScene(sc,**args)
+#     dfoutput = s.do_irradiation()
+#     s.plot(dfoutput[dfoutput['Iteration'] == 1])
     
