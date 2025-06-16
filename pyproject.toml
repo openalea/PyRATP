@@ -65,10 +65,12 @@ dependencies = [
 [project.optional-dependencies]
 test = ["pytest"]
 doc = [
-  "sphinx-favicon",
-  "sphinx-rtd-theme",
   "pydata-sphinx-theme",
   "myst-parser",
+  "sphinx-favicon",
+  "ipykernel",
+  "sphinx-copybutton",
+  "ipython_genutils",
   "nbsphinx",
 ]
 
