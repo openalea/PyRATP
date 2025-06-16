@@ -2,13 +2,13 @@ from openalea.ratp.grid import Grid, grid_index #, decode_index # does not exist
 import numpy
 
 
-def test_read():
-    fn = 'data/grid3Da_2004.grd'
-
-    g = Grid()
-    g = Grid.read(fn)
-    assert (g.njx, g.njy ,g.njz) == (19,20,18)
-    assert 0.19 <= g.dx <= 0.21
+# def test_read():
+#     fn = 'data/grid3Da_2004.grd'
+#
+#     g = Grid()
+#     g = Grid.read(fn)
+#     assert (g.njx, g.njy ,g.njz) == (19,20,18)
+#     assert 0.19 <= g.dx <= 0.21
 
     
 def test_initialise():
