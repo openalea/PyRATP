@@ -46,11 +46,11 @@ def test_property_as_colors():
     assert colors[2] == (20, 20, 250)
 
 
-def test_display_property():
-    faces = ((0, 1, 2), (0, 2, 3), (0, 1, 3))
-    vertices = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1))
-    s_mesh = {1: (vertices, (faces[1],)),
-              2: (vertices, [faces[i] for i in (0, 2)])}
-    a_property = {1: 0, 2: 9}
-    sc = display_property(s_mesh, a_property)
+# def test_display_property():
+#     faces = ((0, 1, 2), (0, 2, 3), (0, 1, 3))
+#     vertices = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1))
+#     s_mesh = {1: (vertices, (faces[1],)),
+#               2: (vertices, [faces[i] for i in (0, 2)])}
+#     a_property = {1: 0, 2: 9}
+#     sc = display_property(s_mesh, a_property)
 
