@@ -1,0 +1,16 @@
+name: ratp_dev
+channels:
+  - openalea3
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pandoc
+# list here manually conda-only deps (listed in [tool.conda.environment] section of pyproject)
+  - openalea.plantgl
+  - openalea.mtg
+  - pandas
+  - numpy
+# let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
+  - pip:
+      - -e ..[doc,test]
