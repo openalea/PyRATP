@@ -9,7 +9,7 @@ from openalea.ratp.RatpScene import RatpScene
 
 def test_pommier(display=False):
 
-    scene = pgl.Scene(r"./pommier.geom")
+    scene = pgl.Scene(r"data/pommier.geom")
     # rotate scene arround X+ then Z+ to get top of tree in Z+ and east/west 
     for sh in scene:
         sh.geometry = pgl.EulerRotated(np.radians(90), 0, np.radians(180), sh.geometry)
