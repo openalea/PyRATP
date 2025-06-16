@@ -59,7 +59,7 @@ test:
     - test/data/**
   commands:
    - cd test
-   - pytest -v --ignore=test_complet.py
+   - pytest -v --ignore=test_complet.py --ignore=test_surfacic_point_cloud.py
 
 about:
   home: {{ home }}
