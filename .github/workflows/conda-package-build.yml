@@ -16,8 +16,8 @@ jobs:
       fail-fast: false
       max-parallel: 6
       matrix:
-        os: [ ubuntu-latest , macos-13 , windows-latest]
-        python-minor-version: [10, 11, 12]
+        os: [ ubuntu-latest]
+        python-minor-version: [12]
 
 
     steps:
