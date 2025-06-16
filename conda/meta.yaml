@@ -32,7 +32,6 @@ requirements:
     - {{ dep }}
     {% endfor  %}
     - {{ compiler('fortran') }}  # [not win]
-    - m2w64-gcc-fortran           # [win]
     - {{ compiler('c') }}
     #- compilers
     - {{ native }}toolchain   # [win]
