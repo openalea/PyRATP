@@ -43,7 +43,7 @@ requirements:
     - {{ dep }}
     {% endfor %}
     - {{ native }}toolchain   # [win]
-    - {{ pin_compatible('numpy') }}
+#    - {{ pin_compatible('numpy') }}
     - charset-normalizer
 
 test:
