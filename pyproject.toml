@@ -1,0 +1,87 @@
+# FB 2025-04-14: based on ADEL and hydroshoot, sphinx pkg in environment.yml
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools_scm",
+    "meson-python",
+    "numpy>1.22", # mandatory for incdir_numpy in meson.build
+  ]
+#build-backend = "setuptools.build_meta"
+build-backend = "mesonpy"
+
+# allow openalea to be a namespace package
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# enable dynamic versioning based on git tags
+[tool.setuptools_scm]
+# can be empty if no extra settings are needed, presence enables setuptools-scm
+
+[project]
+name = "openalea.ratp"
+authors = [
+  { name = "Hervé Sinoquet" },
+  { name = "Marc Saudreau" },
+  { name = "Christophe Pradal" },
+  { name = "Fabrice Bauget" },
+]
+#version="2.2.0"
+description = "RATP - Radiation, Absorption, Transpiration and photosythesis Python and Fortran package."
+readme = "README.md"
+license = "CECILL-C"
+license-files = ["LICEN[CS]E*"]
+requires-python = ">=3.0"
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Framework :: OpenAlea",
+]
+dynamic = ["version"]
+
+dependencies = [
+    "pandas",
+    "numpy>1.22",
+    "scipy",
+]
+
+# section specific to conda-only distributed package (not used by pip yet)
+[tool.conda.environment]
+channels = [
+    "openalea3",
+    "conda-forge"
+]
+dependencies = [
+    "openalea.mtg",
+    "openalea.plantgl",
+    "QtPy", # vege3D.py
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+doc = [
+  "pydata-sphinx-theme",
+  "myst-parser",
+  "sphinx-favicon",
+  "ipykernel",
+  "sphinx-copybutton",
+  "ipython_genutils",
+  "nbsphinx",
+]
+
+[project.urls]
+Homepage = "https://github.com/openalea-incubator/PyRATP"
+"Bug Tracker" = "https://github.com/openalea-incubator/PyRATP/issues"
+Discussions = "https://github.com/openalea-incubator/PyRATP/discussions"
+Changelog = "https://github.com/openalea-incubator/PyRATP/releases"
+
+[tool.setuptools.package-data]
+"pyratp_data" = ['*.pyd', '*.so'] # not following actual guidelines 02/06/2025 not sure but I feel it is needed
+
+[project.entry-points."wralea"]
+"pyratp" = "openalea.ratp_wralea"

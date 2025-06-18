@@ -2,7 +2,7 @@
 # TEST RATP module
 ###################
 import os
-from alinea.pyratp import pyratp
+from openalea.ratp.pyratp import ratp
 from numpy import *
 
 njx = 2

@@ -1,49 +1,72 @@
+{% set pyproject = load_file_data('../pyproject.toml', from_recipe_dir=True) %}
+{% set name = pyproject.get('project').get('name') %}
+{% set description = pyproject.get('project').get('description') %}
+{% set license = pyproject.get('project').get('license') %}
+{% set home = pyproject.get('project', {}).get('urls', {}).get('Homepage', '') %}
+{% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
+{% set deps = pyproject.get('project', {}).get('dependencies', []) %}
+{% set conda_deps = pyproject.get('tool', {}).get('conda', {}).get('environment', {}).get('dependencies',[]) %}
 {% set native = 'm2w64-' if win else '' %}
 
 package:
-  name: alinea.pyratp
-  version: 2.0.1
+  name: {{ name }}
+  version: 1.0.0
 
 source:
-    path: ..
+  path: ..
+
+build:
+  number: 0
+  preserve_egg_dir: True
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
 requirements:
-    host:
-        - python x.x
-        - setuptools
-        - numpy >=1.25  # [osx]
-        - numpy x.x  # [not osx]
-    build:
-        - python {{PY_VER}}
-        - numpy x.x  # [not osx]
-        - numpy >=1.25  # [osx]
-        - meson # Maybe deprecated for current version
-        - make
-        - {{ compiler('fortran') }}  # [not win]
-        - {{ compiler('c') }} 
-        #- compilers
-        - {{ native }}toolchain   # [win]
-        - charset-normalizer
-    run:
-        - python x.x
-        - path.py
-        - {{ native }}toolchain   # [win]
-        - {{ pin_compatible('numpy') }}
-        - scipy
-        - pandas
-        - meson # Maybe deprecated for current version
-        - charset-normalizer
+  host:
+    - python
+    {% for dep in build_deps %}
+    - {{ dep }}
+    {% endfor  %}
+  build:
+    - python
+    {% for dep in build_deps %}
+    - {{ dep }}
+    {% endfor  %}
+    - {{ compiler('fortran') }}  # [not win]
+    - m2w64-gcc-fortran           # [win]
+#    - {{ compiler('c') }}
+    #- compilers
+    - {{ native }}toolchain   # [win]
+    - charset-normalizer
+  run:
+    - python
+    {% for dep in deps + conda_deps %}
+    - {{ dep }}
+    {% endfor %}
+    - {{ native }}toolchain   # [win]
+#    - {{ pin_compatible('numpy') }}
+    - charset-normalizer
 
-        #- openalea.mtg
-        #- openalea.visualea
 test:
-    imports:
-        - alinea.pyratp
-        - alinea.pyratp.pyratp
+  requires:
+    - pytest
+    {% for dep in deps + conda_deps %}
+    - {{ dep }}
+    {% endfor %}
+  imports:
+    - {{ name }}
+  source_files:
+    - test/test_*.py
+    - test/data/**
+  commands:
+   - cd test
+   - pytest -v --ignore=test_complet.py
+
 about:
-    home: http://github.com/openalea-incubator/PyRATP
-    license: Cecill-C
-    summary: RATP is a model to compute Radiation Absorption, Transpiration and Photosynthesis.
+  home: {{ home }}
+  license: {{ license }}
+  summary: {{ description }}
+
 extra:
-    recipe-maintainers:
-        - pradal
+  recipe-maintainers:
+    - pradal
+    - baugetfa
