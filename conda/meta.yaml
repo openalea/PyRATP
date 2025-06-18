@@ -1,6 +1,7 @@
 {% set pyproject = load_file_data('../pyproject.toml', from_recipe_dir=True) %}
 {% set name = pyproject.get('project').get('name') %}
 {% set description = pyproject.get('project').get('description') %}
+{% set version = GIT_DESCRIBE_TAG | replace("v", "") %}
 {% set license = pyproject.get('project').get('license') %}
 {% set home = pyproject.get('project', {}).get('urls', {}).get('Homepage', '') %}
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
@@ -10,7 +11,7 @@
 
 package:
   name: {{ name }}
-  version: 1.0.0
+  version: {{ version }}
 
 source:
   path: ..

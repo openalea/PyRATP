@@ -3,33 +3,15 @@ name: build_publish_anaconda
 on:
   push:
     branches:
-      - meson_baugetfa
+      - '**'
+    tags:
+      - 'v*'
   pull_request:
     branches:
       - '**'
 
 jobs:
-  build-and-publish:
-    name: ${{ matrix.os }}, Python 3.${{ matrix.python-minor-version }} for conda deployment
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      max-parallel: 6
-      matrix:
-        os: [ ubuntu-latest , macos-13 , windows-latest]
-        python-minor-version: [10, 11, 12]
-
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Build and Publish
-      uses: openalea/action-build-publish-anaconda@main
-      with:
-        conda: conda
-        python: ${{ matrix.python-minor-version }}
-        channels: openalea3, conda-forge
-        token: ${{ secrets.ANACONDA_TOKEN }}
-        publish: 'false'
-        label: main
-        build-options: ""
+  build:
+    uses: openalea/github-action-conda-build/.github/workflows/conda-package-build.yml@main
+    secrets:
+      anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
