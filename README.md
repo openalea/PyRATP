@@ -1,3 +1,11 @@
+# Package Name
+[![Docs](https://readthedocs.org/projects/pyratp/badge/?version=latest)](https://pyratp.readthedocs.io/)
+[![Build Status](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml/badge.svg?branch=master)](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml?query=branch%3Amaster)
+[![Python Version](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License--CeCILL-C-blue)](https://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html)
+[![Anaconda-Server Badge](https://anaconda.org/openalea3/pyratp/badges/version.svg)](https://anaconda.org/openalea3/pyratp)
+
+## Description
 # PyRATP
 RATP: Radiation Absorption, Transpiration and Photosynthesis
 
@@ -20,26 +28,31 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 
 ## Installation 
 ### with conda
-1) install miniconda 64 bits: https://docs.conda.io/en/latest/miniconda.html
+1) Install Miniforge: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge)
 2) Create a conda environment:
 ```shell
-conda create -n pyratp PyRatp -c conda-forge -c openalea3
+mamba create -n pyratp PyRatp -c conda-forge -c openalea3
 ```
-3) set conda in the created environment: `conda activate pyratp`
+3) activate the environment: `mamba activate pyratp`
 
 The user has the possibility to install the package from a candicate release channel 
 of the conda repository of openalea as follows:
 ```shell
-conda create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
+mamba create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
 ```
 The rc channel corresponds to the latest build of PyRatp when the main channel is the 
 stable release.
 
-### with pip for developer
+PyRatp can also be installed using the environment.yml in conda:
+```shell
+mamba env create -f ./conda/environment.yml
+```
+
+### with pip
 1) Create a conda environment:
 ```shell
 conda create -n pyratp openalea.mtg openalea.plantgl QtPy -c conda-forge -c openalea3
-conda activate pyratp
+mamba activate pyratp
 ```
 2) download the repository and change to the root directory:
 ```shell
@@ -57,3 +70,4 @@ conda activate pyratp
     cd test
     pytest -v --ignore=test_complet.py
 ```
+
