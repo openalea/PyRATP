@@ -27,6 +27,14 @@ conda create -n pyratp PyRatp -c conda-forge -c openalea3
 ```
 3) set conda in the created environment: `conda activate pyratp`
 
+The user has the possibility to install the package from a candicate release channel 
+of the conda repository of openalea as follows:
+```shell
+conda create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
+```
+The rc channel corresponds to the latest build of PyRatp when the main channel is the 
+stable release.
+
 ### with pip for developer
 1) Create a conda environment:
 ```shell
