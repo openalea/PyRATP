@@ -18,19 +18,20 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 - Local or solar hour option for computing sun position
 - Possibility for external use of the sun computation routine
 
-## Installation example with conda
-2) install miniconda 64 bits: https://docs.conda.io/en/latest/miniconda.html
-3) Create a conda environment:
+## Installation 
+### with conda
+1) install miniconda 64 bits: https://docs.conda.io/en/latest/miniconda.html
+2) Create a conda environment:
 ```shell
-conda create -n myenvname PyRatp -c conda-forge -c openalea3
+conda create -n pyratp PyRatp -c conda-forge -c openalea3
 ```
-4) set conda in the created environment: `conda activate myenvname`
+3) set conda in the created environment: `conda activate pyratp`
 
-## Installation for developer
+### with pip for developer
 1) Create a conda environment:
 ```shell
-conda create -n myenvname openalea.mtg openalea.plantgl QtPy -c conda-forge -c openalea3
-conda activate myenvname
+conda create -n pyratp openalea.mtg openalea.plantgl QtPy -c conda-forge -c openalea3
+conda activate pyratp
 ```
 2) download the repository and change to the root directory:
 ```shell
@@ -48,4 +49,3 @@ conda activate myenvname
     cd test
     pytest -v --ignore=test_complet.py
 ```
-
