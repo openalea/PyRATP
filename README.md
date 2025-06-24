@@ -27,7 +27,7 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 - Possibility for external use of the sun computation routine
 
 ## Installation 
-### with conda
+### for user
 1) Install Miniforge: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge)
 2) Create a conda environment:
 ```shell
@@ -43,31 +43,15 @@ mamba create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
 The rc channel corresponds to the latest build of PyRatp when the main channel is the 
 stable release.
 
-PyRatp can also be installed using the environment.yml in conda:
-```shell
-mamba env create -f ./conda/environment.yml
-```
-
-### with pip
-1) Create a conda environment:
-```shell
-conda create -n pyratp openalea.mtg openalea.plantgl QtPy -c conda-forge -c openalea3
-mamba activate pyratp
-```
-2) download the repository and change to the root directory:
+### For developpers
+1) download the repository and change to the root directory:
 ```shell
    git clone https://github.com/openalea/PyRATP.git
    cd PyRATP
 ```
-3) install the package with pip in dev mode:
-```shell
-    pip install -e .
-```
-4) test the package:
-- install pytest `mamba install pytest`
-- run test
-```shell
-    cd test
-    pytest -v --ignore=test_complet.py
-```
+2) install the package with pip in dev mode:
 
+PyRatp can also be installed using the environment.yml in conda:
+```shell
+mamba env create -f ./conda/environment.yml
+```

@@ -6,9 +6,11 @@ dependencies:
 # list here manually conda-only deps (listed in [tool.conda.environment] section of pyproject)
   - python
   - pip
+  - meson-python
   - openalea.plantgl
   - openalea.mtg
   - QtPy
+  - Compilers
 # let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
   - pip:
-      - -e ..[doc]
+      - -e .."[doc, test]"
