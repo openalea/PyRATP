@@ -1,16 +1,16 @@
-name: ratp_dev
+name: pyratp
 channels:
   - openalea3
   - conda-forge
 dependencies:
+# list here manually conda-only deps (listed in [tool.conda.environment] section of pyproject)
   - python
   - pip
-  - pandoc
-# list here manually conda-only deps (listed in [tool.conda.environment] section of pyproject)
+  - meson-python
   - openalea.plantgl
   - openalea.mtg
-  - pandas
-  - numpy
+  - QtPy
+  - Compilers
 # let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
   - pip:
-      - -e ..[doc,test]
+      - -e .."[doc, test]"
