@@ -25,3 +25,4 @@ jobs:
     with:
       python-minor-version: "[10, 11, 12]"
       operating-system: '[ "ubuntu-latest" , "macos-13" , "windows-latest"]'
+      build-options: ""
