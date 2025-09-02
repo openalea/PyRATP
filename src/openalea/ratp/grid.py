@@ -394,11 +394,11 @@ class Grid:
             # check that coordinates fit in the grid
             toric = not bool(grid.int_isolated_box)
             Jx, Jy, Jz = grid_index(x, y, z, grid, toric)
-            if any(np.isin(-1, Jx)):
+            if any(np.isin([-1], Jx)):
                 raise ValueError('Some x coordinates fail outside the grid boundaries, consider increasing grid size, change grid origin or use toric option')
-            if any(np.isin(-1, Jy)):
+            if any(np.isin([-1], Jy)):
                 raise ValueError('Some y coordinates fail outside the grid boundaries, consider increasing grid size, change grid origin or use toric option')
-            if any(np.isin(-1, Jz)):
+            if any(np.isin([-1], Jz)):
                 raise ValueError('Some z coordinates fail outside the grid boundaries, consider increasing grid size or change grid origin')
 
             if entity.max() >  grid.nent:
