@@ -4,7 +4,7 @@ requires = [
     "setuptools",
     "setuptools_scm",
     "meson-python",
-    "numpy>1.22", # mandatory for incdir_numpy in meson.build
+    "numpy", # mandatory for incdir_numpy in meson.build
   ]
 #build-backend = "setuptools.build_meta"
 build-backend = "mesonpy"
@@ -35,7 +35,6 @@ classifiers = [
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -46,7 +45,7 @@ dynamic = ["version"]
 
 dependencies = [
     "pandas",
-    "numpy>1.22",
+    "numpy",
     "scipy",
 ]
 
