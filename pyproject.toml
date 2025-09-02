@@ -75,10 +75,10 @@ doc = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/openalea-incubator/PyRATP"
-"Bug Tracker" = "https://github.com/openalea-incubator/PyRATP/issues"
-Discussions = "https://github.com/openalea-incubator/PyRATP/discussions"
-Changelog = "https://github.com/openalea-incubator/PyRATP/releases"
+Homepage = "https://github.com/openalea/PyRATP"
+"Bug Tracker" = "https://github.com/openalea/PyRATP/issues"
+Discussions = "https://github.com/openalea/PyRATP/discussions"
+Changelog = "https://github.com/openalea/PyRATP/releases"
 
 [tool.setuptools.package-data]
 "pyratp_data" = ['*.pyd', '*.so'] # not following actual guidelines 02/06/2025 not sure but I feel it is needed
