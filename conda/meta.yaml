@@ -19,6 +19,9 @@ source:
 build:
   number: 0
   string: py{{ PY_VER }}
+  script_env:
+    - CXX=g++ # [win]
+    - CC=gcc # [win]
   preserve_egg_dir: True
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
@@ -34,12 +37,9 @@ requirements:
     - {{ dep }}
     {% endfor  %}
     - {{ compiler('fortran') }}  # [not win]
-    - m2w64-gcc-fortran           # [win]
-#    - {{ compiler('c') }}
-    #- compilers
-#    - {{ native }}toolchain   # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - charset-normalizer
-    - vc14_runtime
   run:
     - python
     {% for dep in deps + conda_deps %}
