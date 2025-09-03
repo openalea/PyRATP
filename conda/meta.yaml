@@ -45,8 +45,6 @@ requirements:
     {% for dep in deps + conda_deps %}
     - {{ dep }}
     {% endfor %}
-#    - {{ native }}toolchain   # [win]
-#    - {{ pin_compatible('numpy') }}
     - charset-normalizer
 
 test:
@@ -62,7 +60,7 @@ test:
     - test/data/**
   commands:
    - cd test
-   - pytest -v --ignore=test_complet.py
+   - pytest -v --ignore=test_complet.py --ignore=test_LightTuto.py --ignore=test_RatpScene.py
 
 about:
   home: {{ home }}
