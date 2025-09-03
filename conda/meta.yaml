@@ -37,14 +37,14 @@ requirements:
     - m2w64-gcc-fortran           # [win]
 #    - {{ compiler('c') }}
     #- compilers
-    - {{ native }}toolchain   # [win]
+#    - {{ native }}toolchain   # [win]
     - charset-normalizer
   run:
     - python
     {% for dep in deps + conda_deps %}
     - {{ dep }}
     {% endfor %}
-    - {{ native }}toolchain   # [win]
+#    - {{ native }}toolchain   # [win]
 #    - {{ pin_compatible('numpy') }}
     - charset-normalizer
 
