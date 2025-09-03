@@ -33,9 +33,13 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('fortran') }}
-    - {{ compiler('c') }}
+    - {{ compiler('fortran') }}  # [not win]
+    - m2w64-gcc-fortran           # [win]
+#    - {{ compiler('c') }}
+    #- compilers
+#    - {{ native }}toolchain   # [win]
     - charset-normalizer
+    - vc14_runtime
   run:
     - python
     {% for dep in deps + conda_deps %}
