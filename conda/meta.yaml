@@ -33,11 +33,8 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('fortran') }}  # [not win]
-    - m2w64-gcc-fortran           # [win]
-#    - {{ compiler('c') }}
-    #- compilers
-#    - {{ native }}toolchain   # [win]
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
     - charset-normalizer
   run:
     - python
