@@ -4,7 +4,7 @@ requires = [
     "setuptools",
     "setuptools_scm",
     "meson-python",
-    "numpy", # mandatory for incdir_numpy in meson.build
+    "numpy", # mandatory for f2py which is distributed with numpy
   ]
 #build-backend = "setuptools.build_meta"
 build-backend = "mesonpy"
@@ -38,6 +38,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
   "Framework :: OpenAlea",
 ]

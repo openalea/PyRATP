@@ -11,7 +11,7 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 
 ## Dependencies
 - meson-python
-- numpy > 1.22
+- numpy
 - pandas
 - scipy
 - openalea.plantgl
@@ -31,14 +31,14 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 1) Install Miniforge: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge)
 2) Create a conda environment:
 ```shell
-mamba create -n pyratp PyRatp -c conda-forge -c openalea3
+mamba create -n pyratp openalea.ratp -c conda-forge -c openalea3
 ```
 3) activate the environment: `mamba activate pyratp`
 
 The user has the possibility to install the package from a candicate release channel 
 of the conda repository of openalea as follows:
 ```shell
-mamba create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
+mamba create -n pyratp openalea.ratp -c conda-forge -c openalea3/label/rc
 ```
 The rc channel corresponds to the latest build of PyRatp when the main channel is the 
 stable release.
@@ -50,19 +50,28 @@ Editable install with conda/environment.yml is not functionning because of names
    git clone https://github.com/openalea/PyRATP.git
    cd PyRATP
 ```
-2) install dependencies manually with:
+2) Create a conda environment with dependencies manually with:
 ```shell
-mamba -n pyratp -c conda-forge -c openalea3 openalea.plantgl openalea.mtg QtPy Compilers meson-python QtPy
+mamba create -n pyratp -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python
 ```
+3) activate the environment: `mamba activate pyratp`
 
-Build the fortran library:
+4) Build the fortran library:
 ```shell
 meson setup builddir
 meson compile -C builddir
 cp builddir/src/openalea/ratp/pyratp.cpython-312-x86_64-linux-gnu.so src/openalea/ratp
 ```
+5) modify the Python path:
+via the environment variable
 
-Then add the path to `src` in your ipython or in IDE with:
+```shell
+export PYTHONPATH="$HOME/mypathPyRatp/src"
+```
+
+or
+
+add the path to `src` in your ipython or in IDE with:
 ```ipython
 import sys; sys.path.extend([mypath to 'src'])
 ```
