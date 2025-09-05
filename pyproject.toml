@@ -13,9 +13,12 @@ build-backend = "mesonpy"
 [tool.setuptools.packages.find]
 where = ["src"]
 
-# enable dynamic versioning based on git tags
+# enable dynamic version based on git tags
 [tool.setuptools_scm]
-# can be empty if no extra settings are needed, presence enables setuptools-scm
+# Format version to ease alignment with conda/meta.yaml tag-based versioning
+fallback_version = "2.1.0.dev0"
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
 
 [project]
 name = "openalea.ratp"
