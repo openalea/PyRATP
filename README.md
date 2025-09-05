@@ -11,7 +11,7 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 
 ## Dependencies
 - meson-python
-- numpy > 1.22
+- numpy
 - pandas
 - scipy
 - openalea.plantgl
@@ -31,27 +31,48 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 1) Install Miniforge: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge)
 2) Create a conda environment:
 ```shell
-mamba create -n pyratp PyRatp -c conda-forge -c openalea3
+mamba create -n pyratp openalea.ratp -c conda-forge -c openalea3
 ```
 3) activate the environment: `mamba activate pyratp`
 
 The user has the possibility to install the package from a candicate release channel 
 of the conda repository of openalea as follows:
 ```shell
-mamba create -n pyratp PyRatp -c conda-forge -c openalea3/label/rc
+mamba create -n pyratp openalea.ratp -c conda-forge -c openalea3/label/rc
 ```
 The rc channel corresponds to the latest build of PyRatp when the main channel is the 
 stable release.
 
 ### For developpers
+Editable install with conda/environment.yml is not functionning because of namespace conflict. A workaround is as follow:
 1) download the repository and change to the root directory:
 ```shell
    git clone https://github.com/openalea/PyRATP.git
    cd PyRATP
 ```
-2) install the package with pip in dev mode:
-
-PyRatp can also be installed using the environment.yml in conda:
+2) Create a conda environment with dependencies manually with:
 ```shell
-mamba env create -f ./conda/environment.yml
+mamba create -n pyratp -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python
 ```
+3) activate the environment: `mamba activate pyratp`
+
+4) Build the fortran library:
+```shell
+meson setup builddir
+meson compile -C builddir
+cp builddir/src/openalea/ratp/pyratp.cpython-312-x86_64-linux-gnu.so src/openalea/ratp
+```
+5) modify the Python path:
+via the environment variable
+
+```shell
+export PYTHONPATH="$HOME/mypathPyRatp/src"
+```
+
+or
+
+add the path to `src` in your ipython or in IDE with:
+```ipython
+import sys; sys.path.extend([mypath to 'src'])
+```
+with `mypath to 'src'` the absolute path to 'PyRatp/src'

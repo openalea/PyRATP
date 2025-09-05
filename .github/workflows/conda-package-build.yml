@@ -1,24 +1,24 @@
-# your_package/.github/workflows/openalea_ci.yml
-
 name: OpenAlea CI
 
 on:
   push:
     branches:
-      - '**'
+      - main
+      - master
     tags:
       - 'v*'
   pull_request:
-    branches:
-      - '**'
+    types:
+      - opened
+      - synchronize
+      - reopened
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
   build:
     uses: openalea/action-build-publish-anaconda/.github/workflows/openalea_ci.yml@main
     secrets:
       anaconda_token: ${{ secrets.ANACONDA_TOKEN }}
-    with:
-      python-minor-version: "[10, 11, 12]"
-      operating-system: '[ "ubuntu-latest" , "macos-13" , "windows-latest"]'
+      

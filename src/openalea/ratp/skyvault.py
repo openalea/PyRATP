@@ -39,7 +39,7 @@ class Skyvault(object):
         for n in range(skyvault.ndir):
             listGene.append(f.readline().strip().split('\t'))
         tabGene=np.array(listGene)
-        tabGene = np.cast['float64'](tabGene)
+        tabGene = np.array(tabGene, dtype=np.float64)
         skyvault.hmoy=np.transpose(tabGene)[0]*math.pi / 180
         skyvault.azmoy=np.transpose(tabGene)[1]*math.pi / 180
         skyvault.omega=np.transpose(tabGene)[2]

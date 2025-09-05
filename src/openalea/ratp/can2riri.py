@@ -1,18 +1,18 @@
-import IOtable
-from scipy import array, absolute
-import scipy
+import openalea.ratp.IOtable as IOtable
+from numpy import array, absolute
+import numpy
 
 #scipy.dot -> produit scalaire
 #scipy.cross -> produit vectoriel
 def norme_v(vec):
     """ calcule la norme d'un vecteur """
-    return scipy.sqrt((vec[2]*vec[2])+(vec[1]*vec[1])+(vec[0]*vec[0]))
+    return numpy.sqrt((vec[2]*vec[2])+(vec[1]*vec[1])+(vec[0]*vec[0]))
 
 def triangle_area(p1, p2, p3):
     """ compute surface area of a triangle """
     u = p2-p1
     v = p3-p1
-    return absolute(0.5*norme_v(scipy.cross (u, v)[0]))
+    return absolute(0.5*norme_v(numpy.cross (u, v)[0]))
 
 def tri_ortho(p1,p2,p3):
     """ compute  orthocenter of a triangle - meme resulat que .faceCenter(id) sur un triangle set"""
@@ -40,7 +40,7 @@ def can2riri(can_file_path, Ncontent = 0.1):
         #elevation
         u = p2-p1
         v = p3-p1
-        c = scipy.cross (u, v)[0]
+        c = numpy.cross (u, v)[0]
         norm = c/norme_v(c)
         #id plante
         id = int(tab_geom[i][2][-3:])# va chercher dans les 3 derniers chiffres
