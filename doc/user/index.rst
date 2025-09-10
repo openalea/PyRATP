@@ -17,8 +17,8 @@ reference guide, see :ref:`pyratp_reference`.
    Many aspects of OpenAlea.PyRATP are not covered.
 
    More documentation can be found on the
-   `openalea <http://openalea.gforge.inria.fr>`__ wiki.
+   `openalea <https://openalea.rtfd.io>`__ wiesite.
 
 .. toctree::
-
+    ratp.rst
     manual.rst
