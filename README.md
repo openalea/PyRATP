@@ -24,7 +24,7 @@ Python package
 
 ### License
 CecILL-C
-**URL** : <https://hydroroot.rtfd.io>
+**URL** : <https://pyratp.rtfd.io>
 
 ### Dependencies
 - meson-python
