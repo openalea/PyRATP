@@ -20,5 +20,4 @@ reference guide, see :ref:`pyratp_reference`.
    `openalea <https://openalea.rtfd.io>`__ wiesite.
 
 .. toctree::
-    ratp.rst
     manual.rst

@@ -2,4 +2,7 @@
 * Marc Saudreau
 * Jerome Ngao
 * Boris Adam
+* Christophe Pradal
+* Christian Fournier 
+* Fabrice Bauget
 
