@@ -33,7 +33,7 @@ subroutines, which are all accessible in the OpenAlea environment.
 
 .. python::
 
-    mamba install -c openalea3 -c conda-forge openalea.pyratp 
+    mamba install -c openalea3 -c conda-forge openalea.ratp
 
 **RATP MODULES**
 
