@@ -1,10 +1,11 @@
-**RATP version 2 in OpenAlea environment**
-
-**User’s Guide**
+==================
+Model description
+==================
 
 **H. Sinoquet, UMR PIAF, Clermont-Ferrand, France**
 
-**INTRODUCTION**
+INTRODUCTION
+------------
 
 The model **RATP** (Radiation Absorption, Transpiration and
 Photosynthesis) was designed to simulate the spatial distribution of
@@ -29,13 +30,16 @@ modules, which can be used as a Python library in the OpenAlea
 environment. A Fortran90 module includes public variables and
 subroutines, which are all accessible in the OpenAlea environment.
 
-**SOFTWARE INSTALLATION**
+Software installation
+---------------------
 
-.. python::
+.. code-block:: python
 
     mamba install -c openalea3 -c conda-forge openalea.ratp
 
-**RATP MODULES**
+
+RATP modules
+------------
 
 Here is the list of RATP modules:
 
@@ -59,7 +63,10 @@ Here is the list of RATP modules:
 
 - photosynthesis
 
-  1. *module constant_values*
+
+
+1. module constant_values
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This module is aimed at setting values for physical constants.
 
@@ -97,7 +104,8 @@ Syntax for calling subroutine **cv_set** in OpenAlea environment is:
 
 Ratp.constant_values.cv_set()
 
-2. *module grid3D*
+2. module grid3D
+^^^^^^^^^^^^^^^^
 
 This module is aimed at building a 3D grid, namely the spatial
 distribution of leaf area in the voxels.
@@ -318,7 +326,8 @@ Syntax in OpenAlea environment is:
 
 Ratp.grid3d.g3d_destroy()
 
-3. *module skyvault*
+3. module skyvault
+^^^^^^^^^^^^^^^^^^
 
 This module is aimed at creating the skyvault, namely discretising the
 sky vault as a set of solid angles characterised by their central
@@ -367,7 +376,8 @@ module **skyvault**. Syntax in OpenAlea environment is:
 
 Ratp.skyvault.sv_destroy()
 
-4. *module vegetation_types*
+4. module vegetation_types
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This module is aimed at defining physical and physiological properties
 of each vegetation type included in the 3D scene. This includes leaf
@@ -559,7 +569,8 @@ module **vegetation_types**. Syntax in OpenAlea environment is:
 
 Ratp.vegetation_types.vt_destroy()
 
-5. *module micrometeo*
+5. module micrometeo
+^^^^^^^^^^^^^^^^^^^^
 
 This module is aimed at setting the micrometeorological environment
 experienced by the 3D scene.
@@ -620,7 +631,8 @@ is:
 
 Ratp.micrometeo.mm_destroy()
 
-6. *module dir_interception*
+6. module dir_interception
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This module is aimed at computing directional radiation interception in
 a vegetated 3D grid where several vegetation types are included. This
@@ -734,7 +746,8 @@ the OpenAlea environment is:
 
 Ratp.dir_interception.di_destroy()
 
-7. *module hemi_interception*
+7. module hemi_interception
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This module is aimed at computing hemispherical radiation interception
 in a vegetated 3D grid where several vegetation types are included, by
@@ -812,7 +825,8 @@ Subroutine **hi_destroy** deallocates allocatable arrays of module
 
 Ratp.hemi_interception.hi_destroy()
 
-8. *module shortwave_balance*
+8. module shortwave_balance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Module **shortwave_balance** computes radiation balance from:
 
@@ -902,7 +916,8 @@ is:
 
 Ratp.shortwave_balance.swrb_destroy()
 
-9. *module energy_balance*
+9. module energy_balance
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Module **energy_balance** computes transpiration rates, stomatal
 conductance and leaf temperature, in a 3D scene including one or several
@@ -984,7 +999,8 @@ is:
 
 Ratp.energy_balance.eb_destroy()
 
-10. *module photosynthesis*
+10. module photosynthesis
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Module **photosynthesis** computes assimilation rates by using
 Farquhar’s model in a 3D scene including one or several vegetation types
