@@ -9,8 +9,10 @@ dependencies:
   - meson-python
   - openalea.plantgl
   - openalea.mtg
-  - QtPy
-  - Compilers
-# let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
+  - qtpy
+  - compilers
+  - gfortran
+  
+  # let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
   - pip:
       - -e .."[doc, test]"

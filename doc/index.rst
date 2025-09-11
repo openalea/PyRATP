@@ -29,6 +29,7 @@ Documentation
 .. toctree::
     :maxdepth: 1
 
+    Model Presentation<user/ratp.rst>
     User Guide<user/index.rst>   
     Reference Guide<user/autosum.rst>
 
