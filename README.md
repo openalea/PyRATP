@@ -1,15 +1,32 @@
-# Package Name
+# PyRATP
 [![Docs](https://readthedocs.org/projects/pyratp/badge/?version=latest)](https://pyratp.readthedocs.io/)
 [![Build Status](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml/badge.svg?branch=master)](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml?query=branch%3Amaster)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License--CeCILL-C-blue)](https://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html)
 [![Anaconda-Server Badge](https://anaconda.org/openalea3/pyratp/badges/version.svg)](https://anaconda.org/openalea3/pyratp)
 
-## Description
-# PyRATP
+## Software
+
+### Authors
+> -   Herve Sinoquet
+> -   Marc Saudreau
+> -   Jerome Ngao
+> -   Boris Adam
+> -   Christophe Pradal
+> -   Christian Fournier 
+> -   Fabrice Bauget
+
+### Description
 RATP: Radiation Absorption, Transpiration and Photosynthesis
 
-## Dependencies
+### Status
+Python package
+
+### License
+CecILL-C
+**URL** : <https://pyratp.rtfd.io>
+
+### Dependencies
 - meson-python
 - numpy
 - pandas
@@ -18,7 +35,7 @@ RATP: Radiation Absorption, Transpiration and Photosynthesis
 - openalea.mtg
 - QtPy
 
-## Modifications 
+### Modifications 
 - Installation with make: it compiles fortran part with f2py then installs the package with setuptools and pip
 - Compute transmitted radiation for each voxel
 - Intercepted and transmitted radiation among the output results

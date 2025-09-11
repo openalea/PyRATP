@@ -7,12 +7,12 @@ Reference guide
 ###################################
 .. contents::
 
-.. currentmodule:: alinea.pyratp.__init__
+.. currentmodule:: openalea.ratp.__init__
 
 
-:mod:`alinea.pyratp` module
+:mod:`openalea.ratp` module
 ===============================================
-.. automodule:: alinea.pyratp.__init__
+.. automodule:: openalea.ratp.__init__
     :members:
     :undoc-members:
     :inherited-members:

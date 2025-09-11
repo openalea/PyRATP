@@ -36,11 +36,6 @@ Documentation
 - A `PDF <../latex/pyratp.pdf>`_ version of |pyratp| documentation is 
   available.
 
-.. seealso::
-
-   More documentation can be found on the
-   `openalea <http://openalea.gforge.inria.fr/dokuwiki/doku.php?id=packages:alinea:pyratp:pyratp>`__ wiki.
-
 Authors
 =======
 
@@ -59,4 +54,4 @@ License
 .. note:: `Cecill-C <http://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html>`_ 
     license is a LGPL compatible license.
 
-.. |pyratp| replace:: Alinea.PyRATP
+.. |pyratp| replace:: OpenAlea.PyRATP
