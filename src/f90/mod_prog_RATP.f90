@@ -260,7 +260,7 @@ subroutine do_all
 !spec_mmeteo='mto'     ! definition du fichier mmeteo
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
- !write(*,*)  '                out_time_destroy ...  '
+
  call out_time_destroy 
   
  allocate(out_time_tree(nbli*nemax,9)) 
@@ -432,7 +432,7 @@ subroutine do_all
  call ps_destroy      
  !write(*,*) '...ps_destroy ok '
 
- !write(*,*) 'CALCULS TERMINES 2'
+ write(*,*) 'CALCULS TERMINES 2'
  end subroutine do_all
 
 
@@ -547,7 +547,7 @@ subroutine do_all
  call di_destroy
  call hi_destroy
  call swrb_destroy
- !write(*,*) 'CALCULS TERMINES INTERCEPTION'
+ write(*,*) 'CALCULS TERMINES INTERCEPTION'
  end subroutine do_interception
 
  subroutine out_rayt_destroy

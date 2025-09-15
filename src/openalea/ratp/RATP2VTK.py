@@ -248,7 +248,7 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
 
     # Set the number of entities to write - NbScalars
     ll = Counter(variable[1])
-    NbScalars = np.alen(ll.items())
+    NbScalars = len(ll.items())
 
 
     f.write('CELL_DATA '+str(numVoxels)+'\n')
@@ -275,7 +275,7 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
                         enties = np.array(variable[1])[kindex]
                         #check if  ent is in this voxel
                         EntityOk =np.where(enties==ent)
-                        if np.alen(EntityOk[0])<1: #if enties is not in this voxel
+                        if len(EntityOk[0])<1: #if enties is not in this voxel
                             f.write(str(-9999.0)+'\n')
                         else:                           #if enties is in this voxel
                             if ik == grid.njz:         #Soil layer
