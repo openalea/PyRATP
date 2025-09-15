@@ -69,7 +69,7 @@ Editable install with conda/environment.yml is not functionning because of names
 ```
 2) Create a conda environment with dependencies manually with:
 ```shell
-mamba create -n pyratp -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python
+mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy compilers meson-python gfortran openalea.mtg
 ```
 3) activate the environment: `mamba activate pyratp`
 
@@ -77,13 +77,13 @@ mamba create -n pyratp -c conda-forge -c openalea3 openalea.plantgl openalea.mtg
 ```shell
 meson setup builddir
 meson compile -C builddir
-cp builddir/src/openalea/ratp/pyratp.cpython-312-x86_64-linux-gnu.so src/openalea/ratp
+cp builddir/src/openalea/ratp/pyratp.cpython-31*.so src/openalea/ratp
 ```
 5) modify the Python path:
 via the environment variable
 
 ```shell
-export PYTHONPATH="$HOME/mypathPyRatp/src"
+export PYTHONPATH="$PWD/src":$PYTHONPATH
 ```
 
 or
