@@ -547,7 +547,7 @@ subroutine do_all
  call di_destroy
  call hi_destroy
  call swrb_destroy
- write(*,*) 'CALCULS TERMINES INTERCEPTION'
+ write(*,*) 'COMPUTATIONS COMPLETED'
  end subroutine do_interception
 
  subroutine out_rayt_destroy
