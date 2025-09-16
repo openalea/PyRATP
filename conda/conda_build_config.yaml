@@ -1,2 +1,0 @@
-c_compiler:
-  - m2w64-toolchain          # [win]

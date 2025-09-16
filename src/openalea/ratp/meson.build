@@ -4,6 +4,13 @@ py_mod = import('python')
 py = py_mod.find_installation(pure: false)
 py_dep = py.dependency()
 
+
+
+# Conditionally add Flang runtime linker flags only on Windows
+if host_machine.system() == 'windows'
+    add_project_link_arguments(['-lFortranRuntime', '-lFortranDecimal'], language : 'fortran')
+endif
+
 sources = files([
   '../../f90/mod_Constant_ValuesF2PY.f90',
   '../../f90/mod_Grid3DF2PY_64bit.f90',

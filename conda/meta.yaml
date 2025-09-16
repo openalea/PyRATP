@@ -19,8 +19,8 @@ source:
 build:
   number: 0
   string: py{{ PY_VER }}
-  script_env:
-    - CC=gcc # [win]
+  #script_env:
+  #  - CC=gcc # [win]
   preserve_egg_dir: True
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
@@ -35,7 +35,7 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('fortran') }}  # [not win]
+    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - charset-normalizer
   run:
