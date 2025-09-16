@@ -432,7 +432,7 @@ subroutine do_all
  call ps_destroy      
  !write(*,*) '...ps_destroy ok '
 
- write(*,*) 'CALCULS TERMINES 2'
+ write(*,*) 'COMPUTATIONS COMPLETED'
  end subroutine do_all
 
 
