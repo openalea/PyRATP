@@ -88,4 +88,4 @@ and after each modification of the python or Fortran part, run
 ```shell
 pip install .
 ```
-for your modifications to be taken into account.
+then restart your kernel (when using IPython) for your modifications to be taken into account.
