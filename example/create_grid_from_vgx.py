@@ -17,7 +17,7 @@ coeff_allometric = 1
 
 grid_file_name = os.path.join(datafolder,"gridfromVGX_0_5m.grd")
 
-voxel_size = 0.5 # in m
+dx= dy= dz = 0.5 # in m
 
 # grid parameters
 lat = 44.00    # latitude
@@ -34,30 +34,37 @@ reflect = [0.075, 0.2]  # soil reflectance for each waveband
 # read vgx file (obtained either from digit or plantGL viewer)
 e, x, y, z, s, n = Grid.readVgx(os.path.join(datafolder, vegestar_file), coeff_allometric)
 
-# compute bounding box size
+# compute bounding box dimensions
 deltaX = max(x)-min(x)
 deltaY = max(y)-min(y)
 deltaZ = max(z)-min(z)
 
 # grid dimensions
-nx = int(np.ceil(deltaX/voxel_size)) # round to higer value and turn to integer
-ny = int(np.ceil(deltaY/voxel_size))
-nz = int(np.ceil(deltaZ/voxel_size))
+nx = int(np.ceil(deltaX/dx)) # round to higer value and turn to integer
+ny = int(np.ceil(deltaY/dy))
+nz = int(np.ceil(deltaZ/dz))
 
-# recompute voxel size so the grid fits perfectly in the bounding_box
-vx = deltaX/(nx)
-vy = deltaY/(ny)
-vz = (max(z)-min(z))/(nz)
+vec_dz = [dz] * int(nz+1) # z sizes vector
 
-vec_nz = [vz] * int(nz+1) # z sizes vector
+# account for extra space along x
+extrax = dx*nx - deltaX
+xo = min(x)- (extrax / 2.)
+
+# account for extra space along y
+extray = dy*ny - deltaY
+yo = min(y)- (extray / 2.)
+
+# account for extra space along z
+extraz = dz*nz - deltaZ
+zo = min(z)- (extraz / 2.)
 
 ####################### gather values and save ##########
 
 # Gather all data
 lines = [
     f"{nx} {ny} {nz+1}",  # x, ny, nz
-    f"{vx} {vy} {' '.join(map(str, vec_nz))}",  # voxels size in x y z
-    f"{min(x)} {min(y)} {-min(z)}",  # min box corner
+    f"{dx} {dy} {' '.join(map(str, vec_dz))}",  # voxels size in x y z
+    f"{xo} {yo} {-zo}",  # min box corner
     f"{lat} {long} {timezone}",  # lat, long, timezone
     str(angle),  # angle
     str(offset),  # offset
