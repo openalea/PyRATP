@@ -67,29 +67,25 @@ Editable install with conda/environment.yml is not functionning because of names
    git clone https://github.com/openalea/PyRATP.git
    cd PyRATP
 ```
-2) Create a conda environment with dependencies manually with:
+2) Create a conda environment with dependencies manually:
+   
+Using MAC and Linux: 
 ```shell
-mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy compilers meson-python gfortran openalea.mtg
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest
 ```
-3) activate the environment: `mamba activate pyratp`
-
-4) Build the fortran library:
+Using Windows:
 ```shell
-meson setup builddir
-meson compile -C builddir
-cp builddir/src/openalea/ratp/pyratp.cpython-31*.so src/openalea/ratp
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran
 ```
-5) modify the Python path:
-via the environment variable
+4) activate the environment: `mamba activate pyratp_dev`
+
+5) Compile everything:
 
 ```shell
-export PYTHONPATH="$PWD/src":$PYTHONPATH
+pip install ./"[test]"
 ```
-
-or
-
-add the path to `src` in your ipython or in IDE with:
-```ipython
-import sys; sys.path.extend([mypath to 'src'])
+and after each modification of the python or Fortran part, run
+```shell
+pip install .
 ```
-with `mypath to 'src'` the absolute path to 'PyRatp/src'
+then restart your kernel (when using IPython) for your modifications to be taken into account.

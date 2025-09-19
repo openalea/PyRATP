@@ -1,7 +1,0 @@
-16 20 15							! number of grid voxels along X Y and Z axis
-0.25 0.25 0.25  0.25  0.25  0.25  0.25 0.25  0.25  0.25  0.25  0.25 0.25  0.25  0.25  0.25  0.25 ! dx, dy, (dz(jz),jz=1,njz)		! voxel size according to X- Y- and Z- axis
-0.0 0.0 0.0							! 3D grid origin
-38.7 -8.8 0.						! latitude, longitude timezone (hours)
-13.0								! angle (°) between axis X+ and North
-0									! offset between canopy units along Y-axis
-2									! number of vegetation entities in the 3D grid

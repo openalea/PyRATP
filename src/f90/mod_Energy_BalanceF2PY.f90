@@ -245,7 +245,8 @@ contains
     rn=rn-rayirt(joe,je,k)/S_detailed(joe,je,k)
 
 !    1'- Derivative of net radiation with regard to leaf temperature: drn
-
+  write(*,*) 'Iteration #',niter,'Maximum deviation from energy balance (W m-2) : ',bilanmax
+  write(*,*) 'Iteration #',niter,'Maximum deviation of leaf temperature between two iter steps (C): ',LeafDiffTempMax
     drn=2*4*sigma*(ts(joe,je,k)+273.15)**3*(ffvv(k,je,k,je)*S_detailed(joe,je,k)/(S_vt_vx(je,k))-1.)
 
 
@@ -1051,8 +1052,7 @@ contains
    end do
 
    
-   write(*,*) 'Iteration #',niter,'Maximum deviation from energy balance (W m-2) : ',bilanmax
-   write(*,*) 'Iteration #',niter,'Maximum deviation of leaf temperature between two iter steps (C): ',LeafDiffTempMax
+ 
    next_iter = (LeafDiffTempMax.gt.(0.01)).and.(niter.lt.90)
    if (niter.eq.90) then
        write(*,*) 'WARNING ... the maximum number of iterations has been reached'
@@ -1061,7 +1061,8 @@ contains
    end if
     !next_iter = (niter.lt.50)
   end do
- 
+  write(*,*) 'Iteration #',niter,'Maximum deviation from energy balance (W m-2) : ',bilanmax
+  write(*,*) 'Iteration #',niter,'Maximum deviation of leaf temperature between two iter steps (C): ',LeafDiffTempMax
   
   !write(*,*) 'niter,next_iter,k,je,joe,uref(numz(k)),rh,rn,E(joe,je,k),h'
   !o k=1,nveg     ! Computation of the energy balance

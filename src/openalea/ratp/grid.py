@@ -217,6 +217,7 @@ class Grid:
             - s: array of leaf area in m2 (real)
             - n: array of nitrogen content in g/m2    (real)
         """
+        print(filename)
         v,x,y,z,s,n = vege3D.Vege3D.readVGX(filename,CoefAllo,2)
 ##        print(alen(x)',np.alen(x)
         return v,x/100,y/100,-z/100,s/10000.,n
