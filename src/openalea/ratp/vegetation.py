@@ -200,7 +200,7 @@ class Vegetation(object):
             # second column
             fn = i.split(' ')[1].strip()
             nomfVeg = pj(chemin, fn)
-            fVeg = open(nomfVeg)
+            fVeg = open(nomfVeg, encoding='latin-1')
 
 
             _read(fVeg,varTemp)
