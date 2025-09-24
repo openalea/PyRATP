@@ -19,6 +19,9 @@ module RATP
  integer :: iterspatial = 0
  integer :: itertree = 0
  character*200 fname
+ 
+ integer :: Nprint = 50 ! to print status every mod_result iteration
+ integer :: mod_res ! used to check if printing is needed
 
  character(len=17):: pathResult
 
@@ -321,6 +324,12 @@ subroutine do_all
  
  do while (.NOT.((endmeteo)))
   ntime=ntime+1
+  
+  ! Print progress every 'Nprint' iterations
+  if (mod(ntime, Nprint) == 0 .OR. ntime == 1) then
+    write(*,"(A, F6.2, A)") 'Progress: ', (real(ntime)/real(nbli))*100.0, '%'
+  end if
+     
   !write(*,*) '...Iteration : ',ntime,nbli
   call mm_read(ntime,nbli)  ! Read micrometeo data (line #ntime in file mmeteo.<spec>)
   !write(*,*) '...mm_read : '

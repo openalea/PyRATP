@@ -1061,8 +1061,8 @@ contains
    end if
     !next_iter = (niter.lt.50)
   end do
-  write(*,*) 'Iteration #',niter,'Maximum deviation from energy balance (W m-2) : ',bilanmax
-  write(*,*) 'Iteration #',niter,'Maximum deviation of leaf temperature between two iter steps (C): ',LeafDiffTempMax
+  !write(*,*) 'Iteration #',niter,'Maximum deviation from energy balance (W m-2) : ',bilanmax
+  !write(*,*) 'Iteration #',niter,'Maximum deviation of leaf temperature between two iter steps (C): ',LeafDiffTempMax
   
   !write(*,*) 'niter,next_iter,k,je,joe,uref(numz(k)),rh,rn,E(joe,je,k),h'
   !o k=1,nveg     ! Computation of the energy balance
@@ -1544,10 +1544,10 @@ contains
     ! Test whether root is bracketed
     if (.not. bracketsRoot(fa,fb)) then
         if (abs(fa)<abs(fb)) then
-            write(*,*) 'brent: WARNING: root is not bracketed, returning best endpoint a'
+            !write(*,*) 'brent: WARNING: root is not bracketed, returning best endpoint a'
             x = a
         else
-            write(*,*) 'brent: WARNING: root is not bracketed, returning best endpoint b'
+            !write(*,*) 'brent: WARNING: root is not bracketed, returning best endpoint b'
             x = b
         end if
         return

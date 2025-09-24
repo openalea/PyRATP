@@ -534,7 +534,7 @@ def gridToVGX(grid,path,filename):
         echZ= grid.dz[grid.numz[k]-1]*100
         fichier.write("35\t"+str(echX) +"\t"+ str(echY)+"\t"+str(echZ)+"\t"+str(transX)+"\t"+str(transY)+"\t"+str(transZ)+"\t0\t0\t0"+"\t0\t255\t0"+"\t"+str(k))
         fichier.write("\n")
-    print("Write Grid to VGX file")
+    #print("Write Grid to VGX file")
     fichier.close()
 
 

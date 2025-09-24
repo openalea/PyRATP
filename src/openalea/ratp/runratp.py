@@ -32,7 +32,7 @@ class runRATP(object):
             path = tempfile.mkdtemp()
         os.mkdir(path+"/Resul")
         grid.gridToVGX(pyratp.grid3d,path+"/Resul/","VoxelsGrid.vgx") #Save grid in VGX format
-        print("... grid written")
+        #print("... grid written")
         ##print np.where(pyratp.vegetation_types.ismine==1)
         try:
             numeroMin = (np.where(pyratp.vegetation_types.ismine==1))[0][0] + 1
