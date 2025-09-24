@@ -71,11 +71,11 @@ Editable install with conda/environment.yml is not functionning because of names
    
 Using MAC and Linux: 
 ```shell
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest jupyter
 ```
 Using Windows:
 ```shell
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran jupyter
 ```
 4) activate the environment: `mamba activate pyratp_dev`
 
@@ -89,3 +89,5 @@ and after each modification of the python or Fortran part, run
 pip install .
 ```
 then restart your kernel (when using IPython) for your modifications to be taken into account.
+
+6) Have a look at the notebooks and scripts in ```example/```!
