@@ -505,7 +505,7 @@ class PyRATPViewer:
         
         # Add a slider widget to control the entity
         self.plotter.add_slider_widget(
-            callback=self.entity,
+            callback=self.update_entity,
             rng=[1,self.nent],
             value=self.entity,
             style="modern",  # or "document"
@@ -534,7 +534,7 @@ class PyRATPViewer:
         self.update_plot()
         
     def update_entity(self,val):
-        self.entity = int(val) # round slider value
+        self.entity = max(1,np.ceil(val)) # actual entity is at least 1
         self.update_plot()
         
     def update_hour(self,val):
