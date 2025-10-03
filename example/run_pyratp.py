@@ -19,8 +19,9 @@ from openalea.ratp.grid import Grid
 from openalea.ratp.vegetation import Vegetation
 from openalea.ratp.micrometeo import MicroMeteo
 from openalea.ratp.runratp import runRATP
-from openalea.ratp.RATP2VTK import RATPVOXELS2VTK
+from openalea.ratp.RATP2VTK import RATPVOXELS2VTK, RATPVOXELS2PYVISTA, extract_dataframe, PyRATPViewer
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 ######################## set up inputs #############################
 
@@ -160,24 +161,11 @@ else:
                            'LeafSurfaceArea': res_tree[:,8],
                            })
     
-############ 4) export a vtk file at given time and variable ################
+# ---- save data frame & grid ---
 
-outputname = 'data_'+ColToExtract+'_day'+str(DayToExtract)+'hour'+str(HourToExtract)+'.vtk'
-
-# Filter the DataFrame for the specified day and hour
-filtered_df = dfvox[(dfvox['day'] == DayToExtract) & (dfvox['hour'] == HourToExtract)]
-
-# format data to be written
-extracted_df = filtered_df[[ColToExtract, 'VegetationType', 'VoxelId',]]
-
-# Convert the DataFrame to a NumPy array
-extracted_array = extracted_df.to_numpy()
-
-# Transpose the array to orient it along the rows
-extracted_array_transposed = extracted_array.T
-
-# write VTK file
-RATPVOXELS2VTK(g, extracted_array_transposed,ColToExtract,outputname)
+# timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+# dfvox.to_csv(f'dfvox_{timestamp}.csv', index=False)
+# dftree.to_csv(f'dftree_{timestamp}.csv', index=False)
 
 ##################  5) plot some global variable at tree scales  #############
 
@@ -185,3 +173,17 @@ plt.figure(1)
 plt.plot(dftree['Iteration'],dftree[var2plot])
 plt.xlabel('Iteration')
 plt.ylabel(y_label)
+    
+############ 4) export a vtk file at given time and variable ################
+
+outputname = 'data_'+ColToExtract+'_day'+str(DayToExtract)+'hour'+str(HourToExtract)+'.vtk'
+
+array = extract_dataframe(dfvox, ColToExtract, DayToExtract, HourToExtract)
+
+#write VTK file
+RATPVOXELS2VTK(g, array, ColToExtract, outputname)
+
+############  instantaneous viewer ############
+
+p = PyRATPViewer(g, dfvox)
+
