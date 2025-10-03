@@ -86,7 +86,7 @@ import pandas
 ##    # return outputs
 ##    return   triangleColor
 
-def RATP2VTK(scene, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"):
+def ratp2vtk(scene, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"):
     '''    Display leaves colored by voxel values with Paraview for each entity
            Scene is written in VTK Format as an unstructured grid
            Inputs: ... a RATP variable = liste de float
@@ -171,7 +171,7 @@ def RATP2VTK(scene, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"
     # return outputs
     return   triangleColor
 
-def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"):
+def ratpvoxels2vtk(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"):
     '''    Display Voxels colored by variable with Paraview
            RATP Grid is written in VTK Format as a structured grid
            Inputs: ... variable : a list of 3 arrays composed of the a RATP variable to be plotted, corresponding entities, and Voxel ID
@@ -298,7 +298,7 @@ def RATPVOXELS2VTK(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
 
     f.close()
     
-def RATPVOXELS2PYVISTA(grid, variable, varname):
+def ratpvoxels2pyvista(grid, variable, varname):
     '''
     A function to create a visualisation of a voxel file using PyVista.
     It creates a vtk grid structure and fill it with the variable to plot,
@@ -452,7 +452,7 @@ def is_notebook():
     except:
         return False
 
-class PyRATPViewer:
+class pyratpviewer:
     def __init__(self, grid, df):
         try:
             import pyvista as pv
@@ -488,7 +488,7 @@ class PyRATPViewer:
         # create initial view
         self.plotter = pv.Plotter() # initiate plotter
         array = extract_dataframe(self.data, self.variable, self.day, self.hour) #  get data
-        self.mesh = RATPVOXELS2PYVISTA(self.g, array, self.variable) # create pyvista object
+        self.mesh = ratpvoxels2pyvista(self.g, array, self.variable) # create pyvista object
 
         self.plotter.add_mesh(self.mesh,cmap="viridis", 
                               scalars=f"{self.variable}_entity_{self.entity}") # add to plotter
@@ -565,7 +565,7 @@ class PyRATPViewer:
         array = extract_dataframe(self.data, self.variable, self.day, self.hour)
         if array is not None and np.size(array,1) > 0: # if the data exists!
             self.plotter.remove_scalar_bar()
-            self.mesh = RATPVOXELS2PYVISTA(self.g, array, self.variable)
+            self.mesh = ratpvoxels2pyvista(self.g, array, self.variable)
             self.plotter.add_mesh(self.mesh, cmap="viridis",
                                   scalars=f"{self.variable}_entity_{self.entity}")
     

@@ -19,7 +19,7 @@ from openalea.ratp.grid import Grid
 from openalea.ratp.vegetation import Vegetation
 from openalea.ratp.micrometeo import MicroMeteo
 from openalea.ratp.runratp import runRATP
-from openalea.ratp.RATP2VTK import RATPVOXELS2VTK, RATPVOXELS2PYVISTA, extract_dataframe, PyRATPViewer
+from openalea.ratp.RATP2VTK import ratpvoxels2vtk, extract_dataframe, pyratpviewer
 import matplotlib.pyplot as plt
 from datetime import datetime
 
@@ -181,9 +181,9 @@ outputname = 'data_'+ColToExtract+'_day'+str(DayToExtract)+'hour'+str(HourToExtr
 array = extract_dataframe(dfvox, ColToExtract, DayToExtract, HourToExtract)
 
 #write VTK file
-RATPVOXELS2VTK(g, array, ColToExtract, outputname)
+ratpvoxels2vtk(g, array, ColToExtract, outputname)
 
 ############  instantaneous viewer ############
 
-p = PyRATPViewer(g, dfvox)
+p = pyratpviewer(g, dfvox)
 
