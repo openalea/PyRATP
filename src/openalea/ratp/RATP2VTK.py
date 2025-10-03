@@ -441,6 +441,16 @@ def extract_dataframe(df, ColName, Day, Hour):
     # Transpose the array to orient it along the rows
     return extracted_array.T
 
+# Function to detect if running in a notebook
+def is_notebook():
+    try:
+        from IPython import get_ipython
+        if 'IPKernelApp' in get_ipython().config:
+            return True
+        else:
+            return False
+    except:
+        return False
 
 class PyRATPViewer:
     def __init__(self, grid, df):
@@ -451,6 +461,10 @@ class PyRATPViewer:
             "PyVista is not installed. "
             "Please install it with: pip install pyvista"
             )
+            
+        # Set the Jupyter backend if running in a notebook
+        if is_notebook():
+            pv.set_jupyter_backend("static")  
         
         self.data = df # data frame of interest
         self.g = grid # RATP grid
