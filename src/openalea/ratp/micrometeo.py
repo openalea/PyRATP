@@ -5,7 +5,7 @@
 
 """
 
-from openalea.ratp import pyratp
+from . import pyratp
 import numpy as np
 import math
 import os
