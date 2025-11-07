@@ -5,7 +5,7 @@ import numpy as np
 import pandas
 import scipy.io as io
 
-from . import pyratp
+from openalea.ratp import pyratp
 from . import vege3D
 
 
