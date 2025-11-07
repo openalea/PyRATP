@@ -21,6 +21,11 @@ build:
   string: py{{ PY_VER }}
   script_env:
     - CC=gcc # [win]
+  ignore_run_exports_from:
+    # Avoid automatic run export of m2w64 stdlib on windows (that forces hard regression of msvc libs)
+    - {{ compiler('c') }} # [win]
+    # Force static build on Windows to allow skipping run export of m2w64 stdlib
+    - LDFLAGS=-static -static-libgcc   # [win]
   preserve_egg_dir: True
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
