@@ -19,8 +19,6 @@ source:
 build:
   number: 0
   string: py{{ PY_VER }}
-  script_env:
-    - CC=gcc # [win]
   preserve_egg_dir: True
   script:
     # Force meson-python to use MSVC toolchain instead of m2w64
