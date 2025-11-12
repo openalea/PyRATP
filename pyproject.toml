@@ -20,6 +20,9 @@ fallback_version = "2.1.0.dev0"
 version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
 
+[tool.meson-python.args]
+setup = ["--vsenv"]
+
 [project]
 name = "openalea.ratp"
 authors = [
