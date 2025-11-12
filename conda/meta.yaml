@@ -39,7 +39,7 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('fortran') }}  # [not win]
+    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - charset-normalizer
   run:
