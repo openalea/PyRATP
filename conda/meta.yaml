@@ -22,7 +22,10 @@ build:
   script_env:
     - CC=gcc # [win]
   preserve_egg_dir: True
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
+  script:
+    # Force meson-python to use MSVC toolchain instead of m2w64
+    - set "MESON_ARGS=--vsenv"
+    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
 requirements:
   host:
