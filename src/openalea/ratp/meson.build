@@ -50,6 +50,7 @@ py.extension_module('pyratp',
   install : true,
   link_language: 'fortran',
   subdir: 'openalea/ratp',
+  link_args: ['flang'],
 )
 
 python_sources = [
