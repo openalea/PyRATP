@@ -32,9 +32,8 @@ build:
 requirements:
   host:
     - python
-    {% for dep in build_deps %}
-    - {{ dep }}
-    {% endfor  %}
+    - setuptools
+    - numpy
   build:
     - python
     {% for dep in build_deps %}
