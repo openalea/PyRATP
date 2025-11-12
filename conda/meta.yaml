@@ -22,7 +22,7 @@ build:
   preserve_egg_dir: True
   script_env:
     - CC=cl # [win]
-    - FC=llvm-flang # [win]
+    - FC=flang # [win]
   script:
     # Force meson-python to use MSVC toolchain instead of m2w64
     - set "MESON_ARGS=--vsenv"
@@ -42,6 +42,7 @@ requirements:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
     - charset-normalizer
+    - llvm-openmp
   run:
     - python
     {% for dep in deps + conda_deps %}
