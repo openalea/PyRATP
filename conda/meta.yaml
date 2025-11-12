@@ -22,7 +22,7 @@ build:
   preserve_egg_dir: True
   script_env:
     - CC=cl # [win]
-    - FC=flang # [win]
+    - FC=flang-new # [win]
   script:
     # Force meson-python to use MSVC toolchain instead of m2w64
     - set "MESON_ARGS=--vsenv"
