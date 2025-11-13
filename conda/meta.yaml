@@ -33,7 +33,7 @@ requirements:
     - {{ dep }}
     {% endfor  %}
     - fortran-compiler
-    - - {{ compiler('c') }}
+    - {{ compiler('c') }}
     - charset-normalizer
   run:
     - python
