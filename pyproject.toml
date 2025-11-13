@@ -21,7 +21,7 @@ version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
 
 [tool.meson-python.args]
-setup = ["--vsenv"]
+setup = ['--vsenv', '-Dfortran_std=none']
 
 [project]
 name = "openalea.ratp"
