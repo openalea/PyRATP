@@ -32,7 +32,8 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - compilers
+    - fortran-compiler
+    - - {{ compiler('c') }}
     - charset-normalizer
   run:
     - python
