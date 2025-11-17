@@ -32,13 +32,7 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('c' }}
-    - flang
-    - libflang
-    - libllvm19
-    - lld
-    - llvm-tools
-    - vs2022_win-64
+    - compilers
     - charset-normalizer
   run:
     - python
