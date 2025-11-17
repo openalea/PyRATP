@@ -4,7 +4,7 @@ requires = [
     "setuptools",
     "setuptools_scm",
     "meson-python",
-    "numpy", # mandatory for f2py which is distributed with numpy
+    "numpy>2.0.0", # mandatory for f2py which is distributed with numpy
   ]
 #build-backend = "setuptools.build_meta"
 build-backend = "mesonpy"
@@ -19,6 +19,9 @@ where = ["src"]
 fallback_version = "2.1.0.dev0"
 version_scheme = "guess-next-dev"
 local_scheme = "no-local-version"
+
+[tool.meson-python.args]
+setup = ['-Dfortran_std=none']
 
 [project]
 name = "openalea.ratp"
