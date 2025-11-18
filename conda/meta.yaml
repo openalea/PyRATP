@@ -23,6 +23,8 @@ build:
     - CC=gcc # [win]
     # Force static build on Windows to allow skipping run export of m2w64 stdlib
     - LDFLAGS=-static -static-libgcc -static-libgfortran   # [win]
+    # to correct in windows-latest libmamba Failed to load subdir: Download error (35) SSL connect error
+    - SSL_NO_VERIFY=1
   ignore_run_exports_from:
     # Avoid automatic run export of m2w64 stdlib on windows (that forces hard regression of msvc libs)
     - {{ compiler('c') }} # [win]
