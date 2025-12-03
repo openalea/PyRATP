@@ -1,4 +1,4 @@
-##from openalea.plantgl import *
+from openalea.plantgl import all as pgl
 import numpy as np
 from collections import Counter
 import pandas
@@ -101,7 +101,7 @@ def ratp2vtk(scene, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"
 ##      variable=np.zeros(len(scene))
 
 
-    T = all.Tesselator()
+    T = pgl.Tesselator()
     VertexCoords=[]
     TrianglesVertexIDs=[]
     triangleColor = []

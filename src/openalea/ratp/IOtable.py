@@ -1,7 +1,11 @@
+""" Input/output functions for tables in csv or txt format.
+This module may be rewrite for efficiency using pandas library.
+"""
+
 from os.path import join
 
 def N_lignes (fichier) :
-    """compte le nombre de lignes d'un fichier (compte le nombre d'elements de la liste readlines()"""
+    """Count the number of lines in a file without changing the file pointer position"""
 
     position_ini = fichier.tell()
     fichier.seek(0)
@@ -10,16 +14,16 @@ def N_lignes (fichier) :
     return N_tot_lignes
 
 def transcript_csv_str (fichier) :
-     """ transcrit une ligne d'un fichier.csv en liste de float """
+     """ Convert a line of csv into a list of float """
      ligne_ch = fichier.readline()
-     liste, i, caract = [], 0, '' #initialise une liste vide et un indice a 0 et une chaine de caractere vide 
+     liste, i, caract = [], 0, '' #init a empty list and an index at 0 and an empty string 
 
-     if ligne_ch == '' : #verifie si la chaine est vide
+     if ligne_ch == '' : #check if the string is empty
          return 'chaine vide'
    
-     while ligne_ch[i] !=  '\n': #boucle pour une valeur en .csv (separateur ;)
+     while ligne_ch[i] !=  '\n': #loop for a value in .csv (separator ;)
          ch = ligne_ch[i]
-         if ligne_ch[i] == ',' : #converti separateur decimal en point
+         if ligne_ch[i] == ',' : #convert decimal separator into point
             ch = '.'
          if ligne_ch[i] == ';'  :
             liste.append (caract)
@@ -28,11 +32,11 @@ def transcript_csv_str (fichier) :
             caract = caract + ch
          i=i+1
 
-     liste.append (caract) #ajoute la derniere valeur
+     liste.append(caract) # add the last value
      return liste
 
 def table_csv_str (fichier) :
-    """transcrit un fichier .csv de nombres en un tableau (liste de liste) de nombre reels """
+    """transcribe a .csv file of strings into a table (list of list) of strings """
 
     fichier.seek(0)
     liste, n = [], N_lignes(fichier)
@@ -43,16 +47,15 @@ def table_csv_str (fichier) :
     return liste
 
 def transcript_csv (fichier) :
-     """ transcrit une ligne d'un fichier.csv en liste de float """
+     """ Convert a line of csv into a list of float """
      ligne_ch = fichier.readline()
-     liste, i, caract = [], 0, '' #initialise une liste vide et un indice a 0 et une chaine de caractere vide
-
-     if ligne_ch == '' : #verifie si la chaine est vide
+     liste, i, caract = [], 0, '' 
+     if ligne_ch == '' : #check if the string is empty
          return 'chaine vide'
    
-     while ligne_ch[i] !=  '\n': #boucle pour une valeur en .csv (separateur ;)
+     while ligne_ch[i] !=  '\n': #loop for a value in .csv (separator ;)
          ch = ligne_ch[i]
-         if ligne_ch[i] == ',' : #converti separateur decimal en point
+         if ligne_ch[i] == ',' : #convert decimal separator into point
             ch = '.'
          if ligne_ch[i] == ';'  :
             liste.append (float(caract))
@@ -61,12 +64,12 @@ def transcript_csv (fichier) :
             caract = caract + ch
          i=i+1
 
-     liste.append (float(caract)) #ajoute la derniere valeur
+     liste.append (float(caract)) # add the last value
 
      return liste
 
 def table_csv (fichier) :
-    """transcrit un fichier .csv de nombres en un tableau (liste de liste) de nombre reels """
+    """transcribe a .csv file into a table (list of list) of floats """
 
     fichier.seek(0)
     liste, n = [], N_lignes(fichier)
@@ -77,14 +80,13 @@ def table_csv (fichier) :
     return liste
 
 def transcript_txt (fichier) :
-     """ transcrit une ligne d'un fichier.txt en liste de chaine """
+     """ Convert a line of txt into a list of strings """
      ligne_ch = fichier.readline()
-     liste, i, caract = [], 0, '' #initialise une liste vide et un indice a 0 et une chaine de caractere vide 
-
-     if ligne_ch == '' : #verifie si la chaine est vide
+     liste, i, caract = [], 0, '' 
+     if ligne_ch == '' : 
          return 'chaine vide'
    
-     while ligne_ch[i] !=  '\n': #boucle pour une valeur en .csv (separateur ;)
+     while ligne_ch[i] !=  '\n': 
          ch = ligne_ch[i]
          if (ligne_ch[i] == ' ' or ligne_ch[i] == "\t") and caract != '' :
             liste.append (caract)
@@ -93,12 +95,12 @@ def transcript_txt (fichier) :
             caract = caract + ch
          i=i+1
 
-     liste.append (caract) #ajoute la derniere valeur
+     liste.append (caract) 
      return liste
 
 
 def table_txt (fichier) :
-    """transcrit un fichier .txt un tableau (liste de liste) de chaines """
+    """transcribe a .txt file into a table (list of list) of strings """
 
     fichier.seek(0)
     liste, n = [], N_lignes(fichier)
@@ -109,7 +111,7 @@ def table_txt (fichier) :
     return liste
 
 def ecriture_csv (table, fichier) :
-    """ ecrit table (liste de liste) de chiffre dans un fichier csv """
+    """ write table (list of list) of numbers into a csv file """
     for i in range (len(table)):
         for j in range (len(table[i][0:])-1) :
             fichier.write(str(table[i][j]))
@@ -119,7 +121,7 @@ def ecriture_csv (table, fichier) :
     fichier.close()
 
 def ecriture_txt (table, fichier) :
-    """ ecrit table (liste de liste) de chiffre dans un fichier txt """
+    """ write table (list of list) of numbers into a txt file """
     for i in range (len(table)):
         for j in range (len(table[i][0:])-1) :
             fichier.write(str(table[i][j]))
@@ -129,7 +131,7 @@ def ecriture_txt (table, fichier) :
     fichier.close()
 
 def copie_partielle (fichier,out,n,m):
-    """ recopie de fichier des lignes n a m dans le fichier out """
+    """ copy lines from n to m from fichier to out """
     for i in range(m):
         ligne_ch = fichier.readline()
         if i>=n:
@@ -137,8 +139,9 @@ def copie_partielle (fichier,out,n,m):
 
 
 def conv_dataframe(tab):
-    """ converti liste de liste en dictionnaire; prend la cle comme le pemier element de la liste"""
-    """ format a priori compatible pour conversion en data.frame R"""
+    """ convert list of list into dictionary of lists  with 1st row as key. 
+    Format compatible for R DataFrame
+    """
     dat = {}
     for i in range(len(tab)):
         dat[str(tab[i][0])] = tab[i][1:]
@@ -146,8 +149,10 @@ def conv_dataframe(tab):
     return dat #r.as_data_frame(dat)
 
 def conv_list(tab):
-    """ converti dictionnaireen liste de liste en ;  cle comme pemier element de la liste"""
-    """ format compatible pour mes_csv"""
+    """ convert dictionary of lists into list of lists with key as first element of each list
+    
+    Format compatible for my_csv
+    """
     dat = []
     for i in tab.keys():
         v = [i]
@@ -163,9 +168,11 @@ def conv_list(tab):
     return dat 
 
 def extract_dataframe(dat, ls_cles, cle, val=None, oper='egal'):
-    """ extrait dans listes de cles ls_cles les lignes pour lesquelles cle=val; toutes si val=None  
-    option pour oper: egal / sup / inf/ supeg / infeg / diff"""
-    #cree liste d'index ou cle = val
+    """ extract from dat (dictionary of lists) a sub-dictionary where dat[cle] respect cle  ival  val  
+    option oper : 'egal', 'inf', 'sup', 'infeg', 'supeg', 'diff'
+    """
+    
+    #create list of index or cle = val
 
     id = []
     for i in range(len(dat[cle])):
@@ -192,9 +199,9 @@ def extract_dataframe(dat, ls_cles, cle, val=None, oper='egal'):
                     id.append(i)
 
     x = {}
-    for k in ls_cles: # recupere les paires interessantes
+    for k in ls_cles: 
         v = []
-        for i in id: # les id respectant cle=val
+        for i in id: 
             v.append(dat[k][i])
 
         x[k] = v
@@ -217,8 +224,7 @@ def t_list(tab):
 
 
 def conv_list2(tab):
-    """ converti dictionnaire avec 1 seule valeur par cle en liste de liste ;  cle comme pemier element de la liste"""
-    """ format compatible pour mes_csv"""
+    """ convert dictionary into list of lists with key as first element of each list"""
     dat = []
     for i in tab.keys():
         v = [i, tab[i]]

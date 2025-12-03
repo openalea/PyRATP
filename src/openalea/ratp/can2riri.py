@@ -1,6 +1,7 @@
-import openalea.ratp.IOtable as IOtable
 from numpy import array, absolute
 import numpy
+
+import openalea.ratp.IOtable as IOtable
 
 #scipy.dot -> produit scalaire
 #scipy.cross -> produit vectoriel
