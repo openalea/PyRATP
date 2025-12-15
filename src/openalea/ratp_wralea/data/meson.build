@@ -2,6 +2,7 @@ py_mod = import('python')
 py = py_mod.find_installation(pure: false)
 
 
+pkgdir = py.get_install_dir() / 'openalea' / 'ratp_wralea'
 python_sources = [
   '__init__.py',
   '__wralea__.py',
@@ -9,7 +10,6 @@ python_sources = [
 
 py.install_sources(
   python_sources,
-  pure: false,
   subdir: 'openalea/ratp_wralea/data'
 )
 
@@ -31,7 +31,7 @@ data_sources = [
   'vgxTestTriangles.vgx',
 ]
 
-py.install_data(
+install_data(
   data_sources,
-  install_dir: 'openalea/ratp_wralea/data'
+  install_dir: pkgdir / 'data'
 )

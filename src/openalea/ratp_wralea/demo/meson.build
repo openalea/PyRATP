@@ -9,6 +9,5 @@ python_sources = [
 
 py.install_sources(
   python_sources,
-  pure: true,
   subdir: 'openalea/ratp_wralea/demo'
 )
