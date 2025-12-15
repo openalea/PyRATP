@@ -8,3 +8,4 @@ project('PyRATP', 'c',
 add_languages('fortran')
 
 subdir('src/openalea/ratp')
+subdir('src/openalea/ratp_wralea')
