@@ -11,7 +11,7 @@
 #!/usr/bin/env python
 
 def main():
-    import pyratp
+    from . import pyratp
     grid = pyratp.grid3d
     grid.dx=3
     gridmat={}

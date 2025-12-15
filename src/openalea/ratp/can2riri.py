@@ -6,7 +6,7 @@ import openalea.ratp.IOtable as IOtable
 #scipy.dot -> produit scalaire
 #scipy.cross -> produit vectoriel
 def norme_v(vec):
-    """ calcule la norme d'un vecteur """
+    """ Caculate norm of vector"""
     return numpy.sqrt((vec[2]*vec[2])+(vec[1]*vec[1])+(vec[0]*vec[0]))
 
 def triangle_area(p1, p2, p3):

@@ -36,7 +36,7 @@ def voxel_relative_coordinates(x, y, z, mapping, grid, normalise = True):
     
     return xv, yv, zv 
 
-class ColorMap(object):
+class ColorMap:
     """A RGB color map, between 2 colors defined in HSV code
 
     :Examples: 

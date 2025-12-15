@@ -4,17 +4,16 @@
 """
 
 """
-
-from . import pyratp
-#import pyRATP
-import numpy as np
 import math
 import os
 pj = os.path.join
 
+import numpy as np
+
+from . import pyratp
 
 
-class Vegetation(object):
+class Vegetation:
     """
     """
     
