@@ -86,10 +86,3 @@ via the environment variable
 export PYTHONPATH="$PWD/src":$PYTHONPATH
 ```
 
-or
-
-add the path to `src` in your ipython or in IDE with:
-```ipython
-import sys; sys.path.extend([mypath to 'src'])
-```
-with `mypath to 'src'` the absolute path to 'PyRatp/src'
