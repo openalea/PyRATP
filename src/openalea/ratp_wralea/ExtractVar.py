@@ -1,4 +1,4 @@
-from openalea.core import *
+from openalea.core import Node, IEnumStr
 
 class ExtractColumn2( Node ):
     """ Extract column based on str

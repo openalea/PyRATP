@@ -4,17 +4,18 @@
 from openalea.core import *
 
 
-__name__ = 'PyRATP'
+__name__ = 'openalea.ratp'
 
 __editable__ = True
-__description__ = ''
+__description__ = 'Simulation of radiation and leaf-gas exchanges as a function of canopy structure, canopy microclimate and physical and physiological leaf properties'
 __license__ = 'CeCILL-C'
-__url__ = 'http://openalea.gforge.inria.fr'
+__url__ = 'https://pyratp.readthedocs.io'
 __alias__ = []
-__version__ = '0.9.0'
+__version__ = '1.0.0'
 __authors__ = ''
 __institutes__ = None
 __icon__ = 'icon.png'
+__alias__ = ['PyRATP']
 
 
 __all__ = ['ratp_PlantGL2VTK', 'ratp_can2riri', 'ratp_RATP2VTK_Leaves', 'ExtractLight_ExtractLight', 'ExtractLight_ExtractVoxels', 'ratp_read_grid', 'ExtractVar_ExtractVar', 'ratp_DoAll', 'ratp_fill_grid', 'ratp_DoIrradiation', 'Plot3DRATP_Plot3DRATP', 'ratp_read_vgx', 'ratp_ExtractTime', 'ratp_extract_leaves', 'ratp_read_vegetation', 'ratp_RATPVOXELS2VTK', 'ratp_Nallocate', 'ratp_read_micrometeo', 'ratp_read_skyvault']

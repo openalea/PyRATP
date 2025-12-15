@@ -4,16 +4,17 @@
 from openalea.core import *
 
 
-__name__ = 'PyRATP.demo'
+__name__ = 'Demo.RATP'
 
 __editable__ = True
 __description__ = ''
 __license__ = 'CeCILL-C'
-__url__ = 'http://openalea.gforge.inria.fr'
+__url__ = 'https://pyratp.readthedocs.io'
 __alias__ = []
-__version__ = '0.9.0'
+__version__ = '1.0.0'
 __authors__ = ''
-__institutes__ = None
+__institutes__ = 'INRAE, CIRAD, inria'
+__alias__ = ['PyRATP.demo']
 __icon__ = ''
 
 
