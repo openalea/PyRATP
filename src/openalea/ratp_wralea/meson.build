@@ -20,3 +20,5 @@ py.install_sources(
   subdir: 'openalea/ratp_wralea'
 )
 
+subdir('data') 
+subdir('demo') 
