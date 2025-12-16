@@ -84,6 +84,7 @@ mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea
 ```shell
 pip install ./"[test]"
 ```
+
 and after each modification of the python or Fortran part, run
 ```shell
 pip install .
@@ -91,3 +92,4 @@ pip install .
 then restart your kernel (when using IPython) for your modifications to be taken into account.
 
 6) Have a look at the notebooks and scripts in ```example/```!
+
