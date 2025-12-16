@@ -20,7 +20,7 @@ def ExtractLight(d_e2v, data, day, hour,col):
 
     extractedvar = []
 
-    nmax = np.alen(d_e2v)
+    nmax = len(d_e2v)
 
     for i in range(nmax): #Enleve nmax+1 MARC 10 12 2014
         try :
@@ -55,7 +55,7 @@ def ExtractLightNew(d_e2v, data, day, hour,col):
     extractedvar = []
     entity=[]
     voxelId=[]
-    nmax = np.alen(d_e2v)   #number of leaves in the initial 3D plant scene to be colored
+    nmax = len(d_e2v)   #number of leaves in the initial 3D plant scene to be colored
 
     for i in range(nmax): #Enleve nmax+1 MARC 10 12 2014
 ##        try :

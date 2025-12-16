@@ -36,11 +36,11 @@ def extract_leaves(g, factor=100, nitrogen=2, grid_definition=None):
     # convert dict into array
 
     _leaves = np.array(leaves)
-    _leaf_type = np.array(list(leaf_type[vid] for vid in leaves), dtype=np.int)-1
-    _x = np.array(list(x[vid] for vid in leaves))
-    _y = np.array(list(y[vid] for vid in leaves))
-    _z = np.array(list(z[vid] for vid in leaves))
-    _leaf_area = np.array(list(leaf_area[vid] for vid in leaves))
+    _leaf_type = np.array(list(leaf_type[vid] for vid in leaves), dtype=np.int32)-1
+    _x = np.array([x[vid] for vid in leaves])
+    _y = np.array([y[vid] for vid in leaves])
+    _z = np.array([z[vid] for vid in leaves])
+    _leaf_area = np.array([leaf_area[vid] for vid in leaves])
     _leaf_nitrogen = np.ones(len(leaves))*nitrogen
 
     return _leaves, _leaf_type, _x, _y, _z, _leaf_area, _leaf_nitrogen
