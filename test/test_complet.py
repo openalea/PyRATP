@@ -17,11 +17,11 @@ def test_complet(pm):
 def test_can(pm):
     factory = pm['demo.ratp']['RATPTuto_CanFile']
     cn = factory.instantiate()
-    cn.eval_as_expression(16)
-    result = cn.node(16).get_output(0)
+    cn.eval_as_expression(15)
+    result = cn.node(15).get_output(0)
     
-    assert len(result) == 230
-    assert result.shape == (230,9)
+    assert len(result) == 170
+    assert result.shape == (170,11)
     #assert 199 < result.mean() < 200
 
 
