@@ -109,7 +109,7 @@ mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea
 5) Compile everything:
 
 ```shell
-pip install ./"[test]"
+pip install ."[test]"
 ```
 
 and after each modification of the python or Fortran part, run
