@@ -4,13 +4,13 @@
 from openalea.core import *
 
 
-__name__ = 'pyratp.data'
+__name__ = 'openalea.ratp.data'
 
 __editable__ = True
 __description__ = ''
 __license__ = ''
 __url__ = ''
-__alias__ = []
+__alias__ = ['pyratp.data']
 __version__ = ''
 __authors__ = ''
 __institutes__ = ''

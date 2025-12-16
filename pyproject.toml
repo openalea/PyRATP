@@ -85,6 +85,10 @@ Changelog = "https://github.com/openalea/PyRATP/releases"
 
 [tool.setuptools.package-data]
 "pyratp_data" = ['*.pyd', '*.so'] # not following actual guidelines 02/06/2025 not sure but I feel it is needed
+"*" = ['*.vgx', '*.can', '*.grd', '*.mat', '*.veg','*.mat', '*.mto', '*.skv', '*.vfn', '*.txt']
 
 [project.entry-points."wralea"]
-"pyratp" = "openalea.ratp_wralea"
+"openalea.ratp" = "openalea.ratp_wralea"
+"openalea.ratp.demo" = "openalea.ratp_wralea.demo"
+"openalea.ratp.data" = "openalea.ratp_wralea.data"
+

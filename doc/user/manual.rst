@@ -1,21 +1,21 @@
 Getting Started
 ################
 
-Things to know about pyRATP ...
+Things to know about OpenAlea.RATP ...
 ===============================
 Based on a single Fortran90 program, the OpenAlea version of RATP is still implemented 
 in Fortran90 with some specificities:
 
-- The RATP code is now divided into several Fortran90 modules which can be used as a Python library in the ALEA environment. A Fortran90 module includes public variables and subroutines, which are all accessible in the ALEA environment.
+- The RATP code is now divided into several Fortran90 modules which can be used as a Python library in the ALEA environment. A Fortran90 module includes public variables and subroutines, which are all accessible in the OpenAlea environment.
 - Input variables and files are managed in Python through dedicated python nodes available in the VisuAlea environment.
 - The RATP core i.e. radiation balance, heat energy balance and leaf physiological models (transpiration and photosynthesis) are still Fortran90 modules and are not available for users.
  
 First tutorial
 ==============
  
-Load pyRATP
-***********
-Launch the Tuto1 composite node from the pyratp package (pyratp.demo.RATPTuto1):
+Load OpenAlea.RATP
+*******************
+Launch the Tuto1 composite node from the openalea.ratp package (openalea.ratp.demo.RATPTuto1):
 
 .. image:: Tuto1Image.png
     :width: 30%
@@ -23,7 +23,7 @@ Launch the Tuto1 composite node from the pyratp package (pyratp.demo.RATPTuto1):
 
 The following workspace should open :
 
-.. dataflow:: pyratp.demo RATPTuto_ToStart
+.. dataflow:: openalea.ratp.demo RATPTuto_ToStart
 
 This workspace is composed of:
 
@@ -36,9 +36,9 @@ Description of input files
 --------------------------
 Many input parameters are necessary to run RATP. It is out of the scope of this short tutorial to describe all this parameters. All information about these input files can be found in /LINK TO PDF ou WORD FILE/  
 
-Run pyRATP
-**********
-To run pyRATP click right on the node "DoAll" and run the node. All the input files will be read sequentially. The success of each step and the computational time should be highlighted in the console window as follow:  
+Run OpenAlea.RATP
+******************
+To run OpenAlea.RATP click right on the node "DoAll" and run the node. All the input files will be read sequentially. The success of each step and the computational time should be highlighted in the console window as follow:  
 ::
   VEGE3D OK
   GRILLE OK
@@ -48,7 +48,7 @@ To run pyRATP click right on the node "DoAll" and run the node. All the input fi
   MICROMETEO OK
   Evaluation time: 3.07400012016 
 
-pyRATP outputs
+OpenAlea.RATP outputs
 **************
 At the end of the computation, four output files are stored in the directory: C:\\tmpRATP\\Resul\\: data.txt, spatial.txt, tree.txt and VoxelsGrid.vgx .
 
@@ -61,20 +61,20 @@ Description of output files
 
 Visualize output as 3D data
 ---------------------------
-The pyRATP outputs can be visualized at the leaf scale or at the voxel scale.
+The OpenAlea.RATP outputs can be visualized at the leaf scale or at the voxel scale.
 
 #. 3D Voxel scale
 
 To visualize the voxels you first have to extract from the entire spatial output data the variable to plot for a specific time step. Then write this data in a file according to the vtk format (to be use with the Paraview software) using the RATP2VOXELS python node.
 The following data flow shows how to connect all the nodes and to define the day, the hour and the RATP variable to extract.
  
-.. dataflow:: pyratp.demo RATPTuto_Visu3DOutputVoxels
+.. dataflow:: OpenAlea.RATP.demo RATPTuto_Visu3DOutputVoxels
  
 #. 3D leaf scale
 
-To visualize the pyRATP outputs as 3D data you can either use plantGL method or python nodes dedicated to pyRATP In both case 3D plot are colored according to one variable output variable i.e. one which is stored in the spatial.txt file.
+To visualize the OpenAlea.RATP outputs as 3D data you can either use plantGL method or python nodes dedicated to OpenAlea.RATP In both case 3D plot are colored according to one variable output variable i.e. one which is stored in the spatial.txt file.
 
-.. dataflow:: pyratp.demo RATPTuto_Visu3DOutputLeaves       
+.. dataflow:: OpenAlea.RATP.demo RATPTuto_Visu3DOutputLeaves       
 
  
 TODO

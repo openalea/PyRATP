@@ -60,7 +60,7 @@ mamba create -n pyratp openalea.ratp -c conda-forge -c openalea3/label/rc
 The rc channel corresponds to the latest build of PyRatp when the main channel is the 
 stable release.
 
-### For developpers
+### For developpers Linux (python modification only)
 Editable install with conda/environment.yml is not functionning because of namespace conflict. A workaround is as follow:
 1) download the repository and change to the root directory:
 ```shell
@@ -69,7 +69,7 @@ Editable install with conda/environment.yml is not functionning because of names
 ```
 2) Create a conda environment with dependencies manually with:
 ```shell
-mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy compilers meson-python gfortran openalea.mtg
+mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy compilers meson-python gfortran scipy pytest jupyter
 ```
 3) activate the environment: `mamba activate pyratp`
 
@@ -85,4 +85,39 @@ via the environment variable
 ```shell
 export PYTHONPATH="$PWD/src":$PYTHONPATH
 ```
+
+
+### For developpers (python and fortran modifications)
+Editable install with conda/environment.yml is not functionning because of namespace conflict. A workaround is as follow:
+1) download the repository and change to the root directory:
+```shell
+   git clone https://github.com/openalea/PyRATP.git
+   cd PyRATP
+```
+2) Create a conda environment with dependencies manually:
+   
+Using MAC and Linux:
+```shell
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest jupyter
+```
+Using Windows:
+```shell
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran jupyter
+```
+4) activate the environment: `mamba activate pyratp_dev`
+
+5) Compile everything:
+
+```shell
+pip install ./"[test]"
+```
+
+and after each modification of the python or Fortran part, run
+```shell
+pip install .
+```
+then restart your kernel (when using IPython) for your modifications to be taken into account.
+
+6) Have a look at the notebooks and scripts in ```example/```!
+
 

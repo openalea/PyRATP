@@ -1,0 +1,8 @@
+11 10 12 ! nx, ny,nz
+0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ! dx, dy, dz (nz+1 times)
+0.08404499999999998 0.2980714999999997 -2.3868764999999996 ! x_orig, y_orig, z_orig
+44.0 0.0 0.0  ! latitude, longitude timezone (hours)
+0.0 ! angle (°) between axis X+ and North
+0 ! offset between canopy units along Y-axis
+1 ! number of vegetation entities in the 3D grid
+2 0.075 0.2 ! number of wavebands, soil reflectance for each waveband

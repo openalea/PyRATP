@@ -1,4 +1,4 @@
-The model PyRATP was designed to simulate the spatial distribution of radiation and leaf-gas 
+The model RATP (aka OpenAlea.RATP) was designed to simulate the spatial distribution of radiation and leaf-gas 
 exchanges within vegetation canopies as a function of canopy structure, 
 canopy microclimate and physical and physiological leaf 
 properties. The model uses a 3D representation of the canopy (i.e. an array 

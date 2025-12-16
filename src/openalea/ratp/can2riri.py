@@ -1,11 +1,12 @@
-import openalea.ratp.IOtable as IOtable
 from numpy import array, absolute
 import numpy
+
+import openalea.ratp.IOtable as IOtable
 
 #scipy.dot -> produit scalaire
 #scipy.cross -> produit vectoriel
 def norme_v(vec):
-    """ calcule la norme d'un vecteur """
+    """ Caculate norm of vector"""
     return numpy.sqrt((vec[2]*vec[2])+(vec[1]*vec[1])+(vec[0]*vec[0]))
 
 def triangle_area(p1, p2, p3):
@@ -24,7 +25,7 @@ def tri_ortho(p1,p2,p3):
 
 def can2riri(can_file_path, Ncontent = 0.1):
     #open file
-    f = file(can_file_path, 'r')
+    f = open(can_file_path, 'r')
     tab_geom = IOtable.table_txt(f) 
     f.close()
     for i in range(1, len(tab_geom)-1):

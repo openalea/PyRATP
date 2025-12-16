@@ -10,13 +10,14 @@ python_sources = [
   'ExtractVar.py',
   'Plot3DRATP.py',
   'ratp.py',
-  'WidgetUIRATP_Grid.py',
-  'WidgetUIRATP_Vege.py',
+  'WidgetUiRATP_Grid.py',
+  'WidgetUiRATP_Vege.py',
 ]
 
 py.install_sources(
   python_sources,
-  pure: false,
   subdir: 'openalea/ratp_wralea'
 )
 
+subdir('data') 
+subdir('demo') 

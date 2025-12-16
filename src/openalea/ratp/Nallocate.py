@@ -25,6 +25,7 @@ class Nallocate:
             ... grid: updated RATP grid variable
         """
 
+        # BUG : this path have to be generic and not specific to an OS and a computer!
         path = 'c:/tmpRATP' #if platform.system() == 'Windows' else '/tmp/tmpRATP'
 ##        if os.path.isdir(path):
 ##            shutil.rmtree(path)

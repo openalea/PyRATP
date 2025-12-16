@@ -50,7 +50,7 @@ def dicoInit():
     for k in dicoMotCle.keys():
         dicoMotCle[k] = 0
 
-class Vege3D(object):
+class Vege3D:
     """
     """
     def __init__(self, *args, **kwds):

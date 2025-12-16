@@ -4,17 +4,16 @@
 """
 
 """
-
-from . import pyratp
-#import pyRATP
-import numpy as np
 import math
 import os
 pj = os.path.join
 
+import numpy as np
+
+from . import pyratp
 
 
-class Vegetation(object):
+class Vegetation:
     """
     """
     
@@ -200,7 +199,7 @@ class Vegetation(object):
             # second column
             fn = i.split(' ')[1].strip()
             nomfVeg = pj(chemin, fn)
-            fVeg = open(nomfVeg)
+            fVeg = open(nomfVeg, encoding='latin-1')
 
 
             _read(fVeg,varTemp)
