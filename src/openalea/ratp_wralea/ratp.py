@@ -10,7 +10,7 @@ from openalea.ratp import (
     can2riri,
     Nallocate
 )
-from openalea.ratp.RATP2VTK import RATP2VTK, RATPVOXELS2VTK, PlantGL2VTK
+from openalea.ratp.RATP2VTK import RATP2VTK, RATPVOXELS2VTK#, PlantGL2VTK
 
 
 read_grid = grid.Grid.read

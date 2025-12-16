@@ -171,6 +171,8 @@ def ratp2vtk(scene, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"
     # return outputs
     return   triangleColor
 
+RATP2VTK = ratp2vtk
+
 def ratpvoxels2vtk(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT.vtk"):
     '''    Display Voxels colored by variable with Paraview
            RATP Grid is written in VTK Format as a structured grid
@@ -297,7 +299,9 @@ def ratpvoxels2vtk(grid, variable,varname="Variable",nomfich="C:\tmpRATP\RATPOUT
         f.write('\n')
 
     f.close()
-    
+
+RATPVOXELS2VTK = ratpvoxels2vtk
+
 def ratpvoxels2pyvista(grid, variable, varname):
     '''
     A function to create a visualisation of a voxel file using PyVista.

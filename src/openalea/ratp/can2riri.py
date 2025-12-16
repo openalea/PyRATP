@@ -25,7 +25,7 @@ def tri_ortho(p1,p2,p3):
 
 def can2riri(can_file_path, Ncontent = 0.1):
     #open file
-    f = file(can_file_path, 'r')
+    f = open(can_file_path, 'r')
     tab_geom = IOtable.table_txt(f) 
     f.close()
     for i in range(1, len(tab_geom)-1):

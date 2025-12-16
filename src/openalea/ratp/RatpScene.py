@@ -126,7 +126,21 @@ class RatpScene:
     timezone = 0 # consider UTC/GMT time for date inputs
     idecaly = 0 
     
-    def __init__(self, scene=None, scene_unit = 'm', toric=False, domain=None, entity=None, nitrogen=None, area=None, z_soil=None, localisation='Montpellier', grid_shape=None, grid_resolution=None, grid_orientation=0, z_resolution=None, nbincli=9):
+    def __init__(self, 
+                 scene=None, 
+                 scene_unit = 'm', 
+                 toric=False, 
+                 domain=None, 
+                 entity=None, 
+                 nitrogen=None, 
+                 area=None, 
+                 z_soil=None, 
+                 localisation='Montpellier', 
+                 grid_shape=None, 
+                 grid_resolution=None, 
+                 grid_orientation=0, 
+                 z_resolution=None, 
+                 nbincli=9):
         """
         Initialise a RatpScene.
         

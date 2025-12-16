@@ -19,7 +19,7 @@ class MicroMeteo:
         pass
 
     @staticmethod
-    def read(filename,truesolartime):
+    def read(filename,truesolartime=False):
         chemin=str(os.path.dirname(filename))
         micrometeo = pyratp.micrometeo
         listVegeNom = []
@@ -40,7 +40,7 @@ class MicroMeteo:
                 micrometeo.tabmeteo[i,ii] = li[ii]
         f.close()
         micrometeo.truesolartime=truesolartime
-        print("MICROMETEO OK")
+        #print("MICROMETEO OK")
         return micrometeo
 
     @staticmethod
