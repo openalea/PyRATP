@@ -30,7 +30,7 @@ datafolder = "data_pyratp"
 
 # file names
 grid_vegestar = "grid3D-0_5m-vegestar.grd"
-vegestar_file = "LOD6juin0.2.vgx"
+vegestar_file = "LOD6juin0_2.vgx"
 coeff_allometric = 1
 
 grid_voxel = 'grid3D-0_5m.grd'
@@ -186,4 +186,5 @@ ratpvoxels2vtk(g, array, ColToExtract, outputname)
 ############  instantaneous viewer ############
 
 p = pyratpviewer(g, dfvox)
+
 
