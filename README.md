@@ -88,7 +88,7 @@ export PYTHONPATH="$PWD/src":$PYTHONPATH
 
 
 ### For developpers (python and fortran modifications)
-Editable install with conda/environment.yml is not functionning because of namespace conflict. A workaround is as follow:
+Editable installation with conda/environment.yml is not functioning because of namespace conflict. A workaround is as follows:
 1) download the repository and change to the root directory:
 ```shell
    git clone https://github.com/openalea/PyRATP.git
