@@ -120,13 +120,7 @@ htmlhelp_basename = project + '_documentation'
 
 # images used for the nbgallery
 nbsphinx_thumbnails = {
-    "example/example_archi_from_file": "_static/example_archi_from_file.png",
-    "example/example_archi_from_rsml": "_static/example_archi_from_rsml.png",
-    "example/example_generated_archi": "_static/example_generated_archi.png",
-    "example/example_parameter_class": "_static/example_parameter.png",
-    "example/example_k_adjustment": "_static/example_k_adjust.png",
-    "example/example_solute_water_transport": "_static/example_solute.png",
-    "example/Boursiac2022/boursiac2022": "_static/boursiac2022.png"
+    "example/basics_of_PyRATP": "_static/leaf_coordinates.png",
 }
 
 # Add infomation about github repository
