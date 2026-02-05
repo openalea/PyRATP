@@ -7,6 +7,7 @@
 
 Wolcome to OpenAlea RATP's documentation
 ########################################
+.. figure:: _static/first_page.png
 
 The model **RATP** (Radiation Absorption, Transpiration and
 Photosynthesis) was designed to simulate the spatial distribution of
@@ -33,11 +34,11 @@ Documentation
 .. toctree::
     :maxdepth: 1
 
-    .installation.rst
-    User Guide<user/manual.rst>
-    Model Presentation<user/ratp.rst>
+    ./installation.rst
+    ./user/manual.rst
+    ./user/ratp.rst
     Reference Guide<user/autosum.rst>
-    .references.rst
+    ./references.rst
 
 Authors
 =======

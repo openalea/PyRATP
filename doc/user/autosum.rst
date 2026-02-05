@@ -4,15 +4,15 @@
 
 
 Reference guide
-###################################
+###############
 .. contents::
 
-.. currentmodule:: openalea.ratp.__init__
+.. currentmodule:: openalea.ratp.vegetation
 
 
 :mod:`openalea.ratp` module
 ===============================================
-.. automodule:: openalea.ratp.__init__
+.. automodule:: openalea.ratp.vegetation
     :members:
     :undoc-members:
     :inherited-members:

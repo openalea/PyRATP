@@ -32,8 +32,8 @@ Editable installation with conda/environment.yml is not functioning because of n
 
 ::
 
-   git clone https://github.com/openalea/PyRATP.git
-   cd PyRATP
+    git clone https://github.com/openalea/PyRATP.git
+    cd PyRATP
 
 2) Create a conda environment with dependencies manually:
 
@@ -41,13 +41,13 @@ Using MAC and Linux:
 
 ::
 
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest jupyter
+    mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest jupyter
 
 Using Windows:
 
 ::
 
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran jupyter
+    mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran jupyter
 
 4) activate the environment: `mamba activate pyratp_dev`
 
@@ -55,13 +55,13 @@ mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea
 
 ::
 
-pip install ."[test]"
+    pip install ."[test]"
 
 
 and after each modification of the python or Fortran part, run
 
 ::
 
-pip install .
+    pip install .
 
 then restart your kernel (when using IPython) for your modifications to be taken into account.
