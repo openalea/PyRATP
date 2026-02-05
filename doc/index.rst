@@ -37,7 +37,7 @@ Documentation
     ./installation.rst
     ./user/ratp.rst
     ./gallery.rst
-    Reference Guide<user/autosum.rst>
+    ./api.rst
     ./references.rst
 
 Authors
