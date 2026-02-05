@@ -35,7 +35,6 @@ Documentation
     :maxdepth: 1
 
     ./installation.rst
-    ./user/manual.rst
     ./user/ratp.rst
     Reference Guide<user/autosum.rst>
     ./references.rst
