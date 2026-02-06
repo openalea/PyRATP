@@ -17,6 +17,7 @@ source:
   path: ..
 
 build:
+  skip: true  # [win and arm64]
   number: 0
   script_env:
     - CC=gcc # [win]
