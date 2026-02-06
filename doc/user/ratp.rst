@@ -4,40 +4,6 @@ Model description
 
 **H. Sinoquet, UMR PIAF, Clermont-Ferrand, France**
 
-INTRODUCTION
-------------
-
-The model **RATP** (Radiation Absorption, Transpiration and
-Photosynthesis) was designed to simulate the spatial distribution of
-radiation and leaf-gas exchanges within vegetation canopies as a
-function of canopy structure, canopy microclimate within the canopy and
-physical and physiological leaf properties. The model uses a 3D
-representation of the canopy (i.e. an array of 3D voxels, each
-characterised by a leaf area density) and allows several vegetation
-types (e.g. foliage of several plants) to be input at voxel scale.
-Radiation transfer is computed by a turbid medium analogy, transpiration
-by the leaf energy budget approach, and photosynthesis by the Farquhar
-model, each applied for sunlit and shaded leaves at the individual 3D
-cell-scale. The model typically operates at a 20 to 30 min time step.
-Principes and main equations of the RATP model are given in: Sinoquet H,
-Le Roux X, Adam B, Améglio T, Daudet FA, 2001. RATP, a model for
-simulating the spatial distribution of radiation absorption,
-transpiration and photosynthesis within canopies: application to an
-isolated tree crown. Plant Cell and Environment, 24, 395-406.
-
-The RATP version 2 is basically implemented as a set of Fortran90
-modules, which can be used as a Python library in the OpenAlea
-environment. A Fortran90 module includes public variables and
-subroutines, which are all accessible in the OpenAlea environment.
-
-Software installation
----------------------
-
-.. code-block:: python
-
-    mamba install -c openalea3 -c conda-forge openalea.ratp
-
-
 RATP modules
 ------------
 

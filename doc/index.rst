@@ -5,23 +5,28 @@
 
 .. module:: pyratp
 
-PyRATP documentation
-#########################################################################
+Wolcome to OpenAlea RATP's documentation
+########################################
+.. figure:: _static/first_page.png
 
-Module description
-==================
+The model **RATP** (Radiation Absorption, Transpiration and
+Photosynthesis) was designed to simulate the spatial distribution of
+radiation and leaf-gas exchanges within vegetation canopies as a
+function of canopy structure, canopy microclimate within the canopy and
+physical and physiological leaf properties. The model uses a 3D
+representation of the canopy (i.e. an array of 3D voxels, each
+characterised by a leaf area density) and allows several vegetation
+types (e.g. foliage of several plants) to be input at voxel scale.
+Radiation transfer is computed by a turbid medium analogy, transpiration
+by the leaf energy budget approach, and photosynthesis by the Farquhar
+model, each applied for sunlit and shaded leaves at the individual 3D
+cell-scale. The model typically operates at a 20 to 30 min time step.
+Principes and main equations of the RATP model are given in: [Sinoquet2001]_.
 
-.. sidebar:: Summary
-
-    :Version: |version|
-    :Release: |release|
-    :Date: |today|
-    :Author: See `Authors`_ section
-    :ChangeLog: See `ChangeLog`_ section
-
-.. topic:: Overview
-
-    .. include:: user/overview.txt
+The RATP version 2 is basically implemented as a set of Fortran90
+modules, which can be used as a Python library in the OpenAlea
+environment. A Fortran90 module includes public variables and
+subroutines, which are all accessible in the OpenAlea environment.
 
 Documentation
 =============
@@ -29,12 +34,11 @@ Documentation
 .. toctree::
     :maxdepth: 1
 
-    Model Presentation<user/ratp.rst>
-    User Guide<user/index.rst>   
-    Reference Guide<user/autosum.rst>
-
-- A `PDF <../latex/pyratp.pdf>`_ version of |pyratp| documentation is 
-  available.
+    ./installation.rst
+    ./user/ratp.rst
+    ./gallery.rst
+    ./api.rst
+    ./references.rst
 
 Authors
 =======
