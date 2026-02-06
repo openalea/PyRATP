@@ -1,2 +1,9 @@
 c_compiler:
   - m2w64-toolchain          # [win]
+
+
+python:
+  - 3.10
+  - 3.11
+  - 3.12
+  - 3.13
