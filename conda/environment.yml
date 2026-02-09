@@ -15,4 +15,4 @@ dependencies:
   
   # let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
   - pip:
-      - -e .."[doc, test]"
+      - .."[doc, test]"
