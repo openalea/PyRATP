@@ -10,7 +10,6 @@ API References
     openalea.ratp.can2riri
     openalea.ratp.clumping_index
     openalea.ratp.grid
-    openalea.ratp.IOtable
     openalea.ratp.micrometeo
     openalea.ratp.mtg2ratp
     openalea.ratp.mtg_extract
@@ -19,7 +18,6 @@ API References
     openalea.ratp.RatpScene
     openalea.ratp.runratp
     openalea.ratp.skyvault
-    openalea.ratp.test
     openalea.ratp.vege3D
     openalea.ratp.vegetation
     openalea.ratp.interface.clumping_index
