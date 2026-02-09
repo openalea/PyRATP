@@ -1,9 +1,10 @@
 # PyRATP
 [![Docs](https://readthedocs.org/projects/pyratp/badge/?version=latest)](https://pyratp.readthedocs.io/)
 [![Build Status](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml/badge.svg?branch=master)](https://github.com/openalea/PyRatp/actions/workflows/conda-package-build.yml?query=branch%3Amaster)
+[![Build Status](https://github.com/openalea/PyRatp/actions/workflows/openalea_ci.yml/badge.svg)](https://github.com/openalea/PyRatp/actions/workflows/openalea_ci.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License--CeCILL-C-blue)](https://www.cecill.info/licences/Licence_CeCILL-C_V1-en.html)
-[![Anaconda-Server Badge](https://anaconda.org/openalea3/pyratp/badges/version.svg)](https://anaconda.org/openalea3/pyratp)
+[![Anaconda-Server Badge](https://anaconda.org/openalea3/openalea.ratp/badges/version.svg)](https://anaconda.org/openalea3/openalea.ratp)
 
 ## Software
 
