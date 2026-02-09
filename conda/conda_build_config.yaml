@@ -1,2 +1,24 @@
 c_compiler:
   - m2w64-toolchain          # [win]
+
+# Override conda-forge's python config completely
+python:
+  - 3.10.* *_cpython  # [not (win and arm64)]
+  - 3.11.* *_cpython  # [not (win and arm64)]
+  - 3.12.* *_cpython  # [not (win and arm64)]
+  - 3.13.* *_cp313    # [not (win and arm64)]
+  - 3.14.* *_cp314    # [win and arm64]
+
+is_python_min:
+  - 3.10  # [not (win and arm64)]
+  - 3.11  # [not (win and arm64)]
+  - 3.12  # [not (win and arm64)]
+  - 3.13  # [not (win and arm64)]
+  - 3.14  # [win and arm64]
+
+python_impl:
+  - cpython
+
+zip_keys:
+  - python
+  - is_python_min
