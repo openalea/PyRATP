@@ -6,7 +6,7 @@ API References
     :toctree: _autosummary
     :template: 
     :recursive:
-    
+
     openalea.ratp.can2riri
     openalea.ratp.clumping_index
     openalea.ratp.grid
@@ -19,7 +19,6 @@ API References
     openalea.ratp.RatpScene
     openalea.ratp.runratp
     openalea.ratp.skyvault
-    openalea.ratp.test
     openalea.ratp.vege3D
     openalea.ratp.vegetation
     openalea.ratp.interface.clumping_index
