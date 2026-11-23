@@ -69,7 +69,7 @@ Editable install with conda/environment.yml is not functionning because of names
 ```
 2) Create a conda environment with dependencies manually with:
 ```shell
-mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy compilers meson-python gfortran scipy pytest jupyter
+mamba create -n pyratp  -c openalea3 -c conda-forge  openalea.plantgl openalea.mtg qtpy c-compiler fortran-compiler meson-python scipy pytest jupyter
 ```
 3) activate the environment: `mamba activate pyratp`
 
@@ -96,14 +96,12 @@ Editable installation with conda/environment.yml is not functioning because of n
 ```
 2) Create a conda environment with dependencies manually:
    
-Using MAC and Linux:
 ```shell
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy compilers meson-python scipy pytest jupyter
+mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy c-compiler fortran-compiler meson-python scipy pytest jupyter
 ```
-Using Windows:
-```shell
-mamba create -n pyratp_dev -c conda-forge -c openalea3 openalea.plantgl openalea.mtg qtpy m2w64-toolchain meson-python scipy pytest gfortran jupyter
-```
+On Windows, the conda-forge compilers are MSVC (C) and LLVM flang (Fortran): Visual Studio 2022
+or its Build Tools, with the "Desktop development with C++" workload, must be installed.
+
 4) activate the environment: `mamba activate pyratp_dev`
 
 5) Compile everything:

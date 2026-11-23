@@ -7,7 +7,6 @@
 {% set build_deps = pyproject.get("build-system", {}).get("requires", []) %}
 {% set deps = pyproject.get('project', {}).get('dependencies', []) %}
 {% set conda_deps = pyproject.get('tool', {}).get('conda', {}).get('environment', {}).get('dependencies',[]) %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: {{ name }}
@@ -18,16 +17,6 @@ source:
 
 build:
   number: 0
-  script_env:
-    - CC=gcc # [win]
-    # Force static build on Windows to allow skipping run export of m2w64 stdlib
-    - LDFLAGS=-static -static-libgcc -static-libgfortran   # [win]
-    # to correct in windows-latest libmamba Failed to load subdir: Download error (35) SSL connect error
-    # - SSL_NO_VERIFY=1
-  ignore_run_exports_from:
-    # Avoid automatic run export of m2w64 stdlib on windows (that forces hard regression of msvc libs)
-    - {{ compiler('c') }} # [win]
-    - {{ compiler('cxx') }} # [win]
   preserve_egg_dir: True
   script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-build-isolation -vv
 
@@ -42,8 +31,10 @@ requirements:
     {% for dep in build_deps %}
     - {{ dep }}
     {% endfor  %}
-    - {{ compiler('fortran') }}  # [not win]
+    # Windows: MSVC (vs2022) for C, LLVM flang for Fortran (conda_build_config.yaml)
+    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - charset-normalizer
   run:
     - python
