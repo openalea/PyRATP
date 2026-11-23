@@ -10,8 +10,10 @@ dependencies:
   - openalea.plantgl
   - openalea.mtg
   - qtpy
-  - compilers
-  - gfortran
+  # C and Fortran compilers of conda-forge: gcc/gfortran (linux), clang/gfortran (macos),
+  # MSVC/flang (windows: needs Visual Studio 2022 or its Build Tools, C++ workload)
+  - c-compiler
+  - fortran-compiler
   
   # let pip install the rest using pyproject.toml (if you are okay with conda/pip mix)
   - pip:
