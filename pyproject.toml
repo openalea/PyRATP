@@ -62,7 +62,7 @@ channels = [
 dependencies = [
     "openalea.mtg",
     "openalea.plantgl",
-    "QtPy", # vege3D.py
+    # QtPy: only for the OpenAlea visual programming widgets of openalea.ratp_wralea
 ]
 
 [project.optional-dependencies]

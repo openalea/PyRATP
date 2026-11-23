@@ -7,7 +7,6 @@
 # Verifi? avec lecture de fichier vgx le 28/01/2011 MS certified
 ##from openalea.ratp import pyratp
 
-from qtpy import QtCore
 import random
 #import pyRATP
 import numpy as np
@@ -75,15 +74,17 @@ class Vege3D:
         tabZ =np.array([])
         tabS =np.array([])
         tabN =np.array([])
-        #lecture du fichier source
-        file = QtCore.QFile(fileNameVGX)
-        if not(file.open(QtCore.QIODevice.ReadOnly | QtCore.QIODevice.Text)):
+        #lecture du fichier source (plain Python, formerly QFile/QTextStream)
+        try:
+            with open(fileNameVGX, encoding='utf-8', errors='replace') as file:
+                lignes = [l.rstrip('\r\n') for l in file]
+        except OSError:
             return
-        textStream = QtCore.QTextStream (file)
+        if not lignes:
+            return
 
         #recuperation de l'entete du fichier
-        if not(textStream.atEnd()):
-            entete = textStream.readLine()
+        entete = lignes[0]
         #a partir de l'entete, on recupere le numero de la colonne correspondant a chaque mot cle
         #- recherche du caractere de separation
         chrSeparation = ""
@@ -101,14 +102,14 @@ class Vege3D:
                 dicoMotCle[str(mot)] = listEntete.index(str(mot))+1
         nbObj=1
 
-        while not(textStream.atEnd()):
+        for texte in lignes[1:]:
             nbLigne +=1
 
-            ligne = textStream.readLine().split(chrSeparation)
+            ligne = texte.split(chrSeparation)
 
             nbObj += 1
 
-            #transformation de la QStringList en liste python
+            #conversion des champs en nombres
             liste = []
 
             for ch in ligne :
@@ -170,7 +171,6 @@ class Vege3D:
             tabN= np.append(tabN,Azote)
 ##            print(Area',AREA
 ##            if nbLigne == typeVege : nbLigne=0
-        file.close()
         print('VEGE3D OK')
         return (tabTypeVege,tabX,tabY,tabZ,tabS,tabN)
 

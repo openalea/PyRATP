@@ -33,7 +33,7 @@ CecILL-C
 - scipy
 - openalea.plantgl
 - openalea.mtg
-- QtPy
+- QtPy (optional: only for the widgets of the OpenAlea visual programming interface)
 
 ### Modifications 
 - Installation with make: it compiles fortran part with f2py then installs the package with setuptools and pip
